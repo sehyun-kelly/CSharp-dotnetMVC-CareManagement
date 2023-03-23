@@ -13,7 +13,5 @@ namespace CareManagement.Data
             : base(options)
         {
         }
-        public DbSet<CareManagement.Models.Class>? Class { get; set; }
-
     }
 }
