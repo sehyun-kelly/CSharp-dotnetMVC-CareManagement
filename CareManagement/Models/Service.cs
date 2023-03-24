@@ -6,19 +6,19 @@ namespace CareManagement.Models
 	public class Service
 	{
 		[Key]
-		public Guid SERVICE_ID;
+		public Guid serviceId;
 
 		[Required]
-		[ForeignKey("QUALIFICATION")]
-		public Guid Q_ID { get; set; } // the actual FK in the table
-		public virtual Qualification? QUALIFICATION { get; set; } // reference for the FK
+		[ForeignKey("Qualification")]
+		public Guid qId { get; set; } // the actual FK in the table
+		public virtual Qualification? Qualification { get; set; } // reference for the FK
 
 		[Required]
 		[Range(0, double.MaxValue)]  // No negative numbers
-		public double RATE;
+		public double Rate;
 
 		[Required]
 		[MinLength(1)]
-		public string TYPE { get; set; } = "None";
+		public string Type { get; set; } = "None";
 	}
 }

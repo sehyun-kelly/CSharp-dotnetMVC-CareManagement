@@ -6,19 +6,19 @@ namespace CareManagement.Models
 	public class Customer
 	{
 		[Key]
-		public Guid CUSTOMER_ID;
+		public Guid customerId;
 
 		[Required]
-		[ForeignKey("INVOICE")]
-		public int INVOICE_NO { get; set; } // the actual FK in the table
-		public virtual ICollection<Invoice> INVOICE { get; set; } // reference for the FK
-
-		[Required]
-		[Range(0, int.MaxValue)]  // No negative numbers
-		public int RM_NUMBER;
+		[ForeignKey("Invoice")]
+		public int invoiceNo { get; set; } // the actual FK in the table
+		public virtual ICollection<Invoice> Invoice { get; set; } // reference for the FK
 
 		[Required]
 		[Range(0, int.MaxValue)]  // No negative numbers
-		public int AGE;
+		public int rmNumber;
+
+		[Required]
+		[Range(0, int.MaxValue)]  // No negative numbers
+		public int Age;
 	}
 }
