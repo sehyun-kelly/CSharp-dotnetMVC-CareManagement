@@ -10,9 +10,9 @@ namespace CareManagement.Models
 
         public int EMPLOYEE_ID { get; set; }
 
-        [ForeignKey("QUALIFICATION")]
+        [ForeignKey("Qualification")]
         public int Q_ID { get; set; }
-        public virtual Qualification? QUALIFICATION { get; set; }
+        public virtual Qualification? Qualification { get; set; }
     
         public int EmpId { get; set; } // Acts as the Primary Key for an employee
 
