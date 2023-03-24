@@ -1,10 +1,19 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CareManagement.Models
 {
     public class Employee
     {
         [Key]
+        [Range(0, int.MaxValue)]
+
+        public int EmployeeId { get; set; }
+
+        [ForeignKey("Qualification")]
+        public int QualificationId { get; set; }
+        public virtual Qualification? Qualification { get; set; }
+    
         public int EmpId { get; set; } // Acts as the Primary Key for an employee
 
         [Required]

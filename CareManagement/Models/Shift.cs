@@ -5,8 +5,11 @@ namespace CareManagement.Models
 {
     public class Shift
     {
+
         [Key]
         public int ShiftId { get; set; } // The Shift ID
+
+        public Guid S_ID { get; set; }
 
         [Required]
         public int EmployeeId { get; set; } // The employee working the shift
