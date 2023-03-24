@@ -1,4 +1,7 @@
-﻿namespace CareManagement.Models
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace CareManagement.Models
 {
     public class Service
     {
@@ -13,6 +16,10 @@
 		[Required]
 		[Range(0, double.MaxValue)]  // No negative numbers
 		public double Rate;
+
+		[Required]
+		[Range(0, double.MaxValue)]
+		public double Hours { get; set; }
 
 		[Required]
 		[MinLength(1)]
