@@ -7,31 +7,30 @@ namespace CareManagement.Models
     {
 
         [Key]
-       // [Range(0, int.MaxValue)]
+        public int ShiftId { get; set; } // The Shift ID
 
         public Guid S_ID { get; set; }
 
         [Required]
-        [ForeignKey("EMPLOYEE")]
-        public int EMPLOYEE_ID { get; set; }
-        public virtual Employee Employee { get; set; }
+        public int EmployeeId { get; set; } // The employee working the shift
+
+        [ForeignKey("EmployeeId")]
+        public Employee Employee { get; set; } // Navigation property for the employee
 
         [Required]
-        [ForeignKey("EMPLOYEE_MANAGER")]
-        public int MANAGER_ID { get; set; }
-        public virtual Employee EMPLOYEE_MANAGER { get; set; }
+        public int ManagerId { get; set; } // Whoever is responsible for the employee
+
+        [ForeignKey("ManagerId")]
+        public Employee Manager { get; set; } // Navigation property for the manager
 
         [Required]
-        [Range(0,86399, ErrorMessage = "The start time must be between {1} and {2}")]
-        public TimeSpan START_TIME { get; set; }
+        public DateTime StartTime { get; set; } // When the shift starts
 
         [Required]
-        [Range(0, 86399, ErrorMessage = "The start time must be between {1} and {2}")]
-        public TimeSpan END_TIME { get; set; }
-
+        public DateTime EndTime { get; set; } // When the shift ends
 
         [Required]
-        public Boolean? SICK { get;set }
-
+        public bool Sick { get; set; } // Is true if employee called in sick
     }
+
 }
