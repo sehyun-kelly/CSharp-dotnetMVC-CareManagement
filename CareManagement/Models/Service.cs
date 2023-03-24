@@ -1,10 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace CareManagement.Models
+﻿namespace CareManagement.Models
 {
-	public class Service
-	{
+    public class Service
+    {
 		[Key]
 		public Guid serviceId;
 
@@ -20,5 +17,5 @@ namespace CareManagement.Models
 		[Required]
 		[MinLength(1)]
 		public string Type { get; set; } = "None";
-	}
+    }
 }

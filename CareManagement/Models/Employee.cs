@@ -8,10 +8,10 @@ namespace CareManagement.Models
         [Key]
         [Range(0, int.MaxValue)]
 
-        public int EMPLOYEE_ID { get; set; }
+        public int EmployeeId { get; set; }
 
         [ForeignKey("Qualification")]
-        public int Q_ID { get; set; }
+        public int QualificationId { get; set; }
         public virtual Qualification? Qualification { get; set; }
     
         public int EmpId { get; set; } // Acts as the Primary Key for an employee
