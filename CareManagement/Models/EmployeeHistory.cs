@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-
+using CareManagement.Models;
 namespace CareManagement.Models
 {
     public class EmployeeHistory
@@ -65,7 +65,7 @@ namespace CareManagement.Models
         //Foreign key 
         [Required]
         public int EmpId { get; set; }
-        //public Employee Employee { get; set; }
+        public Employee Employee { get; set; }
 
 
     }
