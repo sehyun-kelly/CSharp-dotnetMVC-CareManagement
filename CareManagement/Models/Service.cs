@@ -3,11 +3,11 @@
     public class Service
     {
 		[Key]
-		public Guid serviceId;
+		public Guid ServiceId;
 
 		[Required]
 		[ForeignKey("Qualification")]
-		public Guid qId { get; set; } // the actual FK in the table
+		public Guid QualificationId { get; set; } // the actual FK in the table
 		public virtual Qualification? Qualification { get; set; } // reference for the FK
 
 		[Required]
