@@ -31,7 +31,13 @@ namespace CareManagement.Models
         [Required]
         [Range(typeof(DateTime), "1/1/2023", "12/31/2023",
         ErrorMessage = "Value for {0} must be between {1} and {2}")]
-        public DateTime StartDate { get; set; }
+        public DateTime DatePurchased { get; set; }
+
+
+        [Required]
+        [Range(1,int.MaxValue, ErrorMessage ="Cannot have 0 services purchased.")]
+
+        public int Quantity { get; set; }   
 
 
     }

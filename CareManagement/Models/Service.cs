@@ -22,7 +22,7 @@ namespace CareManagement.Models
 		public double Hours { get; set; }
 
 		[Required]
-		[MinLength(1)]
-		public string Type { get; set; } = "None";
+		[MinLength(5)]
+		public string Type { get; set; }
     }
 }
