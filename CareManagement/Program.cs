@@ -1,4 +1,9 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using CareManagement.Data;
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<CareManagementContext>(options =>
+    options.UseInMemoryDatabase(databaseName: "CareManagement"));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
