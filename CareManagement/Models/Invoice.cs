@@ -46,6 +46,9 @@ namespace CareManagement.Models
         [Range(0.01, double.MaxValue)]
         public double TotalCost { get; set; }
 
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime DatePaid { get; set; }
 
     }
 }
