@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using CareManagement.Models;
+using CRM4.Models;
 
 namespace CRM_Team.Models
 {
