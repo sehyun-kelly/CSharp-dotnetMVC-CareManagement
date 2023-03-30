@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace CRM4.Models
+namespace CareManagement.Models
 {
     using System;
     using System.Collections.Generic;

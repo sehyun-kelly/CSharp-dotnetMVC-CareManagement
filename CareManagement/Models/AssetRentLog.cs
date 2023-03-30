@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace CRM_Team.Models
+namespace CareManagement.Models
 {
     public class AssetRentLog
     {

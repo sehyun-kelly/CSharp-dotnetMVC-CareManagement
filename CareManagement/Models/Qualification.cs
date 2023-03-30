@@ -7,7 +7,6 @@ namespace CareManagement.Models
     public class Qualification
     {
         [Key]
-
         public Guid QualificationId { get; set; }
 
 
