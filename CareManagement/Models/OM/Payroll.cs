@@ -28,7 +28,11 @@ namespace CareManagement.Models.OM
 
         [Required]
         [Range(0, int.MaxValue)]
-        public int HOURS { get; set; }
+        public int HOURS { get; set;
+
+        [Required]
+        [Range(0, int.MaxValue)]
+        public int OVERTIME { get; set; }
 
         [Range(0, int.MaxValue)]
         public int HOUR_RATE { get; set; }
