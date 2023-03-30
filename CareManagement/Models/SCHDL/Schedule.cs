@@ -8,12 +8,12 @@ namespace CareManagement.Models.SCHDL
     public class Schedule
     {
         [Key]
-		public Guid ScheduleId;
+		public Guid ScheduleId { get; set; }
 
 		[Key]
-		public DateTime ScheduleDate;
+		public DateTime ScheduleDate { get; set; }
 
-		[Required]
+        [Required]
 		[ForeignKey("Renter")]
 		public Guid RenterId { get; set; } // the actual FK in the table
 		public virtual Renter? Renter { get; set; } // reference for the FK
