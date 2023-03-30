@@ -6,7 +6,7 @@ namespace CareManagement.Models.OM
     public class Vacation
     {
         [Key]
-        public int VacationId { get; set; }
+        public Guid VacationId { get; set; }
 
         [Required]
         [ForeignKey("Employee")]

@@ -7,16 +7,14 @@ namespace CareManagement.Models.OM
     {
 
         [Key]
-        public int ShiftId { get; set; } // The Shift ID
-
-        public Guid S_ID { get; set; }
+        public Guid ShiftId { get; set; } // The Shift ID
 
         [Required]
-        [ForeignKey("EmployeeId")]
+        [ForeignKey("Employee")]
         public Guid EmployeeId { get; set; }
 
         [Required]
-        [ForeignKey("EmployeeId")]
+        [ForeignKey("Employee")]
         public Guid ManagerId { get; set; }
         public virtual Employee Employee { get; set; }
 

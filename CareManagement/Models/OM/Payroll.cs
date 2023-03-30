@@ -10,31 +10,31 @@ namespace CareManagement.Models.OM
     public class Payroll
     {
         [Key]
-        public int PAY_ID { get; set; }
+        public Guid PayId { get; set; }
 
         [Required]
         [ForeignKey("Employee")]
-        public int EmployeeId { get; set; }
+        public Guid EmployeeId { get; set; }
         public virtual Employee Employee { get; set; }
 
         [Required]
         [Range(0, int.MaxValue)]
-        public int HOURS { get; set; }
+        public int Hours { get; set; }
 
         [Range(0, int.MaxValue)]
-        public int CHECK_AMOUNT { get; set; }
+        public int CheckAmount { get; set; }
 
         [Range(0, int.MaxValue)]
-        public int HOUR_RATE { get; set; }
+        public int HourRate { get; set; }
 
         [Required]
         [EnumDataType(typeof(EmploymentType))]
-        public string EMP_TYPE { get; set; }
+        public string EmployeeType { get; set; }
 
         [Required]
-        public DateTime START_DATE { get; set; }
+        public DateTime StartDate { get; set; }
 
-        public DateTime? END_DATE { get; set; }
+        public DateTime? EndDate { get; set; }
     }
 
     public enum EmploymentType
