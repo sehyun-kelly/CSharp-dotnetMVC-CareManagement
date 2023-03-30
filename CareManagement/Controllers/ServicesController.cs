@@ -22,9 +22,8 @@ namespace CareManagement.Controllers
         // GET: Services
         public async Task<IActionResult> Index()
         {
-              return _context.Service != null ? 
-                          View(await _context.Service.ToListAsync()) :
-                          Problem("Entity set 'CareManagementContext.Service'  is null.");
+            var careManagementContext = _context.Service.Include(s => s.Qualification);
+            return View(await careManagementContext.ToListAsync());
         }
 
         // GET: Services/Details/5
@@ -36,6 +35,7 @@ namespace CareManagement.Controllers
             }
 
             var service = await _context.Service
+                .Include(s => s.Qualification)
                 .FirstOrDefaultAsync(m => m.ServiceId == id);
             if (service == null)
             {
@@ -48,6 +48,7 @@ namespace CareManagement.Controllers
         // GET: Services/Create
         public IActionResult Create()
         {
+            ViewData["QualificationId"] = new SelectList(_context.Qualification, "QualificationId", "QualificationDescription");
             return View();
         }
 
@@ -56,7 +57,7 @@ namespace CareManagement.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ServiceId,Hours,Type")] Service service)
+        public async Task<IActionResult> Create([Bind("ServiceId,QualificationId,Hours,Type")] Service service)
         {
             if (ModelState.IsValid)
             {
@@ -65,6 +66,7 @@ namespace CareManagement.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["QualificationId"] = new SelectList(_context.Qualification, "QualificationId", "QualificationDescription", service.QualificationId);
             return View(service);
         }
 
@@ -81,6 +83,7 @@ namespace CareManagement.Controllers
             {
                 return NotFound();
             }
+            ViewData["QualificationId"] = new SelectList(_context.Qualification, "QualificationId", "QualificationDescription", service.QualificationId);
             return View(service);
         }
 
@@ -89,7 +92,7 @@ namespace CareManagement.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("ServiceId,Hours,Type")] Service service)
+        public async Task<IActionResult> Edit(Guid id, [Bind("ServiceId,QualificationId,Hours,Type")] Service service)
         {
             if (id != service.ServiceId)
             {
@@ -116,6 +119,7 @@ namespace CareManagement.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["QualificationId"] = new SelectList(_context.Qualification, "QualificationId", "QualificationDescription", service.QualificationId);
             return View(service);
         }
 
@@ -128,6 +132,7 @@ namespace CareManagement.Controllers
             }
 
             var service = await _context.Service
+                .Include(s => s.Qualification)
                 .FirstOrDefaultAsync(m => m.ServiceId == id);
             if (service == null)
             {

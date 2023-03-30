@@ -10,7 +10,6 @@ namespace CareManagement.Models.SCHDL
         [Key]
 		public Guid ScheduleId { get; set; }
 
-		[Key]
 		public DateTime ScheduleDate { get; set; }
 
 		//[Required]

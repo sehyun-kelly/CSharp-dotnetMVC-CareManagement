@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,11 +14,8 @@ namespace CareManagement.Data
             : base(options)
         {
         }
-        public DbSet<CareManagement.Models.SCHDL.Service>? Service { get; set; }
-<<<<<<< HEAD
         public DbSet<CareManagement.Models.SCHDL.Qualification>? Qualification { get; set; }
-=======
         public DbSet<CareManagement.Models.SCHDL.Schedule>? Schedule { get; set; }
->>>>>>> a27c6cf (Schedule Controller added)
+        public DbSet<CareManagement.Models.SCHDL.Service>? Service { get; set; }
     }
 }
