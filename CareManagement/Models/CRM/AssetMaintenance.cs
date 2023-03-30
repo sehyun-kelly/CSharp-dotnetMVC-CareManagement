@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace CareManagement.Models
+namespace CareManagement.Models.CRM
 {
     public class AssetMaintenance
     {

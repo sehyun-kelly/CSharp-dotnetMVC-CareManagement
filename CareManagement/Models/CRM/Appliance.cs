@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace CareManagement.Models
+namespace CareManagement.Models.CRM
 {
     public class Appliance
     {

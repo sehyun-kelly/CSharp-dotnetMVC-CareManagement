@@ -5,7 +5,7 @@ using CareManagement.Models;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 
-namespace CareManagement.Models
+namespace CareManagement.Models.OM
 {
     public class Payroll
     {

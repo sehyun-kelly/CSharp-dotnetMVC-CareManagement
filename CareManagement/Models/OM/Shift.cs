@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace CareManagement.Models
+namespace CareManagement.Models.OM
 {
     public class Shift
     {

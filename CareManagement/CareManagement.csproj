@@ -16,4 +16,14 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.13" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="Models\CRM\" />
+    <None Remove="Models\OM\" />
+    <None Remove="Models\SCHDL\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\CRM\" />
+    <Folder Include="Models\OM\" />
+    <Folder Include="Models\SCHDL\" />
+  </ItemGroup>
 </Project>
