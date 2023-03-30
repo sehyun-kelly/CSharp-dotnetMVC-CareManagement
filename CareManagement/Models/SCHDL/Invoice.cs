@@ -1,7 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using CareManagement.Models.CRM;
 
-namespace CareManagement.Models
+namespace CareManagement.Models.SCHDL
 {
 	public class Invoice
 	{
@@ -9,10 +10,10 @@ namespace CareManagement.Models
 		public Guid InvoiceNumber { get; set; }
 
 		[Required]
-		[ForeignKey("Customer")]
+		[ForeignKey("Renter")]
 
-		public int CustomerId { get; set; }
-		public virtual Customer Customer { get; set; }
+		public int RenterId { get; set; }
+		public virtual Renter Renter { get; set; }
 
 
         /**

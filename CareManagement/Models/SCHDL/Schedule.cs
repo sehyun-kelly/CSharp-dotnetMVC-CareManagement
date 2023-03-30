@@ -1,7 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using CareManagement.Models.OM;
+using CareManagement.Models.CRM;
 
-namespace CareManagement.Models
+namespace CareManagement.Models.SCHDL
 {
     public class Schedule
     {
@@ -12,9 +14,9 @@ namespace CareManagement.Models
 		public DateTime ScheduleDate;
 
 		[Required]
-		[ForeignKey("Customer")]
-		public Guid CustomerId { get; set; } // the actual FK in the table
-		public virtual Customer? Customer { get; set; } // reference for the FK
+		[ForeignKey("Renter")]
+		public Guid RenterId { get; set; } // the actual FK in the table
+		public virtual Renter? Renter { get; set; } // reference for the FK
 
 		[Required]
 		[ForeignKey("Shift")]
