@@ -7,25 +7,25 @@ namespace CareManagement.Models.SCHDL
 {
     public class PurchasedServices
     {
+        [Key]
+        public Guid PurchasedServiceId { get; set; }
+
+        //[Required]
         //[Key]
-        //public Guid PurchasedServiceId { get; set; }
+        //[ForeignKey("Invoice")]
+        //public int InvoiceNumber { get; set; }
+        //public virtual Invoice Invoice { get; set; }
 
-        [Required]
-        [Key]
-        [ForeignKey("Invoice")]
-        public int InvoiceNumber { get; set; }
-        public virtual Invoice Invoice { get; set; }
+        //[Required]
+        //[Key]
+        //[ForeignKey("Service")]
+        //public int ServiceId { get; set; }
+        //public virtual Service Service { get; set; }
 
-        [Required]
-        [Key]
-        [ForeignKey("Service")]
-        public int ServiceId { get; set; }
-        public virtual Service Service { get; set; }
-
-        [Required]
-        [ForeignKey("Employee")]
-        public int EmployeeId { get; set; }
-        public virtual Employee Employee { get; set; }
+        //[Required]
+        //[ForeignKey("Employee")]
+        //public int EmployeeId { get; set; }
+        //public virtual Employee Employee { get; set; }
 
         /**
          * once an invoice time period is specified we can change the range of dates allowed for an invoice
