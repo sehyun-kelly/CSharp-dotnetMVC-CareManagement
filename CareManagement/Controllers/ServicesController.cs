@@ -57,7 +57,7 @@ namespace CareManagement.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ServiceId,QualificationId,Hours,Type")] Service service)
+        public async Task<IActionResult> Create([Bind("ServiceId,Type,Rate,Hours,QualificationId")] Service service)
         {
             if (ModelState.IsValid)
             {
@@ -92,7 +92,7 @@ namespace CareManagement.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("ServiceId,QualificationId,Hours,Type")] Service service)
+        public async Task<IActionResult> Edit(Guid id, [Bind("ServiceId,Type,Rate,Hours,QualificationId")] Service service)
         {
             if (id != service.ServiceId)
             {

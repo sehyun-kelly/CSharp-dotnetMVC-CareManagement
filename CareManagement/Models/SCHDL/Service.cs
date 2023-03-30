@@ -8,21 +8,21 @@ namespace CareManagement.Models.SCHDL
 		[Key]
 		public Guid ServiceId { get; set; }
 
-		[Required]
-		[ForeignKey("Qualification")]
-		public Guid QualificationId { get; set; } // the actual FK in the table
-		public virtual Qualification? Qualification { get; set; } // reference for the FK
+        [Required]
+        [MinLength(5)]
+        public string Type { get; set; }
 
 		[Required]
 		[Range(0, double.MaxValue)]  // No negative numbers
-		public double Rate;
+		public double Rate { get; set; }
 
 		[Required]
 		[Range(0, double.MaxValue)]
 		public double Hours { get; set; }
 
-		[Required]
-		[MinLength(5)]
-		public string Type { get; set; }
+        [Required]
+        [ForeignKey("Qualification")]
+        public Guid QualificationId { get; set; } // the actual FK in the table
+        public virtual Qualification? Qualification { get; set; } // reference for the FK
     }
 }
