@@ -15,6 +15,10 @@ namespace CareManagement.Data
         {
         }
         public DbSet<CareManagement.Models.SCHDL.Service>? Service { get; set; }
+<<<<<<< HEAD
         public DbSet<CareManagement.Models.SCHDL.Qualification>? Qualification { get; set; }
+=======
+        public DbSet<CareManagement.Models.SCHDL.Schedule>? Schedule { get; set; }
+>>>>>>> a27c6cf (Schedule Controller added)
     }
 }

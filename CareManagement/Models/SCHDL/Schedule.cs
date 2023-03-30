@@ -13,19 +13,26 @@ namespace CareManagement.Models.SCHDL
 		[Key]
 		public DateTime ScheduleDate { get; set; }
 
+<<<<<<< HEAD
         [Required]
 		[ForeignKey("Renter")]
 		public Guid RenterId { get; set; } // the actual FK in the table
 		public virtual Renter? Renter { get; set; } // reference for the FK
+=======
+		//[Required]
+		//[ForeignKey("Renter")]
+		//public Guid RenterId { get; set; } // the actual FK in the table
+		//public virtual Renter? Renter { get; set; } // reference for the FK
+>>>>>>> a27c6cf (Schedule Controller added)
 
-		[Required]
-		[ForeignKey("Shift")]
-		public Guid ShiftID { get; set; } // the actual FK in the table
-		public virtual ICollection<Shift> Shift { get; set; } // reference for the FK
+		//[Required]
+		//[ForeignKey("Shift")]
+		//public Guid ShiftID { get; set; } // the actual FK in the table
+		//public virtual ICollection<Shift> Shift { get; set; } // reference for the FK
         
-		[Required]
-		[ForeignKey("Service")]
-		public Guid ServiceId { get; set; } // the actual FK in the table
-		public virtual Service? Service { get; set; } // reference for the FK
+		//[Required]
+		//[ForeignKey("Service")]
+		//public Guid ServiceId { get; set; } // the actual FK in the table
+		//public virtual Service? Service { get; set; } // reference for the FK
     }
 }
