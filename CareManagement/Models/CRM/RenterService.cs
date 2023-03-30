@@ -1,11 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-<<<<<<< HEAD:CareManagement/Models/RenterService.cs
 using CareManagement.Models;
-using CRM4.Models;
-=======
 using CareManagement.Models.SCHDL;
->>>>>>> origin/dev:CareManagement/Models/CRM/RenterService.cs
 
 namespace CareManagement.Models.CRM
 {
