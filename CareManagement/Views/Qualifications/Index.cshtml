@@ -1,19 +1,20 @@
-﻿@model IEnumerable<CareManagement.Models.SCHDL.Qualification>
+@model IEnumerable<CareManagement.Models.SCHDL.Qualification>
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Qualifications</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Create a New Qualification</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.QualificationDescription)
+                @*@Html.DisplayNameFor(model => model.QualificationDescription)*@
+                Description
             </th>
             <th></th>
         </tr>
