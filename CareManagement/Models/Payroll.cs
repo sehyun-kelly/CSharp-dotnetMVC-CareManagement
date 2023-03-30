@@ -12,8 +12,10 @@ namespace CareManagement.Models
         [Key]
         public int PAY_ID { get; set; }
 
-        [ForeignKey("EMPLOYEE")]
-        public int EMP_ID { get; set; }
+        [Required]
+        [ForeignKey("Employee")]
+        public int EmployeeId { get; set; }
+        public virtual Employee Employee { get; set; }
 
         [Required]
         [Range(0, int.MaxValue)]
@@ -33,8 +35,6 @@ namespace CareManagement.Models
         public DateTime START_DATE { get; set; }
 
         public DateTime? END_DATE { get; set; }
-
-        public virtual Employee EMPLOYEE { get; set; }
     }
 
     public enum EmploymentType

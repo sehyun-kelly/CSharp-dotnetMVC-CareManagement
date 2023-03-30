@@ -12,16 +12,19 @@ namespace CareManagement.Models
         public Guid S_ID { get; set; }
 
         [Required]
-        public int EmployeeId { get; set; } // The employee working the shift
-
         [ForeignKey("EmployeeId")]
-        public Employee Employee { get; set; } // Navigation property for the employee
+        public Guid EmployeeId { get; set; }
 
         [Required]
-        public int ManagerId { get; set; } // Whoever is responsible for the employee
+        [ForeignKey("EmployeeId")]
+        public Guid ManagerId { get; set; }
+        public virtual Employee Employee { get; set; }
 
-        [ForeignKey("ManagerId")]
-        public Employee Manager { get; set; } // Navigation property for the manager
+        //[Required]
+        //public int ManagerId { get; set; } // Whoever is responsible for the employee
+
+        //[ForeignKey("ManagerId")]
+        //public Employee Manager { get; set; } // Navigation property for the manager
 
         [Required]
         public DateTime StartTime { get; set; } // When the shift starts

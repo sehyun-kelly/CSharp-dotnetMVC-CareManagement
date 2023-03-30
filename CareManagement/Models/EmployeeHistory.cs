@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using CareManagement.Models;
 namespace CareManagement.Models
 {
@@ -64,8 +65,9 @@ namespace CareManagement.Models
 
         //Foreign key 
         [Required]
-        public int EmpId { get; set; }
-        public Employee Employee { get; set; }
+        [ForeignKey("Employee")]
+        public int EmployeeId { get; set; }
+        public virtual Employee Employee { get; set; }
 
 
     }

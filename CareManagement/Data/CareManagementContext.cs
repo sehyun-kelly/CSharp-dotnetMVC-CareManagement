@@ -13,5 +13,6 @@ namespace CareManagement.Data
             : base(options)
         {
         }
+        public DbSet<CareManagement.Models.EmployeeHistory>? EmployeeHistory { get; set; }
     }
 }

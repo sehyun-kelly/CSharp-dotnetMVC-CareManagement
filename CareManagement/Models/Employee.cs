@@ -6,15 +6,12 @@ namespace CareManagement.Models
     public class Employee
     {
         [Key]
-        [Range(0, int.MaxValue)]
 
-        public int EmployeeId { get; set; }
+        public Guid EmployeeId { get; set; }
 
         [ForeignKey("Qualification")]
         public Guid QualificationId { get; set; }
         public virtual Qualification? Qualification { get; set; }
-    
-        public int EmpId { get; set; } // Acts as the Primary Key for an employee
 
         [Required]
         [StringLength(20)]

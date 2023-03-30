@@ -10,8 +10,8 @@ namespace CareManagement.Models
 
         [Required]
         [ForeignKey("Employee")]
-        public int EmployeeId { get; set; }
-        public Employee Employee { get; set; }
+        public Guid EmployeeId { get; set; }
+        public virtual Employee Employee { get; set; }
 
         [Required]
         public DateTime StartDate { get; set; }
