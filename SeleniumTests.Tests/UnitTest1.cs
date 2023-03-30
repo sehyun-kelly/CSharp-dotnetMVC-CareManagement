@@ -19,6 +19,9 @@ namespace SeleniumTests.Tests
 			driver.Navigate().GoToUrl(url);
 			driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
 
+
+
+
 			driver.FindElement(By.LinkText("Client")).Click();
 			driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
 			driver.FindElement(By.LinkText("Create New")).Click();
