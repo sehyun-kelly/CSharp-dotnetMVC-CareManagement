@@ -1,7 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using CareManagement.Models.SCHDL;
 
-namespace CareManagement.Models
+namespace CareManagement.Models.OM
 {
     public class Employee
     {

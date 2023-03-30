@@ -1,8 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using CareManagement.Models.SCHDL;
 
-namespace CRM_Team.Models
+namespace CareManagement.Models.CRM
 {
+
     public class RenterService
     {
 
