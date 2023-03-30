@@ -18,23 +18,25 @@ namespace CareManagement.Models.OM
         public virtual Employee Employee { get; set; }
 
         [Required]
-        [Range(0, int.MaxValue)]
-        public int HOURS { get; set; }
+        public DateTime START_DATE { get; set; }
 
-        [Range(0, int.MaxValue)]
-        public int CHECK_AMOUNT { get; set; }
-
-        [Range(0, int.MaxValue)]
-        public int HOUR_RATE { get; set; }
+        public DateTime? END_DATE { get; set; }
 
         [Required]
         [EnumDataType(typeof(EmploymentType))]
         public string EMP_TYPE { get; set; }
 
         [Required]
-        public DateTime START_DATE { get; set; }
+        [Range(0, int.MaxValue)]
+        public int HOURS { get; set; }
 
-        public DateTime? END_DATE { get; set; }
+        [Range(0, int.MaxValue)]
+        public int HOUR_RATE { get; set; }
+
+        [Range(0, int.MaxValue)]
+        public int CHECK_AMOUNT { get; set; }
+
+
     }
 
     public enum EmploymentType
