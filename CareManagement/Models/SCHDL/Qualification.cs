@@ -8,7 +8,6 @@ namespace CareManagement.Models.SCHDL
     public class Qualification
     {
         [Key]
-
         public Guid QualificationId { get; set; }
 
 
