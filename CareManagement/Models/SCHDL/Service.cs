@@ -6,11 +6,11 @@ namespace CareManagement.Models.SCHDL
     public class Service
     {
 		[Key]
-		public Guid ServiceId;
+		public Guid ServiceId { get; set; }
 
 		[Required]
 		[ForeignKey("Qualification")]
-		public Guid QualificationId { get; set; } // the actual FK in the table
+		public int QualificationId { get; set; } // the actual FK in the table
 		public virtual Qualification? Qualification { get; set; } // reference for the FK
 
 		[Required]
