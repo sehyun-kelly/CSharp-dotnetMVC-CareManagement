@@ -8,10 +8,10 @@ namespace CareManagement.Models.SCHDL
 		[Key]
 		public Guid ServiceId { get; set; }
 
-		[Required]
-		[ForeignKey("Qualification")]
-		public int QualificationId { get; set; } // the actual FK in the table
-		public virtual Qualification? Qualification { get; set; } // reference for the FK
+		//[Required]
+		//[ForeignKey("Qualification")]
+		//public Guid QualificationId { get; set; } // the actual FK in the table
+		//public virtual Qualification? Qualification { get; set; } // reference for the FK
 
 		[Required]
 		[Range(0, double.MaxValue)]  // No negative numbers
