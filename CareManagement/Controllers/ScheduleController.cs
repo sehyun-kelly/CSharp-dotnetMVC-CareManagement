@@ -22,9 +22,8 @@ namespace CareManagement.Controllers
         // GET: Schedule
         public async Task<IActionResult> Index()
         {
-              return _context.Schedule != null ? 
-                          View(await _context.Schedule.ToListAsync()) :
-                          Problem("Entity set 'CareManagementContext.Schedule'  is null.");
+            var careManagementContext = _context.Schedule.Include(s => s.Service);
+            return View(await careManagementContext.ToListAsync());
         }
 
         // GET: Schedule/Details/5
@@ -36,6 +35,7 @@ namespace CareManagement.Controllers
             }
 
             var schedule = await _context.Schedule
+                .Include(s => s.Service)
                 .FirstOrDefaultAsync(m => m.ScheduleId == id);
             if (schedule == null)
             {
@@ -48,6 +48,7 @@ namespace CareManagement.Controllers
         // GET: Schedule/Create
         public IActionResult Create()
         {
+            ViewData["ServiceId"] = new SelectList(_context.Service, "ServiceId", "Type");
             return View();
         }
 
@@ -56,7 +57,7 @@ namespace CareManagement.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ScheduleId")] Schedule schedule)
+        public async Task<IActionResult> Create([Bind("ScheduleId,ScheduleDate,ServiceId")] Schedule schedule)
         {
             if (ModelState.IsValid)
             {
@@ -65,6 +66,7 @@ namespace CareManagement.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["ServiceId"] = new SelectList(_context.Service, "ServiceId", "Type", schedule.ServiceId);
             return View(schedule);
         }
 
@@ -81,6 +83,7 @@ namespace CareManagement.Controllers
             {
                 return NotFound();
             }
+            ViewData["ServiceId"] = new SelectList(_context.Service, "ServiceId", "Type", schedule.ServiceId);
             return View(schedule);
         }
 
@@ -89,7 +92,7 @@ namespace CareManagement.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("ScheduleId")] Schedule schedule)
+        public async Task<IActionResult> Edit(Guid id, [Bind("ScheduleId,ScheduleDate,ServiceId")] Schedule schedule)
         {
             if (id != schedule.ScheduleId)
             {
@@ -116,6 +119,7 @@ namespace CareManagement.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["ServiceId"] = new SelectList(_context.Service, "ServiceId", "Type", schedule.ServiceId);
             return View(schedule);
         }
 
@@ -128,6 +132,7 @@ namespace CareManagement.Controllers
             }
 
             var schedule = await _context.Schedule
+                .Include(s => s.Service)
                 .FirstOrDefaultAsync(m => m.ScheduleId == id);
             if (schedule == null)
             {
