@@ -1,4 +1,4 @@
-@model CareManagement.Models.SCHDL.Schedule
+@model CareManagement.Models.SCHDL.PurchasedServices
 
 @{
     ViewData["Title"] = "Delete";
@@ -8,25 +8,25 @@
 
 <h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>Schedule</h4>
+    <h4>PurchasedServices</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ScheduleDate)
+            @Html.DisplayNameFor(model => model.DatePurchased)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ScheduleDate)
+            @Html.DisplayFor(model => model.DatePurchased)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Service)
+            @Html.DisplayNameFor(model => model.Quantity)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Service.Type)
+            @Html.DisplayFor(model => model.Quantity)
         </dd>
     </dl>
     
     <form asp-action="Delete">
-        <input type="hidden" asp-for="ScheduleId" />
+        <input type="hidden" asp-for="PurchasedServiceId" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |
         <a asp-action="Index">Back to List</a>
     </form>

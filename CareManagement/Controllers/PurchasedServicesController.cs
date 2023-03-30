@@ -10,91 +10,88 @@ using CareManagement.Models.SCHDL;
 
 namespace CareManagement.Controllers
 {
-    public class ScheduleController : Controller
+    public class PurchasedServicesController : Controller
     {
         private readonly CareManagementContext _context;
 
-        public ScheduleController(CareManagementContext context)
+        public PurchasedServicesController(CareManagementContext context)
         {
             _context = context;
         }
 
-        // GET: Schedule
+        // GET: PurchasedServices
         public async Task<IActionResult> Index()
         {
-            var careManagementContext = _context.Schedule.Include(s => s.Service);
-            return View(await careManagementContext.ToListAsync());
+              return _context.PurchasedServices != null ? 
+                          View(await _context.PurchasedServices.ToListAsync()) :
+                          Problem("Entity set 'CareManagementContext.PurchasedServices'  is null.");
         }
 
-        // GET: Schedule/Details/5
+        // GET: PurchasedServices/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {
-            if (id == null || _context.Schedule == null)
+            if (id == null || _context.PurchasedServices == null)
             {
                 return NotFound();
             }
 
-            var schedule = await _context.Schedule
-                .Include(s => s.Service)
-                .FirstOrDefaultAsync(m => m.ScheduleId == id);
-            if (schedule == null)
+            var purchasedServices = await _context.PurchasedServices
+                .FirstOrDefaultAsync(m => m.PurchasedServiceId == id);
+            if (purchasedServices == null)
             {
                 return NotFound();
             }
 
-            return View(schedule);
+            return View(purchasedServices);
         }
 
-        // GET: Schedule/Create
+        // GET: PurchasedServices/Create
         public IActionResult Create()
         {
-            ViewData["ServiceId"] = new SelectList(_context.Service, "ServiceId", "Type");
             return View();
         }
 
-        // POST: Schedule/Create
+        // POST: PurchasedServices/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ScheduleId,ScheduleDate,ServiceId")] Schedule schedule)
+        public async Task<IActionResult> Create([Bind("PurchasedServiceId,DatePurchased,Quantity")] PurchasedServices purchasedServices)
         {
             if (ModelState.IsValid)
             {
-                schedule.ScheduleId = Guid.NewGuid();
-                _context.Add(schedule);
+                purchasedServices.PurchasedServiceId = Guid.NewGuid();
+                _context.Add(purchasedServices);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ServiceId"] = new SelectList(_context.Service, "ServiceId", "Type", schedule.ServiceId);
-            return View(schedule);
+            return View(purchasedServices);
         }
 
-        // GET: Schedule/Edit/5
+        // GET: PurchasedServices/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {
-            if (id == null || _context.Schedule == null)
+            if (id == null || _context.PurchasedServices == null)
             {
                 return NotFound();
             }
 
-            var schedule = await _context.Schedule.FindAsync(id);
-            if (schedule == null)
+            var purchasedServices = await _context.PurchasedServices.FindAsync(id);
+            if (purchasedServices == null)
             {
                 return NotFound();
             }
-            ViewData["ServiceId"] = new SelectList(_context.Service, "ServiceId", "Type", schedule.ServiceId);
-            return View(schedule);
+            return View(purchasedServices);
         }
 
-        // POST: Schedule/Edit/5
+        // POST: PurchasedServices/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("ScheduleId,ScheduleDate,ServiceId")] Schedule schedule)
+        public async Task<IActionResult> Edit(Guid id, [Bind("PurchasedServiceId,DatePurchased,Quantity")] PurchasedServices purchasedServices)
         {
-            if (id != schedule.ScheduleId)
+            if (id != purchasedServices.PurchasedServiceId)
             {
                 return NotFound();
             }
@@ -103,12 +100,12 @@ namespace CareManagement.Controllers
             {
                 try
                 {
-                    _context.Update(schedule);
+                    _context.Update(purchasedServices);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ScheduleExists(schedule.ScheduleId))
+                    if (!PurchasedServicesExists(purchasedServices.PurchasedServiceId))
                     {
                         return NotFound();
                     }
@@ -119,51 +116,49 @@ namespace CareManagement.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ServiceId"] = new SelectList(_context.Service, "ServiceId", "Type", schedule.ServiceId);
-            return View(schedule);
+            return View(purchasedServices);
         }
 
-        // GET: Schedule/Delete/5
+        // GET: PurchasedServices/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
         {
-            if (id == null || _context.Schedule == null)
+            if (id == null || _context.PurchasedServices == null)
             {
                 return NotFound();
             }
 
-            var schedule = await _context.Schedule
-                .Include(s => s.Service)
-                .FirstOrDefaultAsync(m => m.ScheduleId == id);
-            if (schedule == null)
+            var purchasedServices = await _context.PurchasedServices
+                .FirstOrDefaultAsync(m => m.PurchasedServiceId == id);
+            if (purchasedServices == null)
             {
                 return NotFound();
             }
 
-            return View(schedule);
+            return View(purchasedServices);
         }
 
-        // POST: Schedule/Delete/5
+        // POST: PurchasedServices/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            if (_context.Schedule == null)
+            if (_context.PurchasedServices == null)
             {
-                return Problem("Entity set 'CareManagementContext.Schedule'  is null.");
+                return Problem("Entity set 'CareManagementContext.PurchasedServices'  is null.");
             }
-            var schedule = await _context.Schedule.FindAsync(id);
-            if (schedule != null)
+            var purchasedServices = await _context.PurchasedServices.FindAsync(id);
+            if (purchasedServices != null)
             {
-                _context.Schedule.Remove(schedule);
+                _context.PurchasedServices.Remove(purchasedServices);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ScheduleExists(Guid id)
+        private bool PurchasedServicesExists(Guid id)
         {
-          return (_context.Schedule?.Any(e => e.ScheduleId == id)).GetValueOrDefault();
+          return (_context.PurchasedServices?.Any(e => e.PurchasedServiceId == id)).GetValueOrDefault();
         }
     }
 }

@@ -10,91 +10,88 @@ using CareManagement.Models.SCHDL;
 
 namespace CareManagement.Controllers
 {
-    public class ScheduleController : Controller
+    public class InvoicesController : Controller
     {
         private readonly CareManagementContext _context;
 
-        public ScheduleController(CareManagementContext context)
+        public InvoicesController(CareManagementContext context)
         {
             _context = context;
         }
 
-        // GET: Schedule
+        // GET: Invoices
         public async Task<IActionResult> Index()
         {
-            var careManagementContext = _context.Schedule.Include(s => s.Service);
-            return View(await careManagementContext.ToListAsync());
+              return _context.Invoice != null ? 
+                          View(await _context.Invoice.ToListAsync()) :
+                          Problem("Entity set 'CareManagementContext.Invoice'  is null.");
         }
 
-        // GET: Schedule/Details/5
+        // GET: Invoices/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {
-            if (id == null || _context.Schedule == null)
+            if (id == null || _context.Invoice == null)
             {
                 return NotFound();
             }
 
-            var schedule = await _context.Schedule
-                .Include(s => s.Service)
-                .FirstOrDefaultAsync(m => m.ScheduleId == id);
-            if (schedule == null)
+            var invoice = await _context.Invoice
+                .FirstOrDefaultAsync(m => m.InvoiceNumber == id);
+            if (invoice == null)
             {
                 return NotFound();
             }
 
-            return View(schedule);
+            return View(invoice);
         }
 
-        // GET: Schedule/Create
+        // GET: Invoices/Create
         public IActionResult Create()
         {
-            ViewData["ServiceId"] = new SelectList(_context.Service, "ServiceId", "Type");
             return View();
         }
 
-        // POST: Schedule/Create
+        // POST: Invoices/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ScheduleId,ScheduleDate,ServiceId")] Schedule schedule)
+        public async Task<IActionResult> Create([Bind("InvoiceNumber,StartDate,EndDate,TotalHours,TotalCost,DatePaid")] Invoice invoice)
         {
             if (ModelState.IsValid)
             {
-                schedule.ScheduleId = Guid.NewGuid();
-                _context.Add(schedule);
+                invoice.InvoiceNumber = Guid.NewGuid();
+                _context.Add(invoice);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ServiceId"] = new SelectList(_context.Service, "ServiceId", "Type", schedule.ServiceId);
-            return View(schedule);
+            return View(invoice);
         }
 
-        // GET: Schedule/Edit/5
+        // GET: Invoices/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {
-            if (id == null || _context.Schedule == null)
+            if (id == null || _context.Invoice == null)
             {
                 return NotFound();
             }
 
-            var schedule = await _context.Schedule.FindAsync(id);
-            if (schedule == null)
+            var invoice = await _context.Invoice.FindAsync(id);
+            if (invoice == null)
             {
                 return NotFound();
             }
-            ViewData["ServiceId"] = new SelectList(_context.Service, "ServiceId", "Type", schedule.ServiceId);
-            return View(schedule);
+            return View(invoice);
         }
 
-        // POST: Schedule/Edit/5
+        // POST: Invoices/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("ScheduleId,ScheduleDate,ServiceId")] Schedule schedule)
+        public async Task<IActionResult> Edit(Guid id, [Bind("InvoiceNumber,StartDate,EndDate,TotalHours,TotalCost,DatePaid")] Invoice invoice)
         {
-            if (id != schedule.ScheduleId)
+            if (id != invoice.InvoiceNumber)
             {
                 return NotFound();
             }
@@ -103,12 +100,12 @@ namespace CareManagement.Controllers
             {
                 try
                 {
-                    _context.Update(schedule);
+                    _context.Update(invoice);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ScheduleExists(schedule.ScheduleId))
+                    if (!InvoiceExists(invoice.InvoiceNumber))
                     {
                         return NotFound();
                     }
@@ -119,51 +116,49 @@ namespace CareManagement.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ServiceId"] = new SelectList(_context.Service, "ServiceId", "Type", schedule.ServiceId);
-            return View(schedule);
+            return View(invoice);
         }
 
-        // GET: Schedule/Delete/5
+        // GET: Invoices/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
         {
-            if (id == null || _context.Schedule == null)
+            if (id == null || _context.Invoice == null)
             {
                 return NotFound();
             }
 
-            var schedule = await _context.Schedule
-                .Include(s => s.Service)
-                .FirstOrDefaultAsync(m => m.ScheduleId == id);
-            if (schedule == null)
+            var invoice = await _context.Invoice
+                .FirstOrDefaultAsync(m => m.InvoiceNumber == id);
+            if (invoice == null)
             {
                 return NotFound();
             }
 
-            return View(schedule);
+            return View(invoice);
         }
 
-        // POST: Schedule/Delete/5
+        // POST: Invoices/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            if (_context.Schedule == null)
+            if (_context.Invoice == null)
             {
-                return Problem("Entity set 'CareManagementContext.Schedule'  is null.");
+                return Problem("Entity set 'CareManagementContext.Invoice'  is null.");
             }
-            var schedule = await _context.Schedule.FindAsync(id);
-            if (schedule != null)
+            var invoice = await _context.Invoice.FindAsync(id);
+            if (invoice != null)
             {
-                _context.Schedule.Remove(schedule);
+                _context.Invoice.Remove(invoice);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ScheduleExists(Guid id)
+        private bool InvoiceExists(Guid id)
         {
-          return (_context.Schedule?.Any(e => e.ScheduleId == id)).GetValueOrDefault();
+          return (_context.Invoice?.Any(e => e.InvoiceNumber == id)).GetValueOrDefault();
         }
     }
 }

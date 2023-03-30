@@ -14,8 +14,10 @@ namespace CareManagement.Data
             : base(options)
         {
         }
+        public DbSet<CareManagement.Models.SCHDL.Service>? Service { get; set; }
         public DbSet<CareManagement.Models.SCHDL.Qualification>? Qualification { get; set; }
         public DbSet<CareManagement.Models.SCHDL.Schedule>? Schedule { get; set; }
-        public DbSet<CareManagement.Models.SCHDL.Service>? Service { get; set; }
+        public DbSet<CareManagement.Models.SCHDL.PurchasedServices>? PurchasedServices { get; set; }
+        public DbSet<CareManagement.Models.SCHDL.Invoice>? Invoice { get; set; }
     }
 }
