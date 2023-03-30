@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using CareManagement.Models;
-namespace CareManagement.Models
+
+namespace CareManagement.Models.OM
 {
     public class EmployeeHistory
     {

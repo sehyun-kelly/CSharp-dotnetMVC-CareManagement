@@ -1,8 +1,9 @@
 ﻿
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using CareManagement.Models.OM;
 
-namespace CareManagement.Models
+namespace CareManagement.Models.SCHDL
 {
     public class Qualification
     {

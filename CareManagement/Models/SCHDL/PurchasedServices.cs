@@ -1,7 +1,9 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-namespace CareManagement.Models
+using CareManagement.Models.OM;
+
+namespace CareManagement.Models.SCHDL
 {
     public class PurchasedServices
     {
