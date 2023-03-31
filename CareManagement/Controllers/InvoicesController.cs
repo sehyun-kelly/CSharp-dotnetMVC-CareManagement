@@ -20,12 +20,77 @@ namespace CareManagement.Controllers
         }
 
         // GET: Invoices
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder)
         {
-              return _context.Invoice != null ? 
-                          View(await _context.Invoice.ToListAsync()) :
-                          Problem("Entity set 'CareManagementContext.Invoice'  is null.");
+            //ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["StartDateSortParm"] = sortOrder == "StartDate" ? "date_desc" : "StartDate";
+            ViewData["EndDateSortParm"] = sortOrder == "EndDate" ? "end_date_desc" : "EndDate";
+            ViewData["TotalHoursSortParm"] = sortOrder == "TotalHours" ? "total_hrs_desc" : "TotalHours";
+            ViewData["TotalCostSortParm"] = sortOrder == "TotalCost" ? "total_cost_desc" : "TotalCost";
+            ViewData["DatePaidSortParm"] = sortOrder == "DatePaid" ? "date_paid_desc" : "DatePaid";
+            ViewData["IsSentSortParm"] = sortOrder == "IsSent" ? "is_sent_desc" : "IsSent";
+            ViewData["DueDateSortParm"] = sortOrder == "DueDate" ? "due_date_desc" : "DueDate";
+            var invoices = from i in _context.Invoice
+                           select i;
+            switch (sortOrder)
+            {
+                //case "name_desc":
+                //    invoices = invoices.OrderByDescending(i => i.Renter);
+                //    break;
+                case "StartDate":
+                    invoices = invoices.OrderBy(i => i.StartDate);
+                    break;
+                case "date_desc":
+                    invoices = invoices.OrderByDescending(i => i.StartDate);
+                    break;
+                case "EndDate":
+                    invoices = invoices.OrderBy(i => i.EndDate);
+                    break;
+                case "end_date_desc":
+                    invoices = invoices.OrderByDescending(i => i.EndDate);
+                    break;
+                case "TotalHours":
+                    invoices = invoices.OrderBy(i => i.TotalHours);
+                    break;
+                case "total_hrs_desc":
+                    invoices = invoices.OrderByDescending(i => i.TotalHours);
+                    break;
+                case "TotalCost":
+                    invoices = invoices.OrderBy(i => i.TotalCost);
+                    break;
+                case "total_cost_desc":
+                    invoices = invoices.OrderByDescending(i => i.TotalCost);
+                    break;
+                case "DatePaid":
+                    invoices = invoices.OrderBy(i => i.DatePaid);
+                    break;
+                case "date_paid_desc":
+                    invoices = invoices.OrderByDescending(i => i.DatePaid);
+                    break;
+                case "DueDate":
+                    invoices = invoices.OrderBy(i => i.DueDate);
+                    break;
+                case "due_date_desc":
+                    invoices = invoices.OrderByDescending(i => i.DueDate);
+                    break;
+                case "IsSent":
+                    invoices = invoices.OrderBy(i => i.IsSent);
+                    break;
+                case "is_sent_desc":
+                    invoices = invoices.OrderByDescending(i => i.IsSent);
+                    break;
+                default:
+                    invoices = invoices.OrderBy(i => i.StartDate);
+                    break;
+            }
+            return View(await invoices.AsNoTracking().ToListAsync());
         }
+        //public async Task<IActionResult> Index()
+        //{
+        //      return _context.Invoice != null ? 
+        //                  View(await _context.Invoice.ToListAsync()) :
+        //                  Problem("Entity set 'CareManagementContext.Invoice'  is null.");
+        //}
 
         // GET: Invoices/Details/5
         public async Task<IActionResult> Details(Guid? id)
