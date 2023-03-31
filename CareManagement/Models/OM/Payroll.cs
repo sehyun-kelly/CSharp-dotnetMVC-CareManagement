@@ -22,8 +22,11 @@ namespace CareManagement.Models.OM
         [EnumDataType(typeof(EmploymentType))]
         public string? EmployeeType { get; set; }
 
-        [Required] 
-        [Range(0, int.MaxValue)] 
+<<<<<<< HEAD
+        [Required] [Range(0, int.MaxValue)] public int Hours { get; set; }
+=======
+        [Required]
+        [Range(0, int.MaxValue)]
         public int Hours { get; set; }
 
         [Required] [Range(0, int.MaxValue)] public int Overtime { get; set; }
