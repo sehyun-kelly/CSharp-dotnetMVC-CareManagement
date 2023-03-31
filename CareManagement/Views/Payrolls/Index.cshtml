@@ -48,12 +48,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.CheckAmount)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.START_DATE)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.END_DATE)
-            </th>
             <th></th>
         </tr>
     </thead>
@@ -95,12 +89,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.CheckAmount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.START_DATE)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.END_DATE)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.PayrollID">Edit</a> |

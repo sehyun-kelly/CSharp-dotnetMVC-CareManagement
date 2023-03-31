@@ -28,7 +28,7 @@ namespace CareManagement.Models.OM
 
 
         [Required]
-        public string EmergencyContact { get; set; } // Employee emergency contact
+        public int EmergencyContact { get; set; } // Employee emergency contact
 
         [Required]
         [DataType(DataType.PhoneNumber)]

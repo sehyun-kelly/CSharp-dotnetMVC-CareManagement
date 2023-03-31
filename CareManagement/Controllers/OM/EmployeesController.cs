@@ -57,7 +57,7 @@ namespace CareManagement.Controllers.OM
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("EmployeeId,QualificationId,FirstName,LastName,Address,Phone,EmergencyContact,EmployeeType,PayRate,PayType,VacationDays,EmployeeStatus,SickDays,Title,StartDate")] Employee employee)
+        public async Task<IActionResult> Create([Bind("EmployeeId,QualificationId,FirstName,LastName,Address,EmergencyContact,Phone,EmployeeType,PayRate,PayType,VacationDays,EmployeeStatus,SickDays,Title,StartDate,TotalHoursWorked")] Employee employee)
         {
             if (ModelState.IsValid)
             {
@@ -92,7 +92,7 @@ namespace CareManagement.Controllers.OM
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("EmployeeId,QualificationId,FirstName,LastName,Address,Phone,EmergencyContact,EmployeeType,PayRate,PayType,VacationDays,EmployeeStatus,SickDays,Title,StartDate")] Employee employee)
+        public async Task<IActionResult> Edit(Guid id, [Bind("EmployeeId,QualificationId,FirstName,LastName,Address,EmergencyContact,Phone,EmployeeType,PayRate,PayType,VacationDays,EmployeeStatus,SickDays,Title,StartDate,TotalHoursWorked")] Employee employee)
         {
             if (id != employee.EmployeeId)
             {

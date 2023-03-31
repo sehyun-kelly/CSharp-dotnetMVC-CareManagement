@@ -34,14 +34,14 @@
                 <span asp-validation-for="Address" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Phone" class="control-label"></label>
-                <input asp-for="Phone" class="form-control" />
-                <span asp-validation-for="Phone" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="EmergencyContact" class="control-label"></label>
                 <input asp-for="EmergencyContact" class="form-control" />
                 <span asp-validation-for="EmergencyContact" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Phone" class="control-label"></label>
+                <input asp-for="Phone" class="form-control" />
+                <span asp-validation-for="Phone" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="EmployeeType" class="control-label"></label>
@@ -82,6 +82,11 @@
                 <label asp-for="StartDate" class="control-label"></label>
                 <input asp-for="StartDate" class="form-control" />
                 <span asp-validation-for="StartDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TotalHoursWorked" class="control-label"></label>
+                <input asp-for="TotalHoursWorked" class="form-control" />
+                <span asp-validation-for="TotalHoursWorked" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

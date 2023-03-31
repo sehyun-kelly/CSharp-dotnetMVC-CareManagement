@@ -57,7 +57,7 @@ namespace CareManagement.Controllers.OM
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PayrollID,EmployeeId,StartDate,EndDate,EmployeeType,Hours,Overtime,LateDeduction,VacationPay,SickPay,Pre_tax,Tax,CheckAmount,START_DATE,END_DATE")] Payroll payroll)
+        public async Task<IActionResult> Create([Bind("PayrollID,EmployeeId,StartDate,EndDate,EmployeeType,Hours,Overtime,LateDeduction,VacationPay,SickPay,Pre_tax,Tax,CheckAmount")] Payroll payroll)
         {
             if (ModelState.IsValid)
             {
@@ -92,7 +92,7 @@ namespace CareManagement.Controllers.OM
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("PayrollID,EmployeeId,StartDate,EndDate,EmployeeType,Hours,Overtime,LateDeduction,VacationPay,SickPay,Pre_tax,Tax,CheckAmount,START_DATE,END_DATE")] Payroll payroll)
+        public async Task<IActionResult> Edit(Guid id, [Bind("PayrollID,EmployeeId,StartDate,EndDate,EmployeeType,Hours,Overtime,LateDeduction,VacationPay,SickPay,Pre_tax,Tax,CheckAmount")] Payroll payroll)
         {
             if (id != payroll.PayrollID)
             {
