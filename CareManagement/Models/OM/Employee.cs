@@ -7,8 +7,8 @@ namespace CareManagement.Models.OM
     public class Employee
     {
         [Key]
-
         public Guid EmployeeId { get; set; }
+
 
         [ForeignKey("Qualification")]
         public Guid QualificationId { get; set; }
@@ -26,34 +26,46 @@ namespace CareManagement.Models.OM
         [StringLength(50)]
         public string Address { get; set; } // Employee address
 
+
+        [Required]
+        public string EmergencyContact { get; set; } // Employee emergency contact
+
         [Required]
         [Phone]
         public string Phone { get; set; } // Employee phone number
 
-        [Required]
-        public int EmergencyContact { get; set; } // Employee emergency contact
 
         [Required]
-        public string EmpType { get; set; } // Type of employment e.g. Full/part time, On-Call
+        public string EmployeeType { get; set; } // Type of employment e.g. Full/part time, On-Call
+
 
         [Required]
+        [Range(0, float.MaxValue)]
         public float PayRate { get; set; } // Hourly rate for pay calculation
 
         [Required]
         public string PayType { get; set; } // Type of payment for this employee
 
+
+        [Range(0, int.MaxValue)]
         public int? VacationDays { get; set; } // Current vacation days available for use
 
         [Required]
-        public string EmpStatus { get; set; } // Employee current status
+        public string EmployeeStatus { get; set; } // Employee current status
 
+
+        [Range(0, int.MaxValue)]
         public int? SickDays { get; set; } // Current sick days available for use
+
+        [Required]
+        public DateTime StartDate { get; set; } // When the user was initially hired
 
         [Required]
         public string Title { get; set; } // Employee title. Manager, Nurse
 
-        [Required]
-        public DateTime StartDate { get; set; } // When the user was initially hired
+        [Range(0, int.MaxValue)]
+        public int? TotalHoursWorked { get; set; } // Total hours worked since joining company. Used for seniority
+
     }
 
 }
