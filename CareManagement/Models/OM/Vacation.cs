@@ -20,7 +20,7 @@ namespace CareManagement.Models.OM
         public DateTime? EndDate { get; set; }
 
         [Required]
-        public string VacationRequest { get; set; }
+        public string? VacationRequest { get; set; }
     }
 
 }

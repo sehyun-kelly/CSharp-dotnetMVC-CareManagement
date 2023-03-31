@@ -26,8 +26,8 @@ namespace CareManagement.Models.OM
         [EnumDataType(typeof(EmploymentType))]
         public string? EmployeeType { get; set; }
 
-        [Required] 
-        [Range(0, int.MaxValue)] 
+        [Required]
+        [Range(0, int.MaxValue)]
         public int Hours { get; set; }
 
         [Required]
@@ -54,9 +54,10 @@ namespace CareManagement.Models.OM
         public int? CheckAmount { get; set; }
 
         public enum EmploymentType
-    {
-        F,
-        P,
-        O
+        {
+            F,
+            P,
+            O
+        }
     }
 }
