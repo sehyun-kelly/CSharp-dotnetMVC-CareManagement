@@ -9,11 +9,7 @@ namespace CareManagement.Models.OM
         [Key]
         public Guid EmployeeId { get; set; }
 
-<<<<<<< HEAD
         [Required]
-=======
-
->>>>>>> dadd3550b236ad7a3fa6d9c502920e11ae0285e1
         [ForeignKey("Qualification")]
         public Guid QualificationId { get; set; }
         public virtual Qualification? Qualification { get; set; }
@@ -40,12 +36,8 @@ namespace CareManagement.Models.OM
 
 
         [Required]
-<<<<<<< HEAD
         public Enum.EType EmployeeType { get; set; } // Type of employment e.g. Full/part time, On-Call
-=======
-        public string EmployeeType { get; set; } // Type of employment e.g. Full/part time, On-Call
 
->>>>>>> dadd3550b236ad7a3fa6d9c502920e11ae0285e1
 
         [Required]
         [Range(0, float.MaxValue)]
@@ -59,25 +51,19 @@ namespace CareManagement.Models.OM
         public int? VacationDays { get; set; } // Current vacation days available for use
 
         [Required]
-<<<<<<< HEAD
         public Enum.EStatus EmployeeStatus { get; set; } // Employee current status
-=======
-        public string EmployeeStatus { get; set; } // Employee current status
->>>>>>> dadd3550b236ad7a3fa6d9c502920e11ae0285e1
+
 
 
         [Range(0, int.MaxValue)]
         public int? SickDays { get; set; } // Current sick days available for use
 
         [Required]
-<<<<<<< HEAD
         public Enum.EmployeeTitle Title { get; set; } // Employee title. Manager, Nurse
-=======
-        public DateTime StartDate { get; set; } // When the user was initially hired
 
         [Required]
-        public string Title { get; set; } // Employee title. Manager, Nurse
->>>>>>> dadd3550b236ad7a3fa6d9c502920e11ae0285e1
+        public DateTime StartDate { get; set; } // When the user was initially hired
+
 
         [Range(0, int.MaxValue)]
         public int? TotalHoursWorked { get; set; } // Total hours worked since joining company. Used for seniority
