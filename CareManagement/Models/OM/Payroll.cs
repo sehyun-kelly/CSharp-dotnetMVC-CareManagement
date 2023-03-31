@@ -53,13 +53,7 @@ namespace CareManagement.Models.OM
         [Range(0, int.MaxValue)]
         public int? CheckAmount { get; set; }
 
-        [Required]
-        public DateTime START_DATE { get; set; }
-
-        public DateTime? END_DATE { get; set; }
-    }
-
-    public enum EmploymentType
+        public enum EmploymentType
     {
         F,
         P,
