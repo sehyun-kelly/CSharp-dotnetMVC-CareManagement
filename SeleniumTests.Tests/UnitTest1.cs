@@ -65,5 +65,44 @@ namespace SeleniumTests.Tests
 			driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
 			driver.FindElement(By.XPath("//Input[@type='submit']")).Click();
 		}
-	}
+
+
+        [TestMethod]
+        public void TestQualification()
+        {
+            string urlQualification = "https://localhost:7121/Qualifications";
+            ChromeDriver driver = new ChromeDriver();
+
+            // This redirects to the Qualifications URL
+            driver.Manage().Window.Maximize();
+            driver.Navigate().GoToUrl(urlQualification);
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+
+            // This tests creating a qualification
+            driver.FindElement(By.Id("CreateQualification")).Click();
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+            driver.FindElement(By.Id("QualificationDescription")).SendKeys("QD2");
+            driver.FindElement(By.XPath("//Input[@type='submit']")).Click();
+
+            // This tests editing a qualification
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+            driver.FindElement(By.LinkText("Edit")).Click();
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+            driver.FindElement(By.Id("QualificationDescription")).Clear();
+            driver.FindElement(By.Id("QualificationDescription")).SendKeys("QD3");
+            driver.FindElement(By.XPath("//Input[@type='submit']")).Click();
+
+            // This tests viewing a qualification
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+            driver.FindElement(By.LinkText("Details")).Click();
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+            driver.FindElement(By.LinkText("Back to List")).Click();
+
+            // This tests deleting a qualification
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+            driver.FindElement(By.LinkText("Delete")).Click();
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+            driver.FindElement(By.XPath("//Input[@type='submit']")).Click();
+        }
+    }
 }
