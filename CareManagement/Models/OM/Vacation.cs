@@ -6,12 +6,12 @@ namespace CareManagement.Models.OM
     public class Vacation
     {
         [Key]
-        public int VacationId { get; set; }
+        public Guid VacationId { get; set; }
 
         [Required]
         [ForeignKey("Employee")]
         public Guid EmployeeId { get; set; }
-        public virtual Employee Employee { get; set; }
+        public virtual Employee? Employee { get; set; }
 
         [Required]
         public DateTime StartDate { get; set; }
@@ -19,7 +19,7 @@ namespace CareManagement.Models.OM
         public DateTime? EndDate { get; set; }
 
         [Required]
-        public string VacationRequest { get; set; }
+        public string? VacationRequest { get; set; }
     }
 
 }

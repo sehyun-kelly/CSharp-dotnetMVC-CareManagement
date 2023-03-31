@@ -1,4 +1,4 @@
-﻿@model CareManagement.Models.EmployeeHistory
+﻿@model CareManagement.Models.OM.EmployeeHistory
 
 @{
     ViewData["Title"] = "Details";
@@ -29,10 +29,10 @@
             @Html.DisplayFor(model => model.PayType)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.EmpType)
+            @Html.DisplayNameFor(model => model.EmployeeType)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.EmpType)
+            @Html.DisplayFor(model => model.EmployeeType)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.VacationDays)
@@ -53,20 +53,20 @@
             @Html.DisplayFor(model => model.Date)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.EmpStatus)
+            @Html.DisplayNameFor(model => model.EmployeeStatus)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.EmpStatus)
+            @Html.DisplayFor(model => model.EmployeeStatus)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.EmplyeeId)
+            @Html.DisplayNameFor(model => model.Employee)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.EmplyeeId)
+            @Html.DisplayFor(model => model.Employee.Address)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.EmpHisId">Edit</a> |
+    <a asp-action="Edit" asp-route-id="@Model?.EmployeeHistoryId">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>

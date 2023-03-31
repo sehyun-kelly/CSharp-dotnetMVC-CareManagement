@@ -1,4 +1,4 @@
-﻿@model IEnumerable<CareManagement.Models.EmployeeHistory>
+﻿@model IEnumerable<CareManagement.Models.OM.EmployeeHistory>
 
 @{
     ViewData["Title"] = "Index";
@@ -22,7 +22,7 @@
                 @Html.DisplayNameFor(model => model.PayType)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.EmpType)
+                @Html.DisplayNameFor(model => model.EmployeeType)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.VacationDays)
@@ -34,10 +34,10 @@
                 @Html.DisplayNameFor(model => model.Date)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.EmpStatus)
+                @Html.DisplayNameFor(model => model.EmployeeStatus)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.EmplyeeId)
+                @Html.DisplayNameFor(model => model.Employee)
             </th>
             <th></th>
         </tr>
@@ -55,7 +55,7 @@
                 @Html.DisplayFor(modelItem => item.PayType)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.EmpType)
+                @Html.DisplayFor(modelItem => item.EmployeeType)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.VacationDays)
@@ -67,15 +67,15 @@
                 @Html.DisplayFor(modelItem => item.Date)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.EmpStatus)
+                @Html.DisplayFor(modelItem => item.EmployeeStatus)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.EmplyeeId)
+                @Html.DisplayFor(modelItem => item.Employee.Address)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.EmpHisId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.EmpHisId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.EmpHisId">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.EmployeeHistoryId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.EmployeeHistoryId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.EmployeeHistoryId">Delete</a>
             </td>
         </tr>
 }
