@@ -11,12 +11,24 @@ namespace SeleniumTests.Tests
 		[TestMethod]
 		public void TestService()
 		{
-			string url = "https://localhost:7121/Services";
+			string urlServices = "https://localhost:7121/Services";
+			string urlQualification = "https://localhost:7121/Qualifications";
 			ChromeDriver driver = new ChromeDriver();
 
-			// This redirects to the URL
-			driver.Manage().Window.Maximize();
-			driver.Navigate().GoToUrl(url);
+            // This redirects to the Qualifications URL
+            driver.Manage().Window.Maximize();
+			driver.Navigate().GoToUrl(urlQualification);
+			driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+
+			// This tests creating a qualification
+			driver.FindElement(By.Id("CreateQualification")).Click();
+			driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+			driver.FindElement(By.Id("QualificationDescription")).SendKeys("QD1");
+			driver.FindElement(By.XPath("//Input[@type='submit']")).Click();
+
+
+            // This redirects to the Services URL
+            driver.Navigate().GoToUrl(urlServices);
 			driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
 
 			// This tests creating a service
@@ -25,7 +37,8 @@ namespace SeleniumTests.Tests
 			driver.FindElement(By.LinkText("Create New")).Click();
 			driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
 			driver.FindElement(By.Id("Hours")).SendKeys("8");
-			driver.FindElement(By.Id("Type")).SendKeys("service type");
+			driver.FindElement(By.Id("Rate")).SendKeys("1");
+			driver.FindElement(By.Id("Type")).SendKeys("ServiceTypeTest");
 			driver.FindElement(By.XPath("//Input[@type='submit']")).Click();
 
 			// This tests editing a service
@@ -33,9 +46,11 @@ namespace SeleniumTests.Tests
 			driver.FindElement(By.LinkText("Edit")).Click();
 			driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
 			driver.FindElement(By.Id("Hours")).Clear();
+			driver.FindElement(By.Id("Rate")).Clear();
 			driver.FindElement(By.Id("Type")).Clear();
 			driver.FindElement(By.Id("Hours")).SendKeys("9");
-			driver.FindElement(By.Id("Type")).SendKeys("type edited");
+			driver.FindElement(By.Id("Rate")).SendKeys("1");
+			driver.FindElement(By.Id("Type")).SendKeys("TypeEdited");
 			driver.FindElement(By.XPath("//Input[@type='submit']")).Click();
 
 			// This tests viewing a service
