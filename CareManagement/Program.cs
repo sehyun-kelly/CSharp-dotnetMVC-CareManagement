@@ -2,10 +2,15 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using CareManagement.Data;
 using CareManagement.Models;
+using CareManagement.Models.SCHDL;
+using CareManagement.Models.AUTH;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<CareManagementContext>(options =>
     options.UseInMemoryDatabase(databaseName: "CareManagement"));
+builder.Services.AddIdentity<AppUser, IdentityRole>().AddEntityFrameworkStores<CareManagementContext>().AddDefaultTokenProviders();
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -32,7 +37,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
