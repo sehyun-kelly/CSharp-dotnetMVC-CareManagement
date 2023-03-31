@@ -16,10 +16,6 @@ namespace CareManagement.Models.OM
         public Enum.EmployeeTitle Title { get; set; }
 
         [Required]
-        [ForeignKey("Employee")]    
-        public int EmployeeID {get; set; }
-
-        [Required]
         public int PayRate { get; set; }
 
         [Required]
