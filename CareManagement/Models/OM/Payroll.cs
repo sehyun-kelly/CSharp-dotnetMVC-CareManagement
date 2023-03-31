@@ -35,23 +35,23 @@ namespace CareManagement.Models.OM
         public int Overtime { get; set; }
 
         [Range(0, int.MaxValue)]
-        public int LateDeduction { get; set; }
+        public int? LateDeduction { get; set; }
 
         [Range(0, int.MaxValue)]
-        public int VacationPay { get; set; }
+        public int? VacationPay { get; set; }
 
 
         [Range(0, int.MaxValue)]
-        public int SickPay { get; set; }
+        public int? SickPay { get; set; }
 
         [Range(0, int.MaxValue)]
-        public float Pre_tax { get; set; }
+        public float? Pre_tax { get; set; }
 
         [Range(0, int.MaxValue)]
-        public float Tax { get; set; }
+        public float? Tax { get; set; }
 
         [Range(0, int.MaxValue)]
-        public int CheckAmount { get; set; }
+        public int? CheckAmount { get; set; }
 
 
     }
