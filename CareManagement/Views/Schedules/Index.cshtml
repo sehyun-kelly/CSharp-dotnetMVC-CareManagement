@@ -1,0 +1,83 @@
+@model IEnumerable<CareManagement.Models.SCHDL.Schedule>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.StartTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EndTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsInvoiced)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsRepeating)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RepeatStartDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RepeatEndDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Renter)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Shift)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Service)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsInvoiced)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsRepeating)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RepeatStartDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RepeatEndDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Renter.RenterId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Shift.ShiftId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Service.Type)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ScheduleId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ScheduleId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ScheduleId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

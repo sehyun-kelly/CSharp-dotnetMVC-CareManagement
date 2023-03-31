@@ -10,18 +10,27 @@ namespace CareManagement.Models.SCHDL
         [Key]
 		public Guid ScheduleId { get; set; }
 
-		public DateTime ScheduleDate { get; set; }
+		public DateTime StartTime { get; set; }
 
-		//[Required]
-		//[ForeignKey("Renter")]
-		//public Guid RenterId { get; set; } // the actual FK in the table
-		//public virtual Renter? Renter { get; set; } // reference for the FK
+		public DateTime EndTime { get; set; }
 
+		public Boolean IsInvoiced { get; set; } = false;
 
-		//[Required]
-		//[ForeignKey("Shift")]
-		//public Guid ShiftID { get; set; } // the actual FK in the table
-		//public virtual ICollection<Shift> Shift { get; set; } // reference for the FK
+        public Boolean IsRepeating { get; set; } = false;
+
+		public DateTime? RepeatStartDate { get; set; }
+
+		public DateTime? RepeatEndDate { get; set; }
+
+        [Required]
+		[ForeignKey("Renter")]
+		public Guid RenterId { get; set; } // the actual FK in the table
+		public virtual Renter? Renter { get; set; } // reference for the FK
+
+		[Required]
+		[ForeignKey("Shift")]
+		public Guid ShiftID { get; set; } // the actual FK in the table
+		public virtual Shift? Shift { get; set; } // reference for the FK
 
 		[Required]
 		[ForeignKey("Service")]

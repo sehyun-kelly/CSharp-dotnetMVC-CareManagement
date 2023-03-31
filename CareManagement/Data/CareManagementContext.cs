@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using CareManagement.Models;
 using CareManagement.Models.SCHDL;
+using CareManagement.Models.OM;
+using CareManagement.Models.CRM;
 
 namespace CareManagement.Data
 {
@@ -18,5 +20,8 @@ namespace CareManagement.Data
         public DbSet<CareManagement.Models.SCHDL.Qualification>? Qualification { get; set; }
         public DbSet<CareManagement.Models.SCHDL.Schedule>? Schedule { get; set; }
         public DbSet<CareManagement.Models.SCHDL.Invoice>? Invoice { get; set; }
+        public DbSet<CareManagement.Models.OM.Employee>? Employee { get; set; }
+        public DbSet<CareManagement.Models.CRM.Renter>? Renter { get; set; }
+        public DbSet<CareManagement.Models.OM.Shift>? Shift { get; set; }
     }
 }

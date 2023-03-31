@@ -10,23 +10,23 @@ using CareManagement.Models.SCHDL;
 
 namespace CareManagement.Controllers
 {
-    public class ScheduleController : Controller
+    public class SchedulesController : Controller
     {
         private readonly CareManagementContext _context;
 
-        public ScheduleController(CareManagementContext context)
+        public SchedulesController(CareManagementContext context)
         {
             _context = context;
         }
 
-        // GET: Schedule
+        // GET: Schedules
         public async Task<IActionResult> Index()
         {
-            var careManagementContext = _context.Schedule.Include(s => s.Service);
+            var careManagementContext = _context.Schedule.Include(s => s.Renter).Include(s => s.Service).Include(s => s.Shift);
             return View(await careManagementContext.ToListAsync());
         }
 
-        // GET: Schedule/Details/5
+        // GET: Schedules/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null || _context.Schedule == null)
@@ -35,7 +35,9 @@ namespace CareManagement.Controllers
             }
 
             var schedule = await _context.Schedule
+                .Include(s => s.Renter)
                 .Include(s => s.Service)
+                .Include(s => s.Shift)
                 .FirstOrDefaultAsync(m => m.ScheduleId == id);
             if (schedule == null)
             {
@@ -45,19 +47,21 @@ namespace CareManagement.Controllers
             return View(schedule);
         }
 
-        // GET: Schedule/Create
+        // GET: Schedules/Create
         public IActionResult Create()
         {
+            ViewData["RenterId"] = new SelectList(_context.Renter, "RenterId", "RenterId");
             ViewData["ServiceId"] = new SelectList(_context.Service, "ServiceId", "Type");
+            ViewData["ShiftID"] = new SelectList(_context.Shift, "ShiftId", "ShiftId");
             return View();
         }
 
-        // POST: Schedule/Create
+        // POST: Schedules/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ScheduleId,ScheduleDate,ServiceId")] Schedule schedule)
+        public async Task<IActionResult> Create([Bind("ScheduleId,StartTime,EndTime,IsInvoiced,IsRepeating,RepeatStartDate,RepeatEndDate,RenterId,ShiftID,ServiceId")] Schedule schedule)
         {
             if (ModelState.IsValid)
             {
@@ -66,11 +70,13 @@ namespace CareManagement.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["RenterId"] = new SelectList(_context.Renter, "RenterId", "RenterId", schedule.RenterId);
             ViewData["ServiceId"] = new SelectList(_context.Service, "ServiceId", "Type", schedule.ServiceId);
+            ViewData["ShiftID"] = new SelectList(_context.Shift, "ShiftId", "ShiftId", schedule.ShiftID);
             return View(schedule);
         }
 
-        // GET: Schedule/Edit/5
+        // GET: Schedules/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null || _context.Schedule == null)
@@ -83,16 +89,18 @@ namespace CareManagement.Controllers
             {
                 return NotFound();
             }
+            ViewData["RenterId"] = new SelectList(_context.Renter, "RenterId", "RenterId", schedule.RenterId);
             ViewData["ServiceId"] = new SelectList(_context.Service, "ServiceId", "Type", schedule.ServiceId);
+            ViewData["ShiftID"] = new SelectList(_context.Shift, "ShiftId", "ShiftId", schedule.ShiftID);
             return View(schedule);
         }
 
-        // POST: Schedule/Edit/5
+        // POST: Schedules/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("ScheduleId,ScheduleDate,ServiceId")] Schedule schedule)
+        public async Task<IActionResult> Edit(Guid id, [Bind("ScheduleId,StartTime,EndTime,IsInvoiced,IsRepeating,RepeatStartDate,RepeatEndDate,RenterId,ShiftID,ServiceId")] Schedule schedule)
         {
             if (id != schedule.ScheduleId)
             {
@@ -119,11 +127,13 @@ namespace CareManagement.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["RenterId"] = new SelectList(_context.Renter, "RenterId", "RenterId", schedule.RenterId);
             ViewData["ServiceId"] = new SelectList(_context.Service, "ServiceId", "Type", schedule.ServiceId);
+            ViewData["ShiftID"] = new SelectList(_context.Shift, "ShiftId", "ShiftId", schedule.ShiftID);
             return View(schedule);
         }
 
-        // GET: Schedule/Delete/5
+        // GET: Schedules/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null || _context.Schedule == null)
@@ -132,7 +142,9 @@ namespace CareManagement.Controllers
             }
 
             var schedule = await _context.Schedule
+                .Include(s => s.Renter)
                 .Include(s => s.Service)
+                .Include(s => s.Shift)
                 .FirstOrDefaultAsync(m => m.ScheduleId == id);
             if (schedule == null)
             {
@@ -142,7 +154,7 @@ namespace CareManagement.Controllers
             return View(schedule);
         }
 
-        // POST: Schedule/Delete/5
+        // POST: Schedules/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
