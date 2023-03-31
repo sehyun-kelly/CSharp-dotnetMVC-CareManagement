@@ -18,10 +18,6 @@ namespace CareManagement.Models.OM
         [Required]
         [ForeignKey("Employee")]    
         public int EmployeeID {get; set; }
-<<<<<<< HEAD
-
-=======
->>>>>>> 6e0791dfacee3c33e763a2fdae216f85f813275f
 
         [Required]
         public int PayRate { get; set; }
@@ -51,10 +47,7 @@ namespace CareManagement.Models.OM
         [ForeignKey("Employee")]
         public Guid EmployeeId { get; set; }
         public virtual Employee? Employee { get; set; }
-<<<<<<< HEAD
-=======
 
->>>>>>> 6e0791dfacee3c33e763a2fdae216f85f813275f
 
     }
 }

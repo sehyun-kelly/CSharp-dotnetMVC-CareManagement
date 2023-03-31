@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CareManagement.Data;
 using CareManagement.Models.OM;
+using CareManagement.Models.SCHDL;
 
 namespace CareManagement.Controllers.OM
 {
