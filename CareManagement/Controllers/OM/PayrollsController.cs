@@ -36,7 +36,7 @@ namespace CareManagement.Controllers.OM
 
             var payroll = await _context.Payroll
                 .Include(p => p.Employee)
-                .FirstOrDefaultAsync(m => m.PayId == id);
+                .FirstOrDefaultAsync(m => m.PayrollID == id);
             if (payroll == null)
             {
                 return NotFound();
@@ -48,7 +48,7 @@ namespace CareManagement.Controllers.OM
         // GET: Payrolls/Create
         public IActionResult Create()
         {
-            ViewData["EmployeeId"] = new SelectList(_context.Set<Employee>(), "EmployeeId", "Address");
+            ViewData["EmployeeId"] = new SelectList(_context.Employee, "EmployeeId", "Address");
             return View();
         }
 
@@ -57,16 +57,16 @@ namespace CareManagement.Controllers.OM
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PayId,EmployeeId,Hours,CheckAmount,HourRate,EmployeeType,StartDate,EndDate")] Payroll payroll)
+        public async Task<IActionResult> Create([Bind("PayrollID,EmployeeId,StartDate,EndDate,EmployeeType,Hours,Overtime,LateDeduction,VacationPay,SickPay,Pre_tax,Tax,CheckAmount,START_DATE,END_DATE")] Payroll payroll)
         {
             if (ModelState.IsValid)
             {
-                payroll.PayId = Guid.NewGuid();
+                payroll.PayrollID = Guid.NewGuid();
                 _context.Add(payroll);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EmployeeId"] = new SelectList(_context.Set<Employee>(), "EmployeeId", "Address", payroll.EmployeeId);
+            ViewData["EmployeeId"] = new SelectList(_context.Employee, "EmployeeId", "Address", payroll.EmployeeId);
             return View(payroll);
         }
 
@@ -83,7 +83,7 @@ namespace CareManagement.Controllers.OM
             {
                 return NotFound();
             }
-            ViewData["EmployeeId"] = new SelectList(_context.Set<Employee>(), "EmployeeId", "Address", payroll.EmployeeId);
+            ViewData["EmployeeId"] = new SelectList(_context.Employee, "EmployeeId", "Address", payroll.EmployeeId);
             return View(payroll);
         }
 
@@ -92,9 +92,9 @@ namespace CareManagement.Controllers.OM
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("PayId,EmployeeId,Hours,CheckAmount,HourRate,EmployeeType,StartDate,EndDate")] Payroll payroll)
+        public async Task<IActionResult> Edit(Guid id, [Bind("PayrollID,EmployeeId,StartDate,EndDate,EmployeeType,Hours,Overtime,LateDeduction,VacationPay,SickPay,Pre_tax,Tax,CheckAmount,START_DATE,END_DATE")] Payroll payroll)
         {
-            if (id != payroll.PayId)
+            if (id != payroll.PayrollID)
             {
                 return NotFound();
             }
@@ -108,7 +108,7 @@ namespace CareManagement.Controllers.OM
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PayrollExists(payroll.PayId))
+                    if (!PayrollExists(payroll.PayrollID))
                     {
                         return NotFound();
                     }
@@ -119,7 +119,7 @@ namespace CareManagement.Controllers.OM
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EmployeeId"] = new SelectList(_context.Set<Employee>(), "EmployeeId", "Address", payroll.EmployeeId);
+            ViewData["EmployeeId"] = new SelectList(_context.Employee, "EmployeeId", "Address", payroll.EmployeeId);
             return View(payroll);
         }
 
@@ -133,7 +133,7 @@ namespace CareManagement.Controllers.OM
 
             var payroll = await _context.Payroll
                 .Include(p => p.Employee)
-                .FirstOrDefaultAsync(m => m.PayId == id);
+                .FirstOrDefaultAsync(m => m.PayrollID == id);
             if (payroll == null)
             {
                 return NotFound();
@@ -163,7 +163,7 @@ namespace CareManagement.Controllers.OM
 
         private bool PayrollExists(Guid id)
         {
-          return (_context.Payroll?.Any(e => e.PayId == id)).GetValueOrDefault();
+          return (_context.Payroll?.Any(e => e.PayrollID == id)).GetValueOrDefault();
         }
     }
 }

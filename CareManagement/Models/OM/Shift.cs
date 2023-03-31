@@ -15,7 +15,7 @@ namespace CareManagement.Models.OM
 
         [Required]
         public Guid ManagerId { get; set; }
-        public virtual Employee Employee { get; set; }
+        public virtual Employee? Employee { get; set; }
 
         //[Required]
         //public int ManagerId { get; set; } // Whoever is responsible for the employee

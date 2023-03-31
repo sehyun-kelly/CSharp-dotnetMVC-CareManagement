@@ -16,19 +16,19 @@ namespace CareManagement.Models.OM
 
         [Required]
         [StringLength(20)]
-        public string FirstName { get; set; } // The employee's first name.
+        public string? FirstName { get; set; } // The employee's first name.
 
         [Required]
         [StringLength(20)]
-        public string LastName { get; set; } // The employee's last name.
+        public string? LastName { get; set; } // The employee's last name.
 
         [Required]
         [StringLength(50)]
-        public string Address { get; set; } // Employee address
+        public string? Address { get; set; } // Employee address
 
         [Required]
         [DataType(DataType.PhoneNumber)]
-        public string Phone { get; set; } // Employee phone number
+        public string? Phone { get; set; } // Employee phone number
 
         [Required]
         public int EmergencyContact { get; set; } // Employee emergency contact

@@ -42,7 +42,7 @@ namespace CareManagement.Models.OM
         [Required]
         [ForeignKey("Employee")]
         public Guid EmployeeId { get; set; }
-        public virtual Employee Employee { get; set; }
+        public virtual Employee? Employee { get; set; }
 
 
     }
