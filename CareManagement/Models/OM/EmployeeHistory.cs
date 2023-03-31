@@ -14,14 +14,11 @@ namespace CareManagement.Models.OM
 
         [Required]
         public Enum.EmployeeTitle Title { get; set; }
-<<<<<<< HEAD
-
 
         [Required]
         [ForeignKey("Employee")]    
         public int EmployeeID {get; set; }
-=======
->>>>>>> 3da4907398672216227ebc5a9a0136a732e2b0fb
+
 
         [Required]
         public int PayRate { get; set; }
@@ -31,10 +28,6 @@ namespace CareManagement.Models.OM
 
         [Required]
         public Enum.EType EmployeeType { get; set; }
-<<<<<<< HEAD
-
-=======
->>>>>>> 3da4907398672216227ebc5a9a0136a732e2b0fb
 
         [Required]
         public int VacationDays { get; set; }
@@ -55,11 +48,6 @@ namespace CareManagement.Models.OM
         [ForeignKey("Employee")]
         public Guid EmployeeId { get; set; }
         public virtual Employee? Employee { get; set; }
-<<<<<<< HEAD
-
-=======
->>>>>>> 3da4907398672216227ebc5a9a0136a732e2b0fb
-
 
     }
 }
