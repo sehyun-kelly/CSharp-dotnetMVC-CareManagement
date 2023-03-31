@@ -22,7 +22,6 @@
     <None Remove="Models\SCHDL\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Controllers\OM\" />
     <Folder Include="Models\CRM\" />
     <Folder Include="Models\SCHDL\" />
   </ItemGroup>
