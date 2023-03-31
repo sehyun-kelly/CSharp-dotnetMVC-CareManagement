@@ -36,10 +36,11 @@ namespace CareManagement.Models.OM
 
         [Required]
         [Key]
-        public int EmpHisId { get; set; }
+        public int EmployeeHistoryId { get; set; }
 
         [Required]
-        public EmployeeTitle Title { get; set; }
+        [ForeignKey("Employee")]    
+        public int EmployeeID {get; set; }
 
         [Required]
         public int PayRate { get; set; }
@@ -48,26 +49,27 @@ namespace CareManagement.Models.OM
         public PaymentType PayType { get; set; }
 
         [Required]
-        public EType EmpType { get; set; }
+        public EType EmployeeType { get; set; }
+
 
         [Required]
+        [Range(0, int.MaxValue)]
         public int VacationDays { get; set; }
 
         [Required]
+        [Range(0, int.MaxValue)]
         public int SickDays { get; set; }
+
+        [Required]
+        public EStatus EmployeeStatus { get; set; }
+
+        [Required]
+        public EmployeeTitle Title { get; set; }
 
         [Required]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime Date { get; set; }
-
-        [Required]
-        public EStatus EmpStatus { get; set; }
-
-        //Foreign key 
-        [Required]
-        [ForeignKey("Employee")]
-        public int EmployeeId { get; set; }
         public virtual Employee Employee { get; set; }
 
 
