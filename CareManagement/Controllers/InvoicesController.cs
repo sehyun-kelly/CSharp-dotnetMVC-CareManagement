@@ -28,7 +28,7 @@ namespace CareManagement.Controllers
             ViewData["TotalHoursSortParm"] = sortOrder == "TotalHours" ? "total_hrs_desc" : "TotalHours";
             ViewData["TotalCostSortParm"] = sortOrder == "TotalCost" ? "total_cost_desc" : "TotalCost";
             ViewData["DatePaidSortParm"] = sortOrder == "DatePaid" ? "date_paid_desc" : "DatePaid";
-            ViewData["IsSentSortParm"] = sortOrder == "IsSent" ? "is_sent_desc" : "IsSent";
+            ViewData["IsSentSortParm"] = sortOrder == "IsSent" ? "is_sent_false" : "IsSent";
             ViewData["DueDateSortParm"] = sortOrder == "DueDate" ? "due_date_desc" : "DueDate";
             var invoices = from i in _context.Invoice
                            select i;
@@ -74,10 +74,10 @@ namespace CareManagement.Controllers
                     invoices = invoices.OrderByDescending(i => i.DueDate);
                     break;
                 case "IsSent":
-                    invoices = invoices.OrderBy(i => i.IsSent);
+                    invoices = invoices.Where(i => i.IsSent == true);
                     break;
-                case "is_sent_desc":
-                    invoices = invoices.OrderByDescending(i => i.IsSent);
+                case "is_sent_false":
+                    invoices = invoices.Where(i => i.IsSent == false);
                     break;
                 default:
                     invoices = invoices.OrderBy(i => i.StartDate);
