@@ -19,8 +19,8 @@ namespace CareManagement.Models.OM
         public DateTime? EndDate { get; set; }
 
         [Required]
-        [EnumDataType(typeof(EmploymentType))]
-        public string? EmployeeType { get; set; }
+        // [EnumDataType(typeof(EmploymentType))]
+        public Enum.EType EmployeeType { get; set; }
 
 
         [Required] [Range(0, int.MaxValue)] public int Hours { get; set; }
