@@ -4,28 +4,37 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Invoices</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a class="ignoreForPdf" asp-action="Create">Create New</a>
 </p>
-<table class="table">
+<p>
+    <a class="ignoreForPdf" id="PrintInvoice" asp-action="">Print All Invoices</a>
+</p>
+<table id="tblInvoices" class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.StartDate)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["StartDateSortParm"]">@Html.DisplayNameFor(model => model.StartDate)</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.EndDate)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["EndDateSortParm"]">@Html.DisplayNameFor(model => model.EndDate)</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TotalHours)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["TotalHoursSortParm"]">@Html.DisplayNameFor(model => model.TotalHours)</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TotalCost)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["TotalCostSortParm"]">@Html.DisplayNameFor(model => model.TotalCost)</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DatePaid)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["DatePaidSortParm"]">@Html.DisplayNameFor(model => model.DatePaid)</a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["IsSentSortParm"]">@Html.DisplayNameFor(model => model.IsSent)</a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["DueDateSortParm"]">@Html.DisplayNameFor(model => model.DueDate)</a>
             </th>
             <th></th>
         </tr>
@@ -49,11 +58,26 @@
                 @Html.DisplayFor(modelItem => item.DatePaid)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.InvoiceNumber">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.InvoiceNumber">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.InvoiceNumber">Delete</a>
+               @Html.DisplayFor(modelItem => item.IsSent)
+            </td>
+            <td>
+               @Html.DisplayFor(modelItem => item.DueDate)
+            </td>
+            <td>
+               <a class="ignoreForPdf" asp-action="Edit" asp-route-id="@item.InvoiceNumber">Edit</a> |
+               <a class="ignoreForPdf" asp-action="Details" asp-route-id="@item.InvoiceNumber">Details</a> |
+               <a class="ignoreForPdf" asp-action="Delete" asp-route-id="@item.InvoiceNumber">Delete</a>
             </td>
         </tr>
 }
     </tbody>
 </table>
+
+<script src="~/js/jquery/jquery.min.js"></script>
+<script type="text/javascript">
+    $("#PrintInvoice").click(function () {
+        $(".ignoreForPdf").hide();
+                window.print();
+        $(".ignoreForPdf").show();
+            })
+</script>

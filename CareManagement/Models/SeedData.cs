@@ -20,6 +20,10 @@ namespace CareManagement.Models
                 Guid q3 = Guid.NewGuid();
                 Guid e1 = Guid.NewGuid();
                 Guid e2 = Guid.NewGuid();
+                Guid Invoice1 = Guid.NewGuid();
+                Guid Invoice2 = Guid.NewGuid();
+                Guid Invoice3 = Guid.NewGuid();
+
 
                 if (!context.Qualification.Any())
                 {
@@ -165,6 +169,46 @@ namespace CareManagement.Models
                             Employer = "World of Magic",
                             Email = "dumbledore@hogwarts.edu",
                             RmNumber = 245
+                        }
+                        );
+                }
+                if (!context.Invoice.Any())
+                {
+                    context.Invoice.AddRange(
+                        new Invoice
+                        {
+                            InvoiceNumber = Invoice1,
+                            StartDate = new DateTime(2023,3,3),
+                            EndDate = new DateTime(2023,3,4),
+                            TotalHours = 3,
+                            TotalCost = 50,
+                            DatePaid = new DateTime(2023, 3, 5),
+                            IsSent= true,
+                            DueDate= new DateTime(2023, 3, 10)
+                        },
+
+                        new Invoice
+                        {
+                            InvoiceNumber = Invoice2,
+                            StartDate = new DateTime(2023, 4, 3),
+                            EndDate = new DateTime(2023, 4, 4),
+                            TotalHours = 7,
+                            TotalCost = 500,
+                            DatePaid = new DateTime(2023, 4, 5),
+                            IsSent = false,
+                            DueDate = new DateTime(2023, 4, 10)
+                        },
+
+                        new Invoice
+                        {
+                            InvoiceNumber = Invoice3,
+                            StartDate = new DateTime(2023, 5, 3),
+                            EndDate = new DateTime(2023, 5, 4),
+                            TotalHours = 9,
+                            TotalCost = 90,
+                            DatePaid = new DateTime(2023, 5, 5),
+                            IsSent = true,
+                            DueDate = new DateTime(2023, 5, 10)
                         }
                     );
                 }
