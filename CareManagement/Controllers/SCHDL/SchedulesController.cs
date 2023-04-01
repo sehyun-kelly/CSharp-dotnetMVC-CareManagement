@@ -110,7 +110,9 @@ namespace CareManagement.Controllers.SCHDL
                 Value = r.RenterId.ToString(),
                 Text = $"{r.Name} ({r.RmNumber})"
             }).ToList();
+
             ViewData["ServiceId"] = new SelectList(_context.Service, "ServiceId", "Type");
+
             ViewData["ShiftID"] = _context.Shift
                 .Join(_context.Employee,
                     shift => shift.EmployeeId,
@@ -121,6 +123,13 @@ namespace CareManagement.Controllers.SCHDL
                         Text = $"{employee.FirstName} {employee.LastName}"
                     })
                 .ToList();
+
+            ViewData["Hours"] = _context.Service.Select(s => new SelectListItem
+            {
+                Value = s.ServiceId.ToString(),
+                Text = s.Hours.ToString()
+            }).ToList();
+
             return View();
         }
 
@@ -301,5 +310,30 @@ namespace CareManagement.Controllers.SCHDL
         public Service? Service { get; internal set; }
         public Renter? Renter { get; internal set; }
         public Shift? Shift { get; internal set; }
+    }
+
+    [Route("api/services")]
+    [ApiController]
+    public class ServicesApiController : ControllerBase
+    {
+        private readonly CareManagementContext _context;
+
+        public ServicesApiController(CareManagementContext context)
+        {
+            _context = context;
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Service>> GetService(Guid id)
+        {
+            var service = await _context.Service.FindAsync(id);
+
+            if (service == null)
+            {
+                return NotFound();
+            }
+
+            return service;
+        }
     }
 }

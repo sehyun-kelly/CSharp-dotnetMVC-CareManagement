@@ -16,20 +16,20 @@
                 <label asp-for="ServiceId" class="control-label">
                     @Html.DisplayNameFor(model => model.Service)
                 </label>
-                <select asp-for="ServiceId" class="form-control" asp-items="ViewBag.ServiceId"></select>
+                <select id="ServiceId" asp-for="ServiceId" class="form-control" asp-items="ViewBag.ServiceId"></select>
             </div>
             <div class="form-group">
                 <label asp-for="StartTime" class="control-label">
                     @Html.DisplayNameFor(model => model.StartTime)
                 </label>
-                <input asp-for="StartTime" class="form-control" />
+                <input id="StartTime" asp-for="StartTime" class="form-control" />
                 <span asp-validation-for="StartTime" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="EndTime" class="control-label">
                     @Html.DisplayNameFor(model => model.EndTime)
                 </label>
-                <input asp-for="EndTime" class="form-control" />
+                <input id="EndTime" asp-for="EndTime" class="form-control" />
                 <span asp-validation-for="EndTime" class="text-danger"></span>
             </div>
             <div class="form-group form-check">
@@ -77,6 +77,7 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script>
+        //hide/unhide repeat hours
         $(document).ready(function () {
             $('.repeat-check').change(function () {
                 if (this.checked) {
@@ -85,6 +86,46 @@
                     $('.repeat-fields').attr('hidden', true);
                 }
             });
+        });
+
+        //autocomplete endtime
+        $(document).ready(function () {
+            const serviceId = $("#ServiceId");
+            const startTime = $("#StartTime");
+            const endTime = $("#EndTime");
+
+            // A function to fetch the service hours based on the selected service id
+            async function getServiceHours(serviceId) {
+                console.log("getSerivceHours");
+                const response = await fetch(`/api/services/${serviceId}`);
+                if (response.ok) {
+                    const service = await response.json();
+                    console.log(service.hours);
+                    return service.hours;
+                } else {
+                    return null;
+                }
+            }
+
+            // A function to update the end time based on the selected service id and start time
+            async function updateEndTime() {
+                console.log("updateEndtime");
+                const selectedServiceId = serviceId.val();
+                const startDateTime = startTime.val();
+
+                if (selectedServiceId && startDateTime) {
+                    const serviceHours = await getServiceHours(selectedServiceId);
+                    if (serviceHours !== null) {
+                        const startMoment = new Date(startDateTime);
+                        startMoment.setHours(startMoment.getHours() + serviceHours - 7);
+                        endTime.val(startMoment.toISOString().slice(0, 19));
+                    }
+                }
+            }
+
+            // Attach event listeners to the ServiceId and StartTime inputs
+            serviceId.on("change", updateEndTime);
+            startTime.on("change", updateEndTime);
         });
     </script>
 }
