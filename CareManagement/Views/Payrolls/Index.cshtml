@@ -1,0 +1,101 @@
+﻿@model IEnumerable<CareManagement.Models.OM.Payroll>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Employee)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StartDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EndDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmployeeType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Hours)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Overtime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LateDeduction)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VacationPay)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SickPay)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Pre_tax)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tax)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CheckAmount)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Employee.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmployeeType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Hours)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Overtime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LateDeduction)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VacationPay)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SickPay)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pre_tax)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tax)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CheckAmount)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.PayrollID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.PayrollID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.PayrollID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

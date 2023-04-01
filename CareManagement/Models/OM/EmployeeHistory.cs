@@ -1,53 +1,28 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using CareManagement.Models;
+
 
 namespace CareManagement.Models.OM
 {
     public class EmployeeHistory
     {
-        public enum EmployeeTitle
-        {
-            Manager,
-            Nurse,
-            Librarian,
-            Designer
-        }
-
-        public enum PaymentType
-        {
-            Hourly,
-            Weekly,
-            Monthly
-        }
-
-        public enum EType
-        {
-            Full_time,
-            Part_time,
-            On_call
-        }
-
-        public enum EStatus
-        {
-            Resigned,
-            Layoff
-        }
 
         [Required]
         [Key]
-        public int EmpHisId { get; set; }
+        public Guid EmployeeHistoryId { get; set; }
 
         [Required]
-        public EmployeeTitle Title { get; set; }
+        public Enum.EmployeeTitle Title { get; set; }
 
         [Required]
         public int PayRate { get; set; }
 
         [Required]
-        public PaymentType PayType { get; set; }
+        public Enum.PaymentType PayType { get; set; }
 
         [Required]
-        public EType EmpType { get; set; }
+        public Enum.EType EmployeeType { get; set; }
 
         [Required]
         public int VacationDays { get; set; }
@@ -61,12 +36,13 @@ namespace CareManagement.Models.OM
         public DateTime Date { get; set; }
 
         [Required]
-        public EStatus EmpStatus { get; set; }
+        public Enum.EStatus EmployeeStatus { get; set; }
 
         //Foreign key 
         [Required]
-        public int EmpId { get; set; }
-        public Employee Employee { get; set; }
+        [ForeignKey("Employee")]
+        public Guid EmployeeId { get; set; }
+        public virtual Employee? Employee { get; set; }
 
 
     }

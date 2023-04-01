@@ -26,7 +26,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\CRM\" />
-    <Folder Include="Models\OM\" />
     <Folder Include="Models\SCHDL\" />
     <Folder Include="Controllers\SCHDL\" />
   </ItemGroup>
