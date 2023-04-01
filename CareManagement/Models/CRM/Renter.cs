@@ -42,7 +42,7 @@ namespace CareManagement.Models.CRM
 
         [Required]
         [Range(0, int.MaxValue)]  // No negative numbers
-        public int RmNumber;
+        public int RmNumber { get; set; }
 
         //[Required]
         //[ForeignKey("Invoice")]

@@ -10,17 +10,25 @@ namespace CareManagement.Models.SCHDL
         [Key]
 		public Guid ScheduleId { get; set; }
 
+		[Required]
+		[Display(Name = "Start Time")]
 		public DateTime StartTime { get; set; }
 
-		public DateTime EndTime { get; set; }
+        [Required]
+        [Display(Name = "End Time")]
+        public DateTime EndTime { get; set; }
 
-		public Boolean IsInvoiced { get; set; } = false;
+        [Display(Name = "Invoiced")]
+        public Boolean IsInvoiced { get; set; } = false;
 
+        [Display(Name = "Repeat")]
         public Boolean IsRepeating { get; set; } = false;
 
-		public DateTime? RepeatStartDate { get; set; }
+        [Display(Name = "Repeat From")]
+        public DateTime? RepeatStartDate { get; set; }
 
-		public DateTime? RepeatEndDate { get; set; }
+        [Display(Name = "Repeat Until")]
+        public DateTime? RepeatEndDate { get; set; }
 
         [Required]
 		[ForeignKey("Renter")]

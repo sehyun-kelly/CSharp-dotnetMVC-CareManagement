@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CareManagement.Data;
 using CareManagement.Models.SCHDL;
+using CareManagement.Models.CRM;
+using CareManagement.Models.OM;
+using System.ComponentModel.DataAnnotations;
 
 namespace CareManagement.Controllers
 {
@@ -22,8 +25,35 @@ namespace CareManagement.Controllers
         // GET: Schedules
         public async Task<IActionResult> Index()
         {
-            var careManagementContext = _context.Schedule.Include(s => s.Renter).Include(s => s.Service).Include(s => s.Shift);
-            return View(await careManagementContext.ToListAsync());
+            //var careManagementContext = _context.Schedule.Include(s => s.Renter).Include(s => s.Service).Include(s => s.Shift);
+            //return View(await careManagementContext.ToListAsync());
+
+            var careManagementContext = _context.Schedule
+                .Include(s => s.Renter)
+                .Include(s => s.Service)
+                .Include(s => s.Shift)
+                .Select(s => new ScheduleViewModel
+                {
+                    Service = s.Service,
+                    Renter = s.Renter,
+                    Shift = s.Shift,
+                    ScheduleId = s.ScheduleId,
+                    StartTime = s.StartTime,
+                    EndTime = s.EndTime,
+                    IsInvoiced = s.IsInvoiced,
+                    IsRepeating = s.IsRepeating,
+                    RepeatStartDate = s.RepeatStartDate,
+                    RepeatEndDate = s.RepeatEndDate,
+                    RenterId = s.RenterId,
+                    ShiftID = s.ShiftID,
+                    ServiceId = s.ServiceId,
+                    EmployeeName = _context.Employee
+                        .Where(e => e.EmployeeId == s.Shift.EmployeeId)
+                        .Select(e => $"{e.FirstName} {e.LastName}")
+                        .FirstOrDefault()
+                }); 
+
+                return View(await careManagementContext.ToListAsync());
         }
 
         // GET: Schedules/Details/5
@@ -39,6 +69,30 @@ namespace CareManagement.Controllers
                 .Include(s => s.Service)
                 .Include(s => s.Shift)
                 .FirstOrDefaultAsync(m => m.ScheduleId == id);
+
+            //var schedule = await (from s in _context.Schedule
+            //                      join sh in _context.Shift on s.ShiftID equals sh.ShiftId
+            //                      join e in _context.Employee on sh.EmployeeId equals e.EmployeeId
+            //                      join r in _context.Renter on r.RenterId equals s.RenterId
+            //                      where s.ScheduleId == id
+            //                      select new ScheduleViewModel
+            //                      {
+            //                          ScheduleId = s.ScheduleId,
+            //                          StartTime = s.StartTime,
+            //                          EndTime = s.EndTime,
+            //                          IsInvoiced = s.IsInvoiced,
+            //                          IsRepeating = s.IsRepeating,
+            //                          RepeatStartDate = s.RepeatStartDate,
+            //                          RepeatEndDate = s.RepeatEndDate,
+            //                          RenterId = s.RenterId,
+            //                          ShiftID = s.ShiftID,
+            //                          ServiceId = s.ServiceId,
+            //                          EmployeeName = e.FirstName + " " + e.LastName,
+            //                          Service = s.Service,
+            //                          Renter = s.Renter,
+            //                          Shift = s.Shift
+            //                      }).FirstOrDefaultAsync(m => m.ScheduleId == id);
+
             if (schedule == null)
             {
                 return NotFound();
@@ -50,9 +104,23 @@ namespace CareManagement.Controllers
         // GET: Schedules/Create
         public IActionResult Create()
         {
-            ViewData["RenterId"] = new SelectList(_context.Renter, "RenterId", "RenterId");
+
+            ViewData["RenterId"] = _context.Renter.Select(r => new SelectListItem
+            {
+                Value = r.RenterId.ToString(),
+                Text = $"{r.Name} ({r.RmNumber})"
+            }).ToList();
             ViewData["ServiceId"] = new SelectList(_context.Service, "ServiceId", "Type");
-            ViewData["ShiftID"] = new SelectList(_context.Shift, "ShiftId", "ShiftId");
+            ViewData["ShiftID"] = _context.Shift
+                .Join(_context.Employee,
+                    shift => shift.EmployeeId,
+                    employee => employee.EmployeeId,
+                    (shift, employee) => new SelectListItem
+                    {
+                        Value = shift.ShiftId.ToString(),
+                        Text = $"{employee.FirstName} {employee.LastName}"
+                    })
+                .ToList();
             return View();
         }
 
@@ -89,9 +157,31 @@ namespace CareManagement.Controllers
             {
                 return NotFound();
             }
-            ViewData["RenterId"] = new SelectList(_context.Renter, "RenterId", "RenterId", schedule.RenterId);
+
+            ViewData["RenterId"] = _context.Renter.Select(r => new SelectListItem
+            {
+                Value = r.RenterId.ToString(),
+                Text = $"{r.Name} ({r.RmNumber})"
+            }).ToList();
+            // Set the selected value for the SelectList
+            ((List<SelectListItem>)ViewData["RenterId"]).FirstOrDefault(item => item.Value == schedule.RenterId.ToString()).Selected = true;
+
+            //ViewData["RenterId"] = new SelectList(_context.Renter, "RenterId", "RenterId", schedule.RenterId);
             ViewData["ServiceId"] = new SelectList(_context.Service, "ServiceId", "Type", schedule.ServiceId);
-            ViewData["ShiftID"] = new SelectList(_context.Shift, "ShiftId", "ShiftId", schedule.ShiftID);
+
+            ViewData["ShiftID"] = _context.Shift
+            .Join(_context.Employee,
+                shift => shift.EmployeeId,
+                employee => employee.EmployeeId,
+                (shift, employee) => new SelectListItem
+                {
+                    Value = shift.ShiftId.ToString(),
+                    Text = $"{employee.FirstName} {employee.LastName}"
+                })
+            .ToList();
+            ((List<SelectListItem>)ViewData["ShiftID"]).FirstOrDefault(item => item.Value == schedule.ShiftID.ToString()).Selected = true;
+
+            //ViewData["ShiftID"] = new SelectList(_context.Shift, "ShiftId", "ShiftId", schedule.ShiftID);
             return View(schedule);
         }
 
@@ -177,5 +267,39 @@ namespace CareManagement.Controllers
         {
           return (_context.Schedule?.Any(e => e.ScheduleId == id)).GetValueOrDefault();
         }
+    }
+
+    internal class ScheduleViewModel
+    {
+
+        public Guid ScheduleId { get; set; }
+
+        [Display(Name = "Start Time")]
+        public DateTime StartTime { get; set; }
+
+        [Display(Name = "End Time")]
+        public DateTime EndTime { get; set; }
+
+        [Display(Name = "Invoiced")]
+        public bool IsInvoiced { get; set; }
+
+        [Display(Name = "Repeat")]
+        public bool IsRepeating { get; set; }
+
+        [Display(Name = "Repeat From")]
+        public DateTime? RepeatStartDate { get; set; }
+
+        [Display(Name = "Repeat Until")]
+        public DateTime? RepeatEndDate { get; set; }
+
+        public Guid RenterId { get; set; }
+        public Guid ShiftID { get; set; }
+        public Guid ServiceId { get; set; }
+
+        [Display(Name = "Employee")]
+        public string EmployeeName { get; set; }
+        public Service? Service { get; internal set; }
+        public Renter? Renter { get; internal set; }
+        public Shift? Shift { get; internal set; }
     }
 }

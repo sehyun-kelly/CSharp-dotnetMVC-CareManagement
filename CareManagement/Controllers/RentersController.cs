@@ -56,7 +56,7 @@ namespace CareManagement.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("RenterId,Name,Age,Gender,Address,ContactingNumber,EmergencyContactingNumber,FamilyDoctor,SharingInfo,Income,Employer,Email")] Renter renter)
+        public async Task<IActionResult> Create([Bind("RenterId,Name,Age,Gender,Address,ContactingNumber,EmergencyContactingNumber,FamilyDoctor,SharingInfo,Income,Employer,Email,RmNumber")] Renter renter)
         {
             if (ModelState.IsValid)
             {
@@ -89,7 +89,7 @@ namespace CareManagement.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("RenterId,Name,Age,Gender,Address,ContactingNumber,EmergencyContactingNumber,FamilyDoctor,SharingInfo,Income,Employer,Email")] Renter renter)
+        public async Task<IActionResult> Edit(Guid id, [Bind("RenterId,Name,Age,Gender,Address,ContactingNumber,EmergencyContactingNumber,FamilyDoctor,SharingInfo,Income,Employer,Email,RmNumber")] Renter renter)
         {
             if (id != renter.RenterId)
             {
