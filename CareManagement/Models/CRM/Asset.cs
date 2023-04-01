@@ -1,5 +1,6 @@
 namespace CareManagement.Models.CRM
 {
+    using MessagePack;
     using System;
     using System.Collections.Generic;
     
