@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Xml.Linq;
 
-namespace CareManagement.Controllers
+namespace CareManagement.Controllers.SCHDL
 {
     public class EmailController : Controller
     {

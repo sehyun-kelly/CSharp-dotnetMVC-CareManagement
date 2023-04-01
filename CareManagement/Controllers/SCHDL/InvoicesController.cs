@@ -10,7 +10,7 @@ using CareManagement.Models.SCHDL;
 using EmailService;
 using System.Text.Json;
 
-namespace CareManagement.Controllers
+namespace CareManagement.Controllers.SCHDL
 {
     public class InvoicesController : Controller
     {

@@ -11,7 +11,7 @@ using CareManagement.Models.CRM;
 using CareManagement.Models.OM;
 using System.ComponentModel.DataAnnotations;
 
-namespace CareManagement.Controllers
+namespace CareManagement.Controllers.SCHDL
 {
     public class SchedulesController : Controller
     {

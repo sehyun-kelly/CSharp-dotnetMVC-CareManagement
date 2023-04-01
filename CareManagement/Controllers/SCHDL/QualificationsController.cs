@@ -6,92 +6,92 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CareManagement.Data;
-using CareManagement.Models.OM;
+using CareManagement.Models.SCHDL;
 
-namespace CareManagement.Controllers
+namespace CareManagement.Controllers.SCHDL
 {
-    public class ShiftsController : Controller
+    public class QualificationsController : Controller
     {
         private readonly CareManagementContext _context;
 
-        public ShiftsController(CareManagementContext context)
+        public QualificationsController(CareManagementContext context)
         {
             _context = context;
         }
 
-        // GET: Shifts
+        // GET: Qualifications
         public async Task<IActionResult> Index()
         {
-              return _context.Shift != null ? 
-                          View(await _context.Shift.ToListAsync()) :
-                          Problem("Entity set 'CareManagementContext.Shift'  is null.");
+              return _context.Qualification != null ? 
+                          View(await _context.Qualification.ToListAsync()) :
+                          Problem("Entity set 'CareManagementContext.Qualification'  is null.");
         }
 
-        // GET: Shifts/Details/5
+        // GET: Qualifications/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {
-            if (id == null || _context.Shift == null)
+            if (id == null || _context.Qualification == null)
             {
                 return NotFound();
             }
 
-            var shift = await _context.Shift
-                .FirstOrDefaultAsync(m => m.ShiftId == id);
-            if (shift == null)
+            var qualification = await _context.Qualification
+                .FirstOrDefaultAsync(m => m.QualificationId == id);
+            if (qualification == null)
             {
                 return NotFound();
             }
 
-            return View(shift);
+            return View(qualification);
         }
 
-        // GET: Shifts/Create
+        // GET: Qualifications/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Shifts/Create
+        // POST: Qualifications/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ShiftId,EmployeeId,ManagerId,StartTime,EndTime,Sick,ScheduleId")] Shift shift)
+        public async Task<IActionResult> Create([Bind("QualificationId,QualificationDescription")] Qualification qualification)
         {
             if (ModelState.IsValid)
             {
-                shift.ShiftId = Guid.NewGuid();
-                _context.Add(shift);
+                qualification.QualificationId = Guid.NewGuid();
+                _context.Add(qualification);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(shift);
+            return View(qualification);
         }
 
-        // GET: Shifts/Edit/5
+        // GET: Qualifications/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {
-            if (id == null || _context.Shift == null)
+            if (id == null || _context.Qualification == null)
             {
                 return NotFound();
             }
 
-            var shift = await _context.Shift.FindAsync(id);
-            if (shift == null)
+            var qualification = await _context.Qualification.FindAsync(id);
+            if (qualification == null)
             {
                 return NotFound();
             }
-            return View(shift);
+            return View(qualification);
         }
 
-        // POST: Shifts/Edit/5
+        // POST: Qualifications/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("ShiftId,EmployeeId,ManagerId,StartTime,EndTime,Sick,ScheduleId")] Shift shift)
+        public async Task<IActionResult> Edit(Guid id, [Bind("QualificationId,QualificationDescription")] Qualification qualification)
         {
-            if (id != shift.ShiftId)
+            if (id != qualification.QualificationId)
             {
                 return NotFound();
             }
@@ -100,12 +100,12 @@ namespace CareManagement.Controllers
             {
                 try
                 {
-                    _context.Update(shift);
+                    _context.Update(qualification);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ShiftExists(shift.ShiftId))
+                    if (!QualificationExists(qualification.QualificationId))
                     {
                         return NotFound();
                     }
@@ -116,49 +116,49 @@ namespace CareManagement.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(shift);
+            return View(qualification);
         }
 
-        // GET: Shifts/Delete/5
+        // GET: Qualifications/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
         {
-            if (id == null || _context.Shift == null)
+            if (id == null || _context.Qualification == null)
             {
                 return NotFound();
             }
 
-            var shift = await _context.Shift
-                .FirstOrDefaultAsync(m => m.ShiftId == id);
-            if (shift == null)
+            var qualification = await _context.Qualification
+                .FirstOrDefaultAsync(m => m.QualificationId == id);
+            if (qualification == null)
             {
                 return NotFound();
             }
 
-            return View(shift);
+            return View(qualification);
         }
 
-        // POST: Shifts/Delete/5
+        // POST: Qualifications/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            if (_context.Shift == null)
+            if (_context.Qualification == null)
             {
-                return Problem("Entity set 'CareManagementContext.Shift'  is null.");
+                return Problem("Entity set 'CareManagementContext.Qualification'  is null.");
             }
-            var shift = await _context.Shift.FindAsync(id);
-            if (shift != null)
+            var qualification = await _context.Qualification.FindAsync(id);
+            if (qualification != null)
             {
-                _context.Shift.Remove(shift);
+                _context.Qualification.Remove(qualification);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ShiftExists(Guid id)
+        private bool QualificationExists(Guid id)
         {
-          return (_context.Shift?.Any(e => e.ShiftId == id)).GetValueOrDefault();
+          return (_context.Qualification?.Any(e => e.QualificationId == id)).GetValueOrDefault();
         }
     }
 }
