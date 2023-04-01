@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CareManagement.Data;
 using CareManagement.Models.SCHDL;
+using EmailService;
+using System.Text.Json;
 
 namespace CareManagement.Controllers
 {
@@ -224,6 +226,38 @@ namespace CareManagement.Controllers
         private bool InvoiceExists(Guid id)
         {
           return (_context.Invoice?.Any(e => e.InvoiceNumber == id)).GetValueOrDefault();
+        }
+
+        // GET: Invoices/Email/5
+        public async Task<IActionResult> Email(Guid? id)
+        {
+            if (id == null || _context.Invoice == null)
+            {
+                return NotFound();
+            }
+
+            var invoice = await _context.Invoice
+                .FirstOrDefaultAsync(m => m.InvoiceNumber == id);
+            if (invoice == null)
+            {
+                return NotFound();
+            }
+            // Invoice is sent to Renter
+            invoice.IsSent = true;
+
+            var content = "Invoice From Care Management: \n"
+                + "| Invoice Number: " + invoice.InvoiceNumber + "\n"
+                + "| Start Date: " + invoice.StartDate + "\n"
+                + "| End Date: " + invoice.EndDate + "\n"
+                + "| Total Hours: " + invoice.TotalHours + "\n"
+                + "| Total Cost: " + invoice.TotalCost + "\n"
+                + "| Date Paid: " + invoice.DatePaid + "\n"
+                + "| Sent To Renter: " + (invoice.IsSent ? "Yes" : "No") + "\n"
+                + "| Due Date: " + invoice.DueDate + "\n";
+            
+            TempData["Invoice"] = content;
+
+            return RedirectToAction("Index", "Email");
         }
     }
 }

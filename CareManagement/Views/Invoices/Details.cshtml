@@ -57,6 +57,7 @@
 <div>
     <a class="ignoreForPdf" asp-action="Edit" asp-route-id="@Model?.InvoiceNumber">Edit</a> |
     <a id="PrintInvoice" class="ignoreForPdf" asp-route-id="@Model?.InvoiceNumber">Print</a> |
+    <a class="ignoreForPdf" asp-action="Email" asp-route-id="@Model?.InvoiceNumber">Email</a> |
     <a class="ignoreForPdf" asp-action="Index">Back to List</a>
 </div>
 
