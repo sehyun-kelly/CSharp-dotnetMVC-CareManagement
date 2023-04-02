@@ -135,6 +135,41 @@ namespace CareManagement.Controllers.AUTH
             return View(user);
         }
 
+        // GET: Admin/Delete/5
+        public async Task<IActionResult> Delete(String? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            AppUser user = await userManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            return View(user);
+        }
+
+        // POST: Admin/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(String id)
+        {
+            AppUser user = await userManager.FindByIdAsync(id);
+            if (user != null)
+            {
+                IdentityResult result = await userManager.DeleteAsync(user);
+                if (result.Succeeded)
+                    return RedirectToAction("Index");
+                else
+                    Errors(result);
+            }
+            else
+                ModelState.AddModelError("", "User Not Found");
+            return RedirectToAction("Index");
+        }
+        
         private void Errors(IdentityResult result)
         {
             foreach (IdentityError error in result.Errors)
