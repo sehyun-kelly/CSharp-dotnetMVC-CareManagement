@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using CareManagement.Models.CRM;
 
@@ -9,11 +10,11 @@ namespace CareManagement.Models.SCHDL
 		[Key]
 		public Guid InvoiceNumber { get; set; }
 
-		[Required]
-		[ForeignKey("Renter")]
+		//[Required]
+		//[ForeignKey("Renter")]
 
-		public int RenterId { get; set; }
-		public virtual Renter Renter { get; set; }
+		//public int RenterId { get; set; }
+		//public virtual Renter Renter { get; set; }
 
 
         /**
@@ -50,6 +51,17 @@ namespace CareManagement.Models.SCHDL
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime DatePaid { get; set; }
+
+        /**
+         * If the invoice is sent to customer or not
+         */
+        [DisplayName("Sent to Customer")]
+        public bool IsSent { get; set; }
+
+        [DisplayName("Due Date")]
+        [Range(typeof(DateTime), "1/1/2023", "12/31/2023",
+        ErrorMessage = "Value for {0} must be between {1} and {2}")]
+        public DateTime DueDate { get; set; }
 
     }
 }

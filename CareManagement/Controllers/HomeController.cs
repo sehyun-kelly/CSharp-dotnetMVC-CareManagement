@@ -1,6 +1,9 @@
 ﻿using CareManagement.Models;
+using EmailService;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using CareManagement.Data;
+using CareManagement.Models.SCHDL;
 
 namespace CareManagement.Controllers
 {
