@@ -20,6 +20,10 @@ namespace CareManagement.Models
                 Guid q3 = Guid.NewGuid();
                 Guid e1 = Guid.NewGuid();
                 Guid e2 = Guid.NewGuid();
+                Guid e3 = Guid.NewGuid();
+                Guid e4 = Guid.NewGuid();
+                Guid e5 = Guid.NewGuid();
+                Guid e6 = Guid.NewGuid();
                 Guid Invoice1 = Guid.NewGuid();
                 Guid Invoice2 = Guid.NewGuid();
                 Guid Invoice3 = Guid.NewGuid();
@@ -61,7 +65,7 @@ namespace CareManagement.Models
                         new Service
                         {
                             Rate = 40,
-                            Hours = 6,
+                            Hours = 2,
                             Type = "Nursing",
                             QualificationId = q2
                         },
@@ -69,7 +73,7 @@ namespace CareManagement.Models
                         new Service
                         {
                             Rate = 35,
-                            Hours = 3,
+                            Hours = 4,
                             Type = "Homecare",
                             QualificationId = q3
                         }
@@ -82,8 +86,8 @@ namespace CareManagement.Models
                         {
                             EmployeeId = e1,
                             QualificationId = q1,
-                            FirstName = "Bruce",
-                            LastName = "Wayne",
+                            FirstName = "Therapy",
+                            LastName = "Morning",
                             Address = "1234 BCIT st, Burnaby, BC",
                             EmergencyContact = 1,
                             Phone = "111-111-1111",
@@ -100,8 +104,80 @@ namespace CareManagement.Models
                         {
                             EmployeeId = e2,
                             QualificationId = q2,
-                            FirstName = "Tony",
-                            LastName = "Stark",
+                            FirstName = "Nursing",
+                            LastName = "Morning",
+                            Address = "1234 BCIT st, Burnaby, BC",
+                            EmergencyContact = 1,
+                            Phone = "111-111-1111",
+                            EmployeeType = OM.Enum.EType.Full_time,
+                            PayRate = 35.35F,
+                            PayType = OM.Enum.PaymentType.Hourly,
+                            VacationDays = 14,
+                            EmployeeStatus = OM.Enum.EStatus.Layoff,
+                            SickDays = 4,
+                            Title = OM.Enum.EmployeeTitle.Nurse,
+                            StartDate = DateTime.Now
+                        },
+                        new Employee
+                        {
+                            EmployeeId = e3,
+                            QualificationId = q3,
+                            FirstName = "Homecare",
+                            LastName = "Morning",
+                            Address = "1234 BCIT st, Burnaby, BC",
+                            EmergencyContact = 1,
+                            Phone = "111-111-1111",
+                            EmployeeType = OM.Enum.EType.Full_time,
+                            PayRate = 35.35F,
+                            PayType = OM.Enum.PaymentType.Hourly,
+                            VacationDays = 14,
+                            EmployeeStatus = OM.Enum.EStatus.Layoff,
+                            SickDays = 4,
+                            Title = OM.Enum.EmployeeTitle.Nurse,
+                            StartDate = DateTime.Now
+                        },
+                        new Employee
+                        {
+                            EmployeeId = e4,
+                            QualificationId = q1,
+                            FirstName = "Therapy",
+                            LastName = "Afternoon",
+                            Address = "1234 BCIT st, Burnaby, BC",
+                            EmergencyContact = 1,
+                            Phone = "111-111-1111",
+                            EmployeeType = OM.Enum.EType.Full_time,
+                            PayRate = 35.35F,
+                            PayType = OM.Enum.PaymentType.Hourly,
+                            VacationDays = 14,
+                            EmployeeStatus = OM.Enum.EStatus.Layoff,
+                            SickDays = 4,
+                            Title = OM.Enum.EmployeeTitle.Nurse,
+                            StartDate = DateTime.Now
+                        },
+                        new Employee
+                        {
+                            EmployeeId = e5,
+                            QualificationId = q2,
+                            FirstName = "Nursing",
+                            LastName = "Afternoon",
+                            Address = "1234 BCIT st, Burnaby, BC",
+                            EmergencyContact = 1,
+                            Phone = "111-111-1111",
+                            EmployeeType = OM.Enum.EType.Full_time,
+                            PayRate = 35.35F,
+                            PayType = OM.Enum.PaymentType.Hourly,
+                            VacationDays = 14,
+                            EmployeeStatus = OM.Enum.EStatus.Layoff,
+                            SickDays = 4,
+                            Title = OM.Enum.EmployeeTitle.Nurse,
+                            StartDate = DateTime.Now
+                        },
+                        new Employee
+                        {
+                            EmployeeId = e6,
+                            QualificationId = q3,
+                            FirstName = "Homecare",
+                            LastName = "Afternoon",
                             Address = "1234 BCIT st, Burnaby, BC",
                             EmergencyContact = 1,
                             Phone = "111-111-1111",
@@ -123,16 +199,48 @@ namespace CareManagement.Models
                         {
                             EmployeeId = e1,
                             ManagerId = e1,
-                            StartTime = new DateTime(2023, 3, 31, 8, 0, 0),
-                            EndTime = new DateTime(2023, 3, 31, 16, 0, 0),
+                            StartTime = new DateTime(2023, 4, 1, 8, 0, 0),
+                            EndTime = new DateTime(2023, 4, 1, 14, 0, 0),
                             Sick = false
                         },
                         new Shift
                         {
                             EmployeeId = e2,
-                            ManagerId = e2,
-                            StartTime = new DateTime(2023, 3, 31, 12, 0, 0),
-                            EndTime = new DateTime(2023, 3, 31, 20, 0, 0),
+                            ManagerId = e1,
+                            StartTime = new DateTime(2023, 4, 1, 8, 0, 0),
+                            EndTime = new DateTime(2023, 4, 1, 14, 0, 0),
+                            Sick = false
+                        },
+                        new Shift
+                        {
+                            EmployeeId = e3,
+                            ManagerId = e1,
+                            StartTime = new DateTime(2023, 4, 1, 8, 0, 0),
+                            EndTime = new DateTime(2023, 4, 1, 14, 0, 0),
+                            Sick = false
+                        },
+                        new Shift
+                        {
+                            EmployeeId = e4,
+                            ManagerId = e1,
+                            StartTime = new DateTime(2023, 4, 1, 12, 0, 0),
+                            EndTime = new DateTime(2023, 4, 1, 20, 0, 0),
+                            Sick = false
+                        },
+                        new Shift
+                        {
+                            EmployeeId = e5,
+                            ManagerId = e1,
+                            StartTime = new DateTime(2023, 4, 1, 12, 0, 0),
+                            EndTime = new DateTime(2023, 4, 1, 20, 0, 0),
+                            Sick = false
+                        },
+                        new Shift
+                        {
+                            EmployeeId = e6,
+                            ManagerId = e1,
+                            StartTime = new DateTime(2023, 4, 1, 12, 0, 0),
+                            EndTime = new DateTime(2023, 4, 1, 20, 0, 0),
                             Sick = false
                         }
                     );

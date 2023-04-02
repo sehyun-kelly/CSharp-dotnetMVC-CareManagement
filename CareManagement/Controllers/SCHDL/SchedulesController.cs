@@ -348,7 +348,15 @@ namespace CareManagement.Controllers.SCHDL
                     employee => employee.EmployeeId,
                     (shift, employee) => new { shift, employee }
                 )
-                .Where(joined => joined.employee.QualificationId == service.QualificationId)
+                .Where
+                (
+                    joined =>
+                    joined.employee.QualificationId == service.QualificationId
+                    &&
+                    joined.shift.StartTime <= startTime
+                    &&
+                    joined.shift.EndTime >= endTime
+                )
                 .Select(joined => new
                 {
                     ShiftId = joined.shift.ShiftId,
