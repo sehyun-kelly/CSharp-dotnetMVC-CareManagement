@@ -348,20 +348,30 @@ namespace CareManagement.Controllers.SCHDL
                     employee => employee.EmployeeId,
                     (shift, employee) => new { shift, employee }
                 )
+                .GroupJoin
+                (
+                    _context.Schedule,
+                    joined => joined.shift.ShiftId,
+                    schedule => schedule.ShiftID,
+                    (joined, schedules) => new { joined, schedules }
+                )
                 .Where
                 (
-                    joined =>
-                    joined.employee.QualificationId == service.QualificationId
-                    &&
-                    joined.shift.StartTime <= startTime
-                    &&
-                    joined.shift.EndTime >= endTime
+                    grouped =>
+                    grouped.joined.employee.QualificationId == service.QualificationId &&
+                    grouped.joined.shift.StartTime <= startTime &&
+                    grouped.joined.shift.EndTime >= endTime &&
+                    (
+                        !grouped.schedules.Any() ||
+                        //TODO: add more conditions where schedule is before, after, overlap... 
+                        grouped.schedules.All(schedule => schedule.EndTime <= startTime || schedule.StartTime >= endTime)
+                    )
                 )
-                .Select(joined => new
+                .Select(grouped => new
                 {
-                    ShiftId = joined.shift.ShiftId,
-                    FirstName = joined.employee.FirstName,
-                    LastName = joined.employee.LastName
+                    ShiftId = grouped.joined.shift.ShiftId,
+                    FirstName = grouped.joined.employee.FirstName,
+                    LastName = grouped.joined.employee.LastName
                 })
                 .ToListAsync();
 
