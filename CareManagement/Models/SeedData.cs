@@ -5,6 +5,7 @@ using CareManagement.Models.SCHDL;
 using CareManagement.Models.OM;
 using CareManagement.Models.CRM;
 using CareManagement.Models.AUTH;
+using Microsoft.AspNetCore.Identity;
 
 namespace CareManagement.Models
 {
@@ -16,6 +17,7 @@ namespace CareManagement.Models
                 serviceProvider.GetRequiredService<
                     DbContextOptions<CareManagementContext>>()))
             {
+                IPasswordHasher<AppUser> passwordHasher = new PasswordHasher<AppUser>();
                 Guid Qualification1 = Guid.NewGuid();
                 Guid Qualification2 = Guid.NewGuid();
                 Guid Qualification3 = Guid.NewGuid();
@@ -25,6 +27,25 @@ namespace CareManagement.Models
                 Guid Invoice2 = Guid.NewGuid();
                 Guid Invoice3 = Guid.NewGuid();
 
+                if (!context.AppUser.Any())
+                {
+                    AppUser user1 = new AppUser
+                    {
+                        UserName = "admin",
+                        Email = "admin@test.com",
+                    };
+                    user1.PasswordHash = passwordHasher.HashPassword(user1, "Admin_123");
+                    AppUser user2 = new AppUser
+                    {
+                        UserName = "user",
+                        Email = "user@test.com",
+                    };
+                    user2.PasswordHash = passwordHasher.HashPassword(user2, "User_123");
+                    context.AppUser.AddRange(
+                        user1,
+                        user2
+                    );
+                }
                 if (!context.Qualification.Any())
                 {
                     context.Qualification.AddRange(
