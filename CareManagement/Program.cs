@@ -5,12 +5,18 @@ using CareManagement.Models;
 using CareManagement.Models.SCHDL;
 using CareManagement.Models.AUTH;
 using Microsoft.AspNetCore.Identity;
+using EmailService;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<CareManagementContext>(options =>
     options.UseInMemoryDatabase(databaseName: "CareManagement"));
 builder.Services.AddIdentity<AppUser, IdentityRole>().AddEntityFrameworkStores<CareManagementContext>().AddDefaultTokenProviders();
 
+var emailConfig = builder.Configuration
+        .GetSection("EmailConfiguration")
+        .Get<EmailConfiguration>();
+builder.Services.AddSingleton(emailConfig);
+builder.Services.AddScoped<IEmailSender, EmailSender>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

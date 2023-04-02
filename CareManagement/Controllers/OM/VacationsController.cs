@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -6,95 +6,95 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CareManagement.Data;
-using CareManagement.Models.SCHDL;
+using CareManagement.Models.OM;
 
-namespace CareManagement.Controllers
+namespace CareManagement.Controllers.OM
 {
-    public class ScheduleController : Controller
+    public class VacationsController : Controller
     {
         private readonly CareManagementContext _context;
 
-        public ScheduleController(CareManagementContext context)
+        public VacationsController(CareManagementContext context)
         {
             _context = context;
         }
 
-        // GET: Schedule
+        // GET: Vacations
         public async Task<IActionResult> Index()
         {
-            var careManagementContext = _context.Schedule.Include(s => s.Service);
+            var careManagementContext = _context.Vacation.Include(v => v.Employee);
             return View(await careManagementContext.ToListAsync());
         }
 
-        // GET: Schedule/Details/5
+        // GET: Vacations/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {
-            if (id == null || _context.Schedule == null)
+            if (id == null || _context.Vacation == null)
             {
                 return NotFound();
             }
 
-            var schedule = await _context.Schedule
-                .Include(s => s.Service)
-                .FirstOrDefaultAsync(m => m.ScheduleId == id);
-            if (schedule == null)
+            var vacation = await _context.Vacation
+                .Include(v => v.Employee)
+                .FirstOrDefaultAsync(m => m.VacationId == id);
+            if (vacation == null)
             {
                 return NotFound();
             }
 
-            return View(schedule);
+            return View(vacation);
         }
 
-        // GET: Schedule/Create
+        // GET: Vacations/Create
         public IActionResult Create()
         {
-            ViewData["ServiceId"] = new SelectList(_context.Service, "ServiceId", "Type");
+            ViewData["EmployeeId"] = new SelectList(_context.Employee, "EmployeeId", "Address");
             return View();
         }
 
-        // POST: Schedule/Create
+        // POST: Vacations/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ScheduleId,ScheduleDate,ServiceId")] Schedule schedule)
+        public async Task<IActionResult> Create([Bind("VacationId,EmployeeId,StartDate,EndDate,VacationRequest")] Vacation vacation)
         {
             if (ModelState.IsValid)
             {
-                schedule.ScheduleId = Guid.NewGuid();
-                _context.Add(schedule);
+                vacation.VacationId = Guid.NewGuid();
+                _context.Add(vacation);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ServiceId"] = new SelectList(_context.Service, "ServiceId", "Type", schedule.ServiceId);
-            return View(schedule);
+            ViewData["EmployeeId"] = new SelectList(_context.Employee, "EmployeeId", "Address", vacation.EmployeeId);
+            return View(vacation);
         }
 
-        // GET: Schedule/Edit/5
+        // GET: Vacations/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {
-            if (id == null || _context.Schedule == null)
+            if (id == null || _context.Vacation == null)
             {
                 return NotFound();
             }
 
-            var schedule = await _context.Schedule.FindAsync(id);
-            if (schedule == null)
+            var vacation = await _context.Vacation.FindAsync(id);
+            if (vacation == null)
             {
                 return NotFound();
             }
-            ViewData["ServiceId"] = new SelectList(_context.Service, "ServiceId", "Type", schedule.ServiceId);
-            return View(schedule);
+            ViewData["EmployeeId"] = new SelectList(_context.Employee, "EmployeeId", "Address", vacation.EmployeeId);
+            return View(vacation);
         }
 
-        // POST: Schedule/Edit/5
+        // POST: Vacations/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("ScheduleId,ScheduleDate,ServiceId")] Schedule schedule)
+        public async Task<IActionResult> Edit(Guid id, [Bind("VacationId,EmployeeId,StartDate,EndDate,VacationRequest")] Vacation vacation)
         {
-            if (id != schedule.ScheduleId)
+            if (id != vacation.VacationId)
             {
                 return NotFound();
             }
@@ -103,12 +103,12 @@ namespace CareManagement.Controllers
             {
                 try
                 {
-                    _context.Update(schedule);
+                    _context.Update(vacation);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ScheduleExists(schedule.ScheduleId))
+                    if (!VacationExists(vacation.VacationId))
                     {
                         return NotFound();
                     }
@@ -119,51 +119,51 @@ namespace CareManagement.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ServiceId"] = new SelectList(_context.Service, "ServiceId", "Type", schedule.ServiceId);
-            return View(schedule);
+            ViewData["EmployeeId"] = new SelectList(_context.Employee, "EmployeeId", "Address", vacation.EmployeeId);
+            return View(vacation);
         }
 
-        // GET: Schedule/Delete/5
+        // GET: Vacations/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
         {
-            if (id == null || _context.Schedule == null)
+            if (id == null || _context.Vacation == null)
             {
                 return NotFound();
             }
 
-            var schedule = await _context.Schedule
-                .Include(s => s.Service)
-                .FirstOrDefaultAsync(m => m.ScheduleId == id);
-            if (schedule == null)
+            var vacation = await _context.Vacation
+                .Include(v => v.Employee)
+                .FirstOrDefaultAsync(m => m.VacationId == id);
+            if (vacation == null)
             {
                 return NotFound();
             }
 
-            return View(schedule);
+            return View(vacation);
         }
 
-        // POST: Schedule/Delete/5
+        // POST: Vacations/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            if (_context.Schedule == null)
+            if (_context.Vacation == null)
             {
-                return Problem("Entity set 'CareManagementContext.Schedule'  is null.");
+                return Problem("Entity set 'CareManagementContext.Vacation'  is null.");
             }
-            var schedule = await _context.Schedule.FindAsync(id);
-            if (schedule != null)
+            var vacation = await _context.Vacation.FindAsync(id);
+            if (vacation != null)
             {
-                _context.Schedule.Remove(schedule);
+                _context.Vacation.Remove(vacation);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ScheduleExists(Guid id)
+        private bool VacationExists(Guid id)
         {
-          return (_context.Schedule?.Any(e => e.ScheduleId == id)).GetValueOrDefault();
+          return (_context.Vacation?.Any(e => e.VacationId == id)).GetValueOrDefault();
         }
     }
 }

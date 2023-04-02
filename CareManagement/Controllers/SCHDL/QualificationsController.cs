@@ -8,90 +8,90 @@ using Microsoft.EntityFrameworkCore;
 using CareManagement.Data;
 using CareManagement.Models.SCHDL;
 
-namespace CareManagement.Controllers
+namespace CareManagement.Controllers.SCHDL
 {
-    public class InvoicesController : Controller
+    public class QualificationsController : Controller
     {
         private readonly CareManagementContext _context;
 
-        public InvoicesController(CareManagementContext context)
+        public QualificationsController(CareManagementContext context)
         {
             _context = context;
         }
 
-        // GET: Invoices
+        // GET: Qualifications
         public async Task<IActionResult> Index()
         {
-              return _context.Invoice != null ? 
-                          View(await _context.Invoice.ToListAsync()) :
-                          Problem("Entity set 'CareManagementContext.Invoice'  is null.");
+              return _context.Qualification != null ? 
+                          View(await _context.Qualification.ToListAsync()) :
+                          Problem("Entity set 'CareManagementContext.Qualification'  is null.");
         }
 
-        // GET: Invoices/Details/5
+        // GET: Qualifications/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {
-            if (id == null || _context.Invoice == null)
+            if (id == null || _context.Qualification == null)
             {
                 return NotFound();
             }
 
-            var invoice = await _context.Invoice
-                .FirstOrDefaultAsync(m => m.InvoiceNumber == id);
-            if (invoice == null)
+            var qualification = await _context.Qualification
+                .FirstOrDefaultAsync(m => m.QualificationId == id);
+            if (qualification == null)
             {
                 return NotFound();
             }
 
-            return View(invoice);
+            return View(qualification);
         }
 
-        // GET: Invoices/Create
+        // GET: Qualifications/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Invoices/Create
+        // POST: Qualifications/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("InvoiceNumber,StartDate,EndDate,TotalHours,TotalCost,DatePaid")] Invoice invoice)
+        public async Task<IActionResult> Create([Bind("QualificationId,QualificationDescription")] Qualification qualification)
         {
             if (ModelState.IsValid)
             {
-                invoice.InvoiceNumber = Guid.NewGuid();
-                _context.Add(invoice);
+                qualification.QualificationId = Guid.NewGuid();
+                _context.Add(qualification);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(invoice);
+            return View(qualification);
         }
 
-        // GET: Invoices/Edit/5
+        // GET: Qualifications/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {
-            if (id == null || _context.Invoice == null)
+            if (id == null || _context.Qualification == null)
             {
                 return NotFound();
             }
 
-            var invoice = await _context.Invoice.FindAsync(id);
-            if (invoice == null)
+            var qualification = await _context.Qualification.FindAsync(id);
+            if (qualification == null)
             {
                 return NotFound();
             }
-            return View(invoice);
+            return View(qualification);
         }
 
-        // POST: Invoices/Edit/5
+        // POST: Qualifications/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("InvoiceNumber,StartDate,EndDate,TotalHours,TotalCost,DatePaid")] Invoice invoice)
+        public async Task<IActionResult> Edit(Guid id, [Bind("QualificationId,QualificationDescription")] Qualification qualification)
         {
-            if (id != invoice.InvoiceNumber)
+            if (id != qualification.QualificationId)
             {
                 return NotFound();
             }
@@ -100,12 +100,12 @@ namespace CareManagement.Controllers
             {
                 try
                 {
-                    _context.Update(invoice);
+                    _context.Update(qualification);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!InvoiceExists(invoice.InvoiceNumber))
+                    if (!QualificationExists(qualification.QualificationId))
                     {
                         return NotFound();
                     }
@@ -116,49 +116,49 @@ namespace CareManagement.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(invoice);
+            return View(qualification);
         }
 
-        // GET: Invoices/Delete/5
+        // GET: Qualifications/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
         {
-            if (id == null || _context.Invoice == null)
+            if (id == null || _context.Qualification == null)
             {
                 return NotFound();
             }
 
-            var invoice = await _context.Invoice
-                .FirstOrDefaultAsync(m => m.InvoiceNumber == id);
-            if (invoice == null)
+            var qualification = await _context.Qualification
+                .FirstOrDefaultAsync(m => m.QualificationId == id);
+            if (qualification == null)
             {
                 return NotFound();
             }
 
-            return View(invoice);
+            return View(qualification);
         }
 
-        // POST: Invoices/Delete/5
+        // POST: Qualifications/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            if (_context.Invoice == null)
+            if (_context.Qualification == null)
             {
-                return Problem("Entity set 'CareManagementContext.Invoice'  is null.");
+                return Problem("Entity set 'CareManagementContext.Qualification'  is null.");
             }
-            var invoice = await _context.Invoice.FindAsync(id);
-            if (invoice != null)
+            var qualification = await _context.Qualification.FindAsync(id);
+            if (qualification != null)
             {
-                _context.Invoice.Remove(invoice);
+                _context.Qualification.Remove(qualification);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool InvoiceExists(Guid id)
+        private bool QualificationExists(Guid id)
         {
-          return (_context.Invoice?.Any(e => e.InvoiceNumber == id)).GetValueOrDefault();
+          return (_context.Qualification?.Any(e => e.QualificationId == id)).GetValueOrDefault();
         }
     }
 }

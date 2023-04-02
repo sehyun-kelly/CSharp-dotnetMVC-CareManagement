@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -6,92 +6,95 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CareManagement.Data;
-using CareManagement.Models.SCHDL;
+using CareManagement.Models.OM;
 
-namespace CareManagement.Controllers
+namespace CareManagement.Controllers.OM
 {
-    public class QualificationsController : Controller
+    public class ShiftsController : Controller
     {
         private readonly CareManagementContext _context;
 
-        public QualificationsController(CareManagementContext context)
+        public ShiftsController(CareManagementContext context)
         {
             _context = context;
         }
 
-        // GET: Qualifications
+        // GET: Shifts
         public async Task<IActionResult> Index()
         {
-              return _context.Qualification != null ? 
-                          View(await _context.Qualification.ToListAsync()) :
-                          Problem("Entity set 'CareManagementContext.Qualification'  is null.");
+            var careManagementContext = _context.Shift.Include(s => s.Employee);
+            return View(await careManagementContext.ToListAsync());
         }
 
-        // GET: Qualifications/Details/5
+        // GET: Shifts/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {
-            if (id == null || _context.Qualification == null)
+            if (id == null || _context.Shift == null)
             {
                 return NotFound();
             }
 
-            var qualification = await _context.Qualification
-                .FirstOrDefaultAsync(m => m.QualificationId == id);
-            if (qualification == null)
+            var shift = await _context.Shift
+                .Include(s => s.Employee)
+                .FirstOrDefaultAsync(m => m.ShiftId == id);
+            if (shift == null)
             {
                 return NotFound();
             }
 
-            return View(qualification);
+            return View(shift);
         }
 
-        // GET: Qualifications/Create
+        // GET: Shifts/Create
         public IActionResult Create()
         {
+            ViewData["EmployeeId"] = new SelectList(_context.Employee, "EmployeeId", "Address");
             return View();
         }
 
-        // POST: Qualifications/Create
+        // POST: Shifts/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("QualificationId,QualificationDescription")] Qualification qualification)
+        public async Task<IActionResult> Create([Bind("ShiftId,EmployeeId,ManagerId,StartTime,EndTime,Sick")] Shift shift)
         {
             if (ModelState.IsValid)
             {
-                qualification.QualificationId = Guid.NewGuid();
-                _context.Add(qualification);
+                shift.ShiftId = Guid.NewGuid();
+                _context.Add(shift);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(qualification);
+            ViewData["EmployeeId"] = new SelectList(_context.Employee, "EmployeeId", "Address", shift.EmployeeId);
+            return View(shift);
         }
 
-        // GET: Qualifications/Edit/5
+        // GET: Shifts/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {
-            if (id == null || _context.Qualification == null)
+            if (id == null || _context.Shift == null)
             {
                 return NotFound();
             }
 
-            var qualification = await _context.Qualification.FindAsync(id);
-            if (qualification == null)
+            var shift = await _context.Shift.FindAsync(id);
+            if (shift == null)
             {
                 return NotFound();
             }
-            return View(qualification);
+            ViewData["EmployeeId"] = new SelectList(_context.Employee, "EmployeeId", "Address", shift.EmployeeId);
+            return View(shift);
         }
 
-        // POST: Qualifications/Edit/5
+        // POST: Shifts/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("QualificationId,QualificationDescription")] Qualification qualification)
+        public async Task<IActionResult> Edit(Guid id, [Bind("ShiftId,EmployeeId,ManagerId,StartTime,EndTime,Sick")] Shift shift)
         {
-            if (id != qualification.QualificationId)
+            if (id != shift.ShiftId)
             {
                 return NotFound();
             }
@@ -100,12 +103,12 @@ namespace CareManagement.Controllers
             {
                 try
                 {
-                    _context.Update(qualification);
+                    _context.Update(shift);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!QualificationExists(qualification.QualificationId))
+                    if (!ShiftExists(shift.ShiftId))
                     {
                         return NotFound();
                     }
@@ -116,49 +119,51 @@ namespace CareManagement.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(qualification);
+            ViewData["EmployeeId"] = new SelectList(_context.Employee, "EmployeeId", "Address", shift.EmployeeId);
+            return View(shift);
         }
 
-        // GET: Qualifications/Delete/5
+        // GET: Shifts/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
         {
-            if (id == null || _context.Qualification == null)
+            if (id == null || _context.Shift == null)
             {
                 return NotFound();
             }
 
-            var qualification = await _context.Qualification
-                .FirstOrDefaultAsync(m => m.QualificationId == id);
-            if (qualification == null)
+            var shift = await _context.Shift
+                .Include(s => s.Employee)
+                .FirstOrDefaultAsync(m => m.ShiftId == id);
+            if (shift == null)
             {
                 return NotFound();
             }
 
-            return View(qualification);
+            return View(shift);
         }
 
-        // POST: Qualifications/Delete/5
+        // POST: Shifts/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            if (_context.Qualification == null)
+            if (_context.Shift == null)
             {
-                return Problem("Entity set 'CareManagementContext.Qualification'  is null.");
+                return Problem("Entity set 'CareManagementContext.Shift'  is null.");
             }
-            var qualification = await _context.Qualification.FindAsync(id);
-            if (qualification != null)
+            var shift = await _context.Shift.FindAsync(id);
+            if (shift != null)
             {
-                _context.Qualification.Remove(qualification);
+                _context.Shift.Remove(shift);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool QualificationExists(Guid id)
+        private bool ShiftExists(Guid id)
         {
-          return (_context.Qualification?.Any(e => e.QualificationId == id)).GetValueOrDefault();
+          return (_context.Shift?.Any(e => e.ShiftId == id)).GetValueOrDefault();
         }
     }
 }

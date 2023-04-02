@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using CareManagement.Data;
 using CareManagement.Models.SCHDL;
 
-namespace CareManagement.Controllers
+namespace CareManagement.Controllers.SCHDL
 {
     public class ServicesController : Controller
     {

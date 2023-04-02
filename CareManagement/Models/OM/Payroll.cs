@@ -9,38 +9,42 @@ namespace CareManagement.Models.OM
 {
     public class Payroll
     {
-        [Key]
-        public int PAY_ID { get; set; }
+        [Key] public Guid PayrollID { get; set; }
 
-        [ForeignKey("EMPLOYEE")]
-        public int EMP_ID { get; set; }
+        [Required] [ForeignKey("Employee")] public Guid EmployeeId { get; set; }
+        public virtual Employee? Employee { get; set; }
 
-        [Required]
-        [Range(0, int.MaxValue)]
-        public int HOURS { get; set; }
+        [Required] public DateTime StartDate { get; set; }
 
-        [Range(0, int.MaxValue)]
-        public int CHECK_AMOUNT { get; set; }
-
-        [Range(0, int.MaxValue)]
-        public int HOUR_RATE { get; set; }
+        public DateTime? EndDate { get; set; }
 
         [Required]
-        [EnumDataType(typeof(EmploymentType))]
-        public string EMP_TYPE { get; set; }
+        // [EnumDataType(typeof(EmploymentType))]
+        public Enum.EType EmployeeType { get; set; }
 
-        [Required]
-        public DateTime START_DATE { get; set; }
 
-        public DateTime? END_DATE { get; set; }
+        [Required] [Range(0, int.MaxValue)] public int Hours { get; set; }
 
-        public virtual Employee EMPLOYEE { get; set; }
-    }
+        [Required] [Range(0, int.MaxValue)] public int Overtime { get; set; }
 
-    public enum EmploymentType
-    {
-        F,
-        P,
-        O
+        [Range(0, int.MaxValue)] public int? LateDeduction { get; set; }
+
+        [Range(0, int.MaxValue)] public int? VacationPay { get; set; }
+
+
+        [Range(0, int.MaxValue)] public int? SickPay { get; set; }
+
+        [Range(0, int.MaxValue)] public float? Pre_tax { get; set; }
+
+        [Range(0, int.MaxValue)] public float? Tax { get; set; }
+
+        [Range(0, int.MaxValue)] public int? CheckAmount { get; set; }
+
+        public enum EmploymentType
+        {
+            F,
+            P,
+            O
+        }
     }
 }

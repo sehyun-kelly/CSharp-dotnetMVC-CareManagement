@@ -17,6 +17,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.15" />
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.15" />
+    <PackageReference Include="NETCore.MailKit" Version="2.1.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -33,11 +34,16 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\CRM\" />
-    <Folder Include="Models\OM\" />
     <Folder Include="Models\SCHDL\" />
-    <Folder Include="Controllers\SCHDL\" />
     <Folder Include="Models\AUTH\" />
+    <Folder Include="Controllers\SCHDL\" />
     <Folder Include="Controllers\AUTH\" />
     <Folder Include="Views\Admin\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EmailService\EmailService.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EmailService\EmailService.csproj" />
   </ItemGroup>
 </Project>

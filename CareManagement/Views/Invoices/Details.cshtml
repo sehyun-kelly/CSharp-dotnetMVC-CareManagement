@@ -40,9 +40,32 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.DatePaid)
         </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IsSent)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IsSent)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DueDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DueDate)
+        </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.InvoiceNumber">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a class="ignoreForPdf" asp-action="Edit" asp-route-id="@Model?.InvoiceNumber">Edit</a> |
+    <a id="PrintInvoice" class="ignoreForPdf" asp-route-id="@Model?.InvoiceNumber">Print</a> |
+    <a class="ignoreForPdf" asp-action="Email" asp-route-id="@Model?.InvoiceNumber">Email</a> |
+    <a class="ignoreForPdf" asp-action="Index">Back to List</a>
 </div>
+
+<script src="~/js/jquery/jquery.min.js"></script>
+<script type="text/javascript">
+    $("#PrintInvoice").click(function () {
+        $(".ignoreForPdf").hide();
+                window.print();
+        $(".ignoreForPdf").show();
+            })
+</script>
