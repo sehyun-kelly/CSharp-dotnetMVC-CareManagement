@@ -31,6 +31,7 @@
     <None Remove="Models\AUTH\" />
     <None Remove="Controllers\AUTH\" />
     <None Remove="Views\Admin\" />
+    <None Remove="Views\Account\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\CRM\" />
@@ -39,6 +40,7 @@
     <Folder Include="Controllers\SCHDL\" />
     <Folder Include="Controllers\AUTH\" />
     <Folder Include="Views\Admin\" />
+    <Folder Include="Views\Account\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EmailService\EmailService.csproj" />

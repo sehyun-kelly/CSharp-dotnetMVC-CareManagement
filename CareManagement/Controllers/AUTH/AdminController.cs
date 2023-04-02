@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using CareManagement.Models.AUTH;
 using CareManagement.Models.SCHDL;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -11,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CareManagement.Controllers.AUTH
 {
+    [Authorize]
     public class AdminController : Controller
     {
         private UserManager<AppUser> userManager;

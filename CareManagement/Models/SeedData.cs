@@ -18,6 +18,8 @@ namespace CareManagement.Models
                     DbContextOptions<CareManagementContext>>()))
             {
                 IPasswordHasher<AppUser> passwordHasher = new PasswordHasher<AppUser>();
+                ILookupNormalizer normalizer = new UpperInvariantLookupNormalizer();
+
                 Guid Qualification1 = Guid.NewGuid();
                 Guid Qualification2 = Guid.NewGuid();
                 Guid Qualification3 = Guid.NewGuid();
@@ -33,12 +35,16 @@ namespace CareManagement.Models
                     {
                         UserName = "admin",
                         Email = "admin@test.com",
+                        NormalizedUserName = normalizer.NormalizeName("admin"),
+                        NormalizedEmail = normalizer.NormalizeEmail("admin@test.com")
                     };
                     user1.PasswordHash = passwordHasher.HashPassword(user1, "Admin_123");
                     AppUser user2 = new AppUser
                     {
                         UserName = "user",
                         Email = "user@test.com",
+                        NormalizedUserName = normalizer.NormalizeName("user"),
+                        NormalizedEmail = normalizer.NormalizeEmail("user@test.com")
                     };
                     user2.PasswordHash = passwordHasher.HashPassword(user2, "User_123");
                     context.AppUser.AddRange(

@@ -5,10 +5,11 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using CareManagement.Models.OM;
 using CareManagement.Models.CRM;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace CareManagement.Data
 {
-    public class CareManagementContext : DbContext
+    public class CareManagementContext : IdentityDbContext
     {
         public CareManagementContext(DbContextOptions<CareManagementContext> options)
             : base(options)
