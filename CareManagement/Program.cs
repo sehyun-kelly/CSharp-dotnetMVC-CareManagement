@@ -10,7 +10,16 @@ using EmailService;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<CareManagementContext>(options =>
     options.UseInMemoryDatabase(databaseName: "CareManagement"));
+
 builder.Services.AddIdentity<AppUser, IdentityRole>().AddEntityFrameworkStores<CareManagementContext>().AddDefaultTokenProviders();
+builder.Services.Configure<IdentityOptions>(opts =>
+{
+    opts.Password.RequiredLength = 6;
+    opts.Password.RequireLowercase = false;
+    opts.Password.RequireUppercase = false;
+    opts.Password.RequireNonAlphanumeric = false;
+    opts.Password.RequireDigit = false;
+});
 
 var emailConfig = builder.Configuration
         .GetSection("EmailConfiguration")
