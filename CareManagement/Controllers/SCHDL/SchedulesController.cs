@@ -312,18 +312,17 @@ namespace CareManagement.Controllers.SCHDL
         public Shift? Shift { get; internal set; }
     }
 
-    [Route("api/services")]
     [ApiController]
-    public class ServicesApiController : ControllerBase
+    public class ApiController : ControllerBase
     {
         private readonly CareManagementContext _context;
 
-        public ServicesApiController(CareManagementContext context)
+        public ApiController(CareManagementContext context)
         {
             _context = context;
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("api/services/{id}")]
         public async Task<ActionResult<Service>> GetService(Guid id)
         {
             var service = await _context.Service.FindAsync(id);
@@ -334,6 +333,31 @@ namespace CareManagement.Controllers.SCHDL
             }
 
             return service;
+        }
+
+        [HttpGet("api/shifts")]
+        public async Task<IActionResult> GetAvailableShiftIds([FromQuery] Guid serviceId, [FromQuery] DateTime startTime, [FromQuery] DateTime endTime)
+        { 
+            var service= await _context.Service.FindAsync(serviceId);
+
+            var availableShifts = await _context.Shift
+                .Join
+                (
+                    _context.Employee,
+                    shift => shift.EmployeeId,
+                    employee => employee.EmployeeId,
+                    (shift, employee) => new { shift, employee }
+                )
+                .Where(joined => joined.employee.QualificationId == service.QualificationId)
+                .Select(joined => new
+                {
+                    ShiftId = joined.shift.ShiftId,
+                    FirstName = joined.employee.FirstName,
+                    LastName = joined.employee.LastName
+                })
+                .ToListAsync();
+
+            return Ok(availableShifts);
         }
     }
 }
