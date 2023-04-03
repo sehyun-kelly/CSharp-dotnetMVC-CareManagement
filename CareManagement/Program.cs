@@ -11,7 +11,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<CareManagementContext>(options =>
     options.UseInMemoryDatabase(databaseName: "CareManagement"));
 
-builder.Services.AddIdentity<AppUser, IdentityRole>().AddEntityFrameworkStores<CareManagementContext>().AddDefaultTokenProviders();
+builder.Services.AddIdentity<AppUser, IdentityRole>()
+    .AddEntityFrameworkStores<CareManagementContext>()
+    .AddDefaultTokenProviders();
+
 builder.Services.Configure<IdentityOptions>(opts =>
 {
     opts.Password.RequiredLength = 6;

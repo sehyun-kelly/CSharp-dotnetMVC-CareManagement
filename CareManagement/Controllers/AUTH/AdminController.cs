@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using CareManagement.Models.AUTH;
+using CareManagement.Models.OM;
 using CareManagement.Models.SCHDL;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -12,16 +14,45 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CareManagement.Controllers.AUTH
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
+        public const String ADMIN_ROLE = HomeController.ADMIN_ROLE;
+        public const String EMPLOYEE_ROLE = HomeController.EMPLOYEE_ROLE;
+        private IdentityRole admin;
+        private IdentityRole employee;
+
         private UserManager<AppUser> userManager;
         private IPasswordHasher<AppUser> passwordHasher;
+        private RoleManager<IdentityRole> roleManager;
 
-        public AdminController(UserManager<AppUser> usrMgr, IPasswordHasher<AppUser> passwordHash)
+        public AdminController(UserManager<AppUser> usrMgr, IPasswordHasher<AppUser> passwordHash, RoleManager<IdentityRole> roleMgr)
         {
             userManager = usrMgr;
             passwordHasher = passwordHash;
+            roleManager = roleMgr;
+
+            Task createRoleTask = getRole();
+            Task.WaitAll(createRoleTask);
+        }
+
+        public async Task getRole()
+        {
+            admin = await roleManager.FindByNameAsync(ADMIN_ROLE);
+            employee = await roleManager.FindByNameAsync(EMPLOYEE_ROLE);
+            return;
+        }
+
+        public async Task addUserToRole(String userId, String roleName)
+        {
+            IdentityRole roleAdded = roleName == ADMIN_ROLE ? admin : employee;
+            IdentityRole roleRemoved = roleName == ADMIN_ROLE ? employee : admin;
+            AppUser user = await userManager.FindByIdAsync(userId);
+            if (user != null)
+            {
+                await userManager.AddToRoleAsync(user, roleAdded.Name);
+                await userManager.RemoveFromRoleAsync(user, roleRemoved.Name);
+            }
         }
 
         // GET: Admin
@@ -41,17 +72,19 @@ namespace CareManagement.Controllers.AUTH
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name,Email,Password")] User user)
+        public async Task<IActionResult> Create([Bind("Name,Email,Password,Role")] User user)
         {
             if (ModelState.IsValid)
             {
                 AppUser appUser = new AppUser
                 {
                     UserName = user.Name,
-                    Email = user.Email
+                    Email = user.Email,
+                    Role = user.Role
                 };
 
                 IdentityResult result = await userManager.CreateAsync(appUser, user.Password);
+                await addUserToRole(appUser.Id, user.Role);
 
                 if (result.Succeeded) {
                     return RedirectToAction(nameof(Index));
@@ -86,14 +119,14 @@ namespace CareManagement.Controllers.AUTH
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(String id, String username, String email, String password, String? newPassword)
+        public async Task<IActionResult> Edit(String id, String username, String email, String role, String password, String? newPassword)
         {
             AppUser user = await userManager.FindByIdAsync(id);
             if (user != null)
             {
                 bool allow = true;
 
-                if (passwordHasher.VerifyHashedPassword(user, user.PasswordHash, password) != PasswordVerificationResult.Success)
+                if (string.IsNullOrEmpty(password) || passwordHasher.VerifyHashedPassword(user, user.PasswordHash, password) != PasswordVerificationResult.Success)
                 {
                     ModelState.AddModelError("", "Password does not match");
                     allow = false;
@@ -115,13 +148,19 @@ namespace CareManagement.Controllers.AUTH
                     allow = false;
                 }
 
-                if (!string.IsNullOrEmpty(newPassword))
-                    user.PasswordHash = passwordHasher.HashPassword(user, newPassword);
+                if (!string.IsNullOrEmpty(role))
+                {
+                    user.Role = role;
+                    await addUserToRole(user.Id, role);
+                }
                 else
                 {
-                    ModelState.AddModelError("", "Password cannot be empty");
+                    ModelState.AddModelError("", "Role cannot be empty");
                     allow = false;
                 }
+
+                if (!string.IsNullOrEmpty(newPassword))
+                    user.PasswordHash = passwordHasher.HashPassword(user, newPassword);
 
                 if (allow)
                 {

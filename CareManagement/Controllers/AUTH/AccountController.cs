@@ -17,7 +17,7 @@ namespace CareManagement.Controllers.AUTH
             userManager = userMgr;
             signInManager = signinMgr;
         }
-
+        
         [AllowAnonymous]
         public IActionResult Login(string? returnUrl)
         {
@@ -56,6 +56,11 @@ namespace CareManagement.Controllers.AUTH
         {
             await signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
+        }
+
+        public IActionResult AccessDenied()
+        {
+            return View();
         }
     }
 }
