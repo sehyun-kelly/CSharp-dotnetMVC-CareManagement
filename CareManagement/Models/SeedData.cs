@@ -4,6 +4,8 @@ using CareManagement.Data;
 using CareManagement.Models.SCHDL;
 using CareManagement.Models.OM;
 using CareManagement.Models.CRM;
+using CareManagement.Models.AUTH;
+using Microsoft.AspNetCore.Identity;
 
 namespace CareManagement.Models
 {
@@ -15,9 +17,9 @@ namespace CareManagement.Models
                 serviceProvider.GetRequiredService<
                     DbContextOptions<CareManagementContext>>()))
             {
-                Guid q1 = Guid.NewGuid();
-                Guid q2 = Guid.NewGuid();
-                Guid q3 = Guid.NewGuid();
+                Guid Qualification1 = Guid.NewGuid();
+                Guid Qualification2 = Guid.NewGuid();
+                Guid Qualification3 = Guid.NewGuid();
                 Guid e1 = Guid.NewGuid();
                 Guid e2 = Guid.NewGuid();
                 Guid e3 = Guid.NewGuid();
@@ -28,25 +30,25 @@ namespace CareManagement.Models
                 Guid Invoice2 = Guid.NewGuid();
                 Guid Invoice3 = Guid.NewGuid();
 
-
+                
                 if (!context.Qualification.Any())
                 {
                     context.Qualification.AddRange(
                         new Qualification
                         {
-                            QualificationId = q1,
+                            QualificationId = Qualification1,
                             QualificationDescription = "Certified Therapist",
                         },
 
                         new Qualification
                         {
-                            QualificationId = q2,
+                            QualificationId = Qualification2,
                             QualificationDescription = "Certified Nurse",
                         },
 
                         new Qualification
                         {
-                            QualificationId = q3,
+                            QualificationId = Qualification3,
                             QualificationDescription = "Certified Consultant",
                         }
                     );
@@ -59,7 +61,7 @@ namespace CareManagement.Models
                             Rate = 20,
                             Hours = 2,
                             Type = "Therapy Session",
-                            QualificationId = q1
+                            QualificationId = Qualification1
                         },
 
                         new Service
@@ -67,7 +69,7 @@ namespace CareManagement.Models
                             Rate = 40,
                             Hours = 2,
                             Type = "Nursing",
-                            QualificationId = q2
+                            QualificationId = Qualification2
                         },
 
                         new Service
@@ -75,7 +77,7 @@ namespace CareManagement.Models
                             Rate = 35,
                             Hours = 4,
                             Type = "Homecare",
-                            QualificationId = q3
+                            QualificationId = Qualification3
                         }
                     );
                 }
@@ -85,7 +87,7 @@ namespace CareManagement.Models
                         new Employee
                         {
                             EmployeeId = e1,
-                            QualificationId = q1,
+                            QualificationId = Qualification1,
                             FirstName = "Therapy",
                             LastName = "Morning",
                             Address = "1234 BCIT st, Burnaby, BC",
@@ -103,7 +105,7 @@ namespace CareManagement.Models
                         new Employee
                         {
                             EmployeeId = e2,
-                            QualificationId = q2,
+                            QualificationId = Qualification2,
                             FirstName = "Nursing",
                             LastName = "Morning",
                             Address = "1234 BCIT st, Burnaby, BC",
@@ -121,7 +123,7 @@ namespace CareManagement.Models
                         new Employee
                         {
                             EmployeeId = e3,
-                            QualificationId = q3,
+                            QualificationId = Qualification3,
                             FirstName = "Homecare",
                             LastName = "Morning",
                             Address = "1234 BCIT st, Burnaby, BC",
@@ -139,7 +141,7 @@ namespace CareManagement.Models
                         new Employee
                         {
                             EmployeeId = e4,
-                            QualificationId = q1,
+                            QualificationId = Qualification1,
                             FirstName = "Therapy",
                             LastName = "Afternoon",
                             Address = "1234 BCIT st, Burnaby, BC",
@@ -157,7 +159,7 @@ namespace CareManagement.Models
                         new Employee
                         {
                             EmployeeId = e5,
-                            QualificationId = q2,
+                            QualificationId = Qualification2,
                             FirstName = "Nursing",
                             LastName = "Afternoon",
                             Address = "1234 BCIT st, Burnaby, BC",
@@ -175,7 +177,7 @@ namespace CareManagement.Models
                         new Employee
                         {
                             EmployeeId = e6,
-                            QualificationId = q3,
+                            QualificationId = Qualification3,
                             FirstName = "Homecare",
                             LastName = "Afternoon",
                             Address = "1234 BCIT st, Burnaby, BC",

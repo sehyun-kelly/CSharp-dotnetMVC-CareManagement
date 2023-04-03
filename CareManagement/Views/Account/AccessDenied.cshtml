@@ -1,0 +1,5 @@
+﻿<h2>Access Denied</h2>
+@if (User?.Identity?.IsAuthenticated ?? false)
+{
+    <a asp-controller="Account" asp-action="Logout" class="btn btn-primary">Logout</a>
+}
