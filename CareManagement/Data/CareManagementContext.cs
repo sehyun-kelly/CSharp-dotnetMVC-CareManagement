@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using CareManagement.Models.OM;
 using CareManagement.Models.CRM;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using CareManagement.Models.SCHDL;
 
 namespace CareManagement.Data
 {
@@ -26,5 +27,6 @@ namespace CareManagement.Data
         public DbSet<CareManagement.Models.OM.Vacation>? Vacation { get; set; }
         public DbSet<CareManagement.Models.OM.Payroll>? Payroll { get; set; }
         public DbSet<CareManagement.Models.AUTH.AppUser>? AppUser { get; set; }
+        public DbSet<CareManagement.Models.SCHDL.Report>? Report { get; set; }
     }
 }
