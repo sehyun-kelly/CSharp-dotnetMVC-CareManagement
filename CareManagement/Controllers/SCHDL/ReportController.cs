@@ -23,7 +23,7 @@ namespace CareManagement.Controllers.SCHDL
         public async Task<IActionResult> Index()
         {
             var careManagementContext = _context.Report.Include(r => r.Renter).Include(r => r.Service);
-            return View(await careManagementContext.ToListAsync());
+            return View();
         }
 
         // GET: Report/Details/5
