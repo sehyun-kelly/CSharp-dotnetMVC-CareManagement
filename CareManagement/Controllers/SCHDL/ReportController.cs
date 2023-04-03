@@ -23,6 +23,12 @@ namespace CareManagement.Controllers.SCHDL
         public async Task<IActionResult> Index()
         {
             var careManagementContext = _context.Report.Include(r => r.Renter).Include(r => r.Service);
+            ViewData["ServiceId"] = new SelectList(_context.Service, "ServiceId", "Type");
+            ViewData["RenterId"] = _context.Renter.Select(r => new SelectListItem
+            {
+                Value = r.RenterId.ToString(),
+                Text = $"{r.Name} ({r.RmNumber})"
+            }).ToList();
             return View();
         }
 
