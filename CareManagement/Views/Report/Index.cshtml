@@ -1,95 +1,65 @@
-@model CareManagement.Models.SCHDL.Report
-
+@model IEnumerable<CareManagement.Models.SCHDL.Report>
 @{
     ViewData["Title"] = "Index";
 }
 
 <h1>Index</h1>
 
-@*<p>
+<p>
     <a asp-action="Create">Create New</a>
-</p>*@
+</p>
 
-@{
-    ViewData["Title"] = "Create";
-}
-
-<h1>Create</h1>
-
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="StartTime" class="control-label"></label>
-                <input asp-for="StartTime" class="form-control" />
-                <span asp-validation-for="StartTime" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="EndTime" class="control-label"></label>
-                <input asp-for="EndTime" class="form-control" />
-                <span asp-validation-for="EndTime" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="RenterId" class="control-label">
-                    @Html.DisplayNameFor(model => model.Renter)
-                </label>
-                <select asp-for="RenterId" class="form-control" asp-items="ViewBag.RenterId">
-                </select>
-            </div>
-            <div class="form-group">
-                <label asp-for="ServiceId" class="control-label">
-                    @Html.DisplayNameFor(model => model.Service)
-                </label>
-                <select id="ServiceId" asp-for="ServiceId" class="form-control" asp-items="ViewBag.ServiceId"></select>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+<form asp-action="Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Find by renter: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
+            <input type="submit" value="Search" class="btn btn-default" /> |
+            <a asp-action="Index">Back to Full List</a>
+        </p>
     </div>
-</div>
+</form>
 
-<h4>Report</h4>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(modelItem => modelItem.StartTime)
+                @Html.DisplayNameFor(model => model.StartTime)
             </th>
             <th>
-                @Html.DisplayNameFor(modelItem => modelItem.EndTime)
+                @Html.DisplayNameFor(model => model.EndTime)
             </th>
             <th>
-                @Html.DisplayNameFor(modelItem => modelItem.Renter)
+                @Html.DisplayNameFor(model => model.Renter)
             </th>
             <th>
-                @Html.DisplayNameFor(modelItem => modelItem.Service)
+                @Html.DisplayNameFor(model => model.Service)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => modelItem.StartTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => modelItem.EndTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => modelItem.Renter)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => modelItem.Service)
-            </td>
-            <td>
-                @*<a asp-action="Edit" asp-route-id="@Model.ReportId">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@Model.ReportId">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@Model.ReportId">Delete</a>*@
-            </td>
-        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Renter.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Service.Type)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ReportId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.ReportId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ReportId">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
 

@@ -20,16 +20,18 @@ namespace CareManagement.Controllers.SCHDL
         }
 
         // GET: Report
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
-            var careManagementContext = _context.Report.Include(r => r.Renter).Include(r => r.Service);
-            ViewData["ServiceId"] = new SelectList(_context.Service, "ServiceId", "Type");
-            ViewData["RenterId"] = _context.Renter.Select(r => new SelectListItem
+            //var careManagementContext = _context.Report.Include(r => r.Renter).Include(r => r.Service);
+            var reports = from m in _context.Report.Include(r => r.Renter).Include(r => r.Service)
+                          select m;
+
+            if (!String.IsNullOrEmpty(searchString))
             {
-                Value = r.RenterId.ToString(),
-                Text = $"{r.Name} ({r.RmNumber})"
-            }).ToList();
-            return View();
+                reports = reports.Where(s => s.Renter.Name!.Contains(searchString));
+            }
+
+            return View(await reports.ToListAsync());
         }
 
         // GET: Report/Details/5
