@@ -5,9 +5,9 @@ name: .NET
 
 on:
   push:
-    branches: [ "master","brad-dev" ]
-  pull_request:
-    branches: [ "master" ]
+    branches: [ "brad-dev" ]
+  #pull_request:
+   # branches: [ "master" ]
 
 jobs:
   build:
@@ -26,4 +26,36 @@ jobs:
     - name: Build
       run: dotnet build --no-restore
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test --no-build --verbosity normal # run the test suite
+
+  containerize-image:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Login into Docker
+      run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+    - name: Build Docker Image
+      run: docker build -t ${{ secrets.DOCKER_USERNAME }}/care-management:v1 .  # builds the image
+    - name: Push to DockerHub
+      run: docker push ${{secrets.DOCKER_USERNAME}}/care-management:v1 # pushes it to dockerhub
+  
+  push-to-heroku-container-registry:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Login to Heroku Container Registry
+      uses: heroku/login-action@v1
+      with:
+        email: ${{ secrets.HEROKU_EMAIL }} # 
+        api_key: ${{ secrets.HEROKU_API_KEY }} #
+
+
+
+
+  
+
+    
+    
+
