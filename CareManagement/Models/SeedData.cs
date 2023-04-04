@@ -20,12 +20,23 @@ namespace CareManagement.Models
                 Guid Qualification1 = Guid.NewGuid();
                 Guid Qualification2 = Guid.NewGuid();
                 Guid Qualification3 = Guid.NewGuid();
+                Guid Service1 = Guid.NewGuid();
+                Guid Service2 = Guid.NewGuid();
+                Guid Service3 = Guid.NewGuid();
                 Guid e1 = Guid.NewGuid();
                 Guid e2 = Guid.NewGuid();
                 Guid e3 = Guid.NewGuid();
                 Guid e4 = Guid.NewGuid();
                 Guid e5 = Guid.NewGuid();
                 Guid e6 = Guid.NewGuid();
+                Guid Shift1 = Guid.NewGuid();
+                Guid Shift2 = Guid.NewGuid();
+                Guid Shift3 = Guid.NewGuid();
+                Guid Shift4 = Guid.NewGuid();
+                Guid Shift5 = Guid.NewGuid();
+                Guid Shift6 = Guid.NewGuid();
+                Guid Renter1 = Guid.NewGuid();
+                Guid Renter2 = Guid.NewGuid();
                 Guid Invoice1 = Guid.NewGuid();
                 Guid Invoice2 = Guid.NewGuid();
                 Guid Invoice3 = Guid.NewGuid();
@@ -58,6 +69,7 @@ namespace CareManagement.Models
                     context.Service.AddRange(
                         new Service
                         {
+                            ServiceId = Service1,
                             Rate = 20,
                             Hours = 2,
                             Type = "Therapy Session",
@@ -66,6 +78,7 @@ namespace CareManagement.Models
 
                         new Service
                         {
+                            ServiceId = Service2,
                             Rate = 40,
                             Hours = 2,
                             Type = "Nursing",
@@ -74,6 +87,7 @@ namespace CareManagement.Models
 
                         new Service
                         {
+                            ServiceId = Service3,
                             Rate = 35,
                             Hours = 4,
                             Type = "Homecare",
@@ -199,6 +213,7 @@ namespace CareManagement.Models
                     context.Shift.AddRange(
                         new Shift
                         {
+                            ShiftId = Shift1,
                             EmployeeId = e1,
                             ManagerId = e1,
                             StartTime = new DateTime(2023, 4, 1, 8, 0, 0),
@@ -207,6 +222,7 @@ namespace CareManagement.Models
                         },
                         new Shift
                         {
+                            ShiftId = Shift2,
                             EmployeeId = e2,
                             ManagerId = e1,
                             StartTime = new DateTime(2023, 4, 1, 8, 0, 0),
@@ -215,30 +231,34 @@ namespace CareManagement.Models
                         },
                         new Shift
                         {
+                            ShiftId = Shift3,
                             EmployeeId = e3,
                             ManagerId = e1,
-                            StartTime = new DateTime(2023, 4, 1, 8, 0, 0),
-                            EndTime = new DateTime(2023, 4, 1, 14, 0, 0),
+                            StartTime = new DateTime(2023, 4, 5, 8, 0, 0),
+                            EndTime = new DateTime(2023, 4, 5, 14, 0, 0),
                             Sick = false
                         },
                         new Shift
                         {
+                            ShiftId = Shift4,
                             EmployeeId = e4,
                             ManagerId = e1,
-                            StartTime = new DateTime(2023, 4, 1, 12, 0, 0),
-                            EndTime = new DateTime(2023, 4, 1, 20, 0, 0),
+                            StartTime = new DateTime(2023, 4, 3, 12, 0, 0),
+                            EndTime = new DateTime(2023, 4, 3, 20, 0, 0),
                             Sick = false
                         },
                         new Shift
                         {
+                            ShiftId = Shift5,
                             EmployeeId = e5,
                             ManagerId = e1,
-                            StartTime = new DateTime(2023, 4, 1, 12, 0, 0),
-                            EndTime = new DateTime(2023, 4, 1, 20, 0, 0),
+                            StartTime = new DateTime(2023, 4, 2, 12, 0, 0),
+                            EndTime = new DateTime(2023, 4, 2, 20, 0, 0),
                             Sick = false
                         },
                         new Shift
                         {
+                            ShiftId = Shift6,
                             EmployeeId = e6,
                             ManagerId = e1,
                             StartTime = new DateTime(2023, 4, 1, 12, 0, 0),
@@ -252,6 +272,7 @@ namespace CareManagement.Models
                     context.Renter.AddRange(
                         new Renter
                         {
+                            RenterId = Renter1,
                             Name = "Albert Dumbledore",
                             Age = 142,
                             Gender = "Male",
@@ -267,6 +288,7 @@ namespace CareManagement.Models
                         },
                         new Renter
                         {
+                            RenterId = Renter2,
                             Name = "Minerva McGonagall",
                             Age = 71,
                             Gender = "Female",
@@ -279,6 +301,51 @@ namespace CareManagement.Models
                             Employer = "World of Magic",
                             Email = "dumbledore@hogwarts.edu",
                             RmNumber = 245
+                        }
+                        );
+                }
+                if (!context.Schedule.Any())
+                {
+                    context.Schedule.AddRange(
+                        new Schedule
+                        {
+                            StartTime = new DateTime(2023, 4, 1, 10, 0, 0),
+                            EndTime = new DateTime(2023, 4, 1, 12, 0, 0),
+                            RenterId = Renter1,
+                            ServiceId = Service1,
+                            ShiftID = Shift1
+                        },
+                        new Schedule
+                        {
+                            StartTime = new DateTime(2023, 4, 1, 10, 0, 0),
+                            EndTime = new DateTime(2023, 4, 1, 12, 0, 0),
+                            RenterId = Renter2,
+                            ServiceId = Service2,
+                            ShiftID = Shift2
+                        },
+                        new Schedule
+                        {
+                            StartTime = new DateTime(2023, 4, 5, 8, 0, 0),
+                            EndTime = new DateTime(2023, 4, 5, 9, 30, 0),
+                            RenterId = Renter2,
+                            ServiceId = Service3,
+                            ShiftID = Shift3
+                        },
+                        new Schedule
+                        {
+                            StartTime = new DateTime(2023, 4, 3, 15, 0, 0),
+                            EndTime = new DateTime(2023, 4, 3, 17, 0, 0),
+                            RenterId = Renter1,
+                            ServiceId = Service1,
+                            ShiftID = Shift4
+                        },
+                        new Schedule
+                        {
+                            StartTime = new DateTime(2023, 4, 2, 18, 0, 0),
+                            EndTime = new DateTime(2023, 4, 2, 20, 0, 0),
+                            RenterId = Renter1,
+                            ServiceId = Service2,
+                            ShiftID = Shift5
                         }
                         );
                 }
