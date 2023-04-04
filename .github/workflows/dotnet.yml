@@ -50,8 +50,8 @@ jobs:
       uses: akhileshns/heroku-deploy@v3.12.13
 
       with:
-        email: ${{ secrets.HEROKU_EMAIL }} # 
-        api_key: ${{ secrets.HEROKU_API_KEY }} #
+        heroku_email: ${{ secrets.HEROKU_EMAIL }} # 
+        heroku_api_key: ${{ secrets.HEROKU_API_KEY }} #
 
 
 
