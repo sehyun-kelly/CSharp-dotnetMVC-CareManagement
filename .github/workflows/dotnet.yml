@@ -52,7 +52,9 @@ jobs:
       with:
         heroku_api_key: ${{ secrets.HEROKU_API_KEY }} 
         heroku_app_name: "care-management-cs-server"
-        heroku_email: ${{ secrets.HEROKU_EMAIL }} 
+        heroku_email: ${{ secrets.HEROKU_EMAIL }}
+    - name: Push Container to Registry
+      run: heroku container:release -a care-managment-cs-server web
       
 
 
