@@ -51,8 +51,10 @@ jobs:
 
       with:
         heroku_api_key: ${{ secrets.HEROKU_API_KEY }} 
-        heroku_app_name: "docker-demo"
+        heroku_app_name: "care-management-cs-server"
         heroku_email: ${{ secrets.HEROKU_EMAIL }} 
+      
+
 
 
 
