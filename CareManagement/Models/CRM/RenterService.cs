@@ -1,22 +1,33 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using CareManagement.Models;
+=======
+=======
+=======
+=======
+=======
+=======
+=======
+=======
+=======
+=======
+=======
 using CareManagement.Models.SCHDL;
 
 namespace CareManagement.Models.CRM
 {
 
-    public class RenterService
+        [Key]
     {
 
-        [Key]
+        public Guid Service_ID { get; set; }
         public Guid RenterServiceID { get; set; }
 
 
-        [Required]
+        [Key]
         [ForeignKey("Service")]
         public Guid ServiceId { get; set; }
-
+        public Guid Renter_ID { get; set; }
         public virtual Service Service { get; set; }
 
 
