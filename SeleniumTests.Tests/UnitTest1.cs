@@ -104,5 +104,51 @@ namespace SeleniumTests.Tests
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
             driver.FindElement(By.XPath("//Input[@type='submit']")).Click();
         }
+
+
+        //[TestMethod]
+        //public void TestInvoice()
+        //{
+        //    string urlInvoice = "https://localhost:7121/Invoices";
+        //    ChromeDriver driver = new ChromeDriver();
+
+        //    // This redirects to the Qualifications URL
+        //    driver.Manage().Window.Maximize();
+        //    driver.Navigate().GoToUrl(urlInvoice);
+        //    driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+
+        //    // This tests creating an invoice
+        //    driver.FindElement(By.LinkText("Create New")).Click();
+        //    driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+        //    driver.FindElement(By.Id("TotalHours")).SendKeys("30");
+        //    driver.FindElement(By.Id("TotalCost")).SendKeys("100");
+        //    driver.FindElement(By.Id("DatePaid")).Click();
+
+        //    driver.FindElement(By.XPath("//Input[@type='submit']")).Click();
+
+
+
+
+        //    // This tests editing a invoice
+        //    driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+        //    driver.FindElement(By.LinkText("Edit")).Click();
+        //    driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+        //    driver.FindElement(By.Id("QualificationDescription")).Clear();
+
+        //    driver.FindElement(By.Id("QualificationDescription")).SendKeys("QD3");
+        //    driver.FindElement(By.XPath("//Input[@type='submit']")).Click();
+
+        //    // This tests viewing a invoice
+        //    driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+        //    driver.FindElement(By.LinkText("Details")).Click();
+        //    driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+        //    driver.FindElement(By.LinkText("Back to List")).Click();
+
+        //    // This tests deleting a invoice
+        //    driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+        //    driver.FindElement(By.LinkText("Delete")).Click();
+        //    driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+        //    driver.FindElement(By.XPath("//Input[@type='submit']")).Click();
+        //}
     }
 }
