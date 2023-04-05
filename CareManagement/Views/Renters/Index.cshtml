@@ -1,0 +1,101 @@
+﻿@model IEnumerable<CareManagement.Models.CRM.Renter>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Age)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Gender)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContactingNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmergencyContactingNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FamilyDoctor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SharingInfo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Income)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Employer)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RmNumber)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Age)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Gender)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContactingNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmergencyContactingNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FamilyDoctor)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SharingInfo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Income)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Employer)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RmNumber)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.RenterId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.RenterId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.RenterId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,80 @@
+# This workflow will build a .NET project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+name: .NET
+
+on:
+  push:
+    branches: ["master", "brad-dev" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 6.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore
+    - name: Test
+      run: dotnet test --no-build --verbosity normal # run the test suite
+
+  containerize-image:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Login into Docker
+      run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+    - name: Build Docker Image
+      run: docker build -t ${{ secrets.DOCKER_USERNAME }}/care-management:v1 .  # builds the image
+    - name: Push to DockerHub
+      run: docker push ${{secrets.DOCKER_USERNAME}}/care-management:v1 # pushes it to dockerhub
+  
+  push-to-heroku-container-registry:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Login to Heroku Container Registry
+      uses: akhileshns/heroku-deploy@v3.12.13
+   #   uses: gonuit/heroku-docker-deploy@v1.3.3
+
+      with:
+        heroku_api_key: ${{ secrets.HEROKU_API_KEY }} 
+        heroku_app_name: "care-management-cs-server"
+        heroku_email: ${{ secrets.HEROKU_EMAIL }}
+        dockerfile_directory: ./
+        dockerfile_name: Dockerfile
+        docker_options: "--no-cache"
+        process_type: web
+   # - name: Login into Docker
+   #   run: docker login --username=${{secrets.DOCKER_USERNAME}} --password= ${{ secrets.HEROKU_API_KEY }}  registry.heroku.com
+   # - name: Docker Build
+   #   run: docker build -t care-management-cs-server .
+  #  - name: Push Container to Registry
+   #   run: heroku container:push web 
+   # - name: Release
+   #   run: heroku container:release -app care-management-cs-server 
+      
+
+
+
+
+
+
+  
+
+    
+    
+
