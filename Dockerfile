@@ -15,4 +15,5 @@ EXPOSE 80
 FROM mcr.microsoft.com/dotnet/aspnet:6.0.0
 WORKDIR /App
 COPY --from=build-env /App/out .
-ENTRYPOINT ["dotnet", "CareManagement.dll"]
+#ENTRYPOINT ["dotnet", "CareManagement.dll"]
+CMD ASPNETCORE_URLS=http://*:$PORT dotnet CareManagement.dll
