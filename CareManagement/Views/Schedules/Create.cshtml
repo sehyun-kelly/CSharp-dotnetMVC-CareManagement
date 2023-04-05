@@ -11,25 +11,32 @@
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
+            <div class="form-group">
+                <label asp-for="RenterId" class="control-label">
+                    @Html.DisplayNameFor(model => model.Renter)
+                </label>
+                <select asp-for="RenterId" class="form-control" asp-items="ViewBag.RenterId">
+                </select>
+            </div>
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="ServiceId" class="control-label">
                     @Html.DisplayNameFor(model => model.Service)
                 </label>
-                <select asp-for="ServiceId" class="form-control" asp-items="ViewBag.ServiceId"></select>
+                <select id="ServiceId" asp-for="ServiceId" class="form-control" asp-items="ViewBag.ServiceId"></select>
             </div>
             <div class="form-group">
                 <label asp-for="StartTime" class="control-label">
                     @Html.DisplayNameFor(model => model.StartTime)
                 </label>
-                <input asp-for="StartTime" class="form-control" />
+                <input id="StartTime" asp-for="StartTime" class="form-control" />
                 <span asp-validation-for="StartTime" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="EndTime" class="control-label">
                     @Html.DisplayNameFor(model => model.EndTime)
                 </label>
-                <input asp-for="EndTime" class="form-control" />
+                <input id="EndTime" asp-for="EndTime" class="form-control" />
                 <span asp-validation-for="EndTime" class="text-danger"></span>
             </div>
             <div class="form-group form-check">
@@ -53,15 +60,8 @@
                 <span asp-validation-for="RepeatEndDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="RenterId" class="control-label">
-                    @Html.DisplayNameFor(model => model.Renter)
-                </label>
-                <select asp-for="RenterId" class="form-control" asp-items="ViewBag.RenterId">
-                </select>
-            </div>
-            <div class="form-group">
                 <label asp-for="ShiftID" class="control-label">Employee</label>
-                <select asp-for="ShiftID" class="form-control" asp-items="ViewBag.ShiftID"></select>
+                <select id="ShiftID" asp-for="ShiftID" class="form-control" asp-items="ViewBag.ShiftID"></select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
@@ -78,6 +78,7 @@
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script>
         $(document).ready(function () {
+            //hide/unhide repeat hours
             $('.repeat-check').change(function () {
                 if (this.checked) {
                     $('.repeat-fields').removeAttr('hidden');
@@ -85,6 +86,75 @@
                     $('.repeat-fields').attr('hidden', true);
                 }
             });
+
+            const serviceId = $("#ServiceId");
+            const startTime = $("#StartTime");
+            const endTime = $("#EndTime");
+            const shiftId = $("#ShiftID");
+
+            // A function to fetch the service hours based on the selected service id
+            async function getServiceHours(serviceId) {
+                const response = await fetch(`/api/services/${serviceId}`);
+                if (response.ok) {
+                    const service = await response.json();
+                    console.log(service.hours);
+                    return service.hours;
+                } else {
+                    return null;
+                }
+            }
+
+            // A function to update the end time based on the selected service id and start time
+            async function updateEndTime() {
+                const selectedServiceId = serviceId.val();
+                const startDateTime = startTime.val();
+
+                if (selectedServiceId && startDateTime) {
+                    const serviceHours = await getServiceHours(selectedServiceId);
+                    if (serviceHours !== null) {
+                        const startMoment = new Date(startDateTime);
+                        startMoment.setHours(startMoment.getHours() + serviceHours - 7);
+                        endTime.val(startMoment.toISOString().slice(0, 19));
+                        updateShiftIds();
+                    }
+                }
+            }
+
+            // A function to fetch the available Employees based on ServiceId, StartTime, and EndTime
+            async function getAvailableEmployees(serviceId, startTime, endTime) {
+                const response = await fetch(`/api/shifts?serviceId=${serviceId}&startTime=${startTime}&endTime=${endTime}`);
+                if (response.ok) {
+                    const employees = await response.json();
+                    console.log(employees);
+                    return employees;
+                } else {
+                    return [];
+                }
+            }
+
+            // A function to update the ShiftID dropdown based on the selected ServiceId, StartTime, and EndTime
+            async function updateShiftIds() {
+                const selectedServiceId = serviceId.val();
+                const selectedStartTime = startTime.val();
+                const selectedEndTime = endTime.val();
+
+                if (selectedServiceId && selectedStartTime && selectedEndTime) {
+                    const availableEmployees = await getAvailableEmployees(selectedServiceId, selectedStartTime, selectedEndTime);
+                    shiftId.empty();
+
+                    availableEmployees.forEach(shift => {
+                        shiftId.append(`<option value="${shift.shiftId}">${shift.firstName} ${shift.lastName}</option>`);
+                    });
+                }
+            }
+
+
+            // Attach event listeners to the ServiceId and StartTime inputs
+            serviceId.on("change", updateEndTime);
+            startTime.on("change", updateEndTime);
+            serviceId.on("change", updateShiftIds);
+            startTime.on("change", updateShiftIds);
+            endTime.on("change", updateShiftIds);
         });
     </script>
 }

@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using CareManagement.Models;
-using CareManagement.Models.SCHDL;
 using CareManagement.Models.OM;
 using CareManagement.Models.CRM;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using CareManagement.Models.SCHDL;
 
 namespace CareManagement.Data
 {
-    public class CareManagementContext : DbContext
+    public class CareManagementContext : IdentityDbContext
     {
         public CareManagementContext(DbContextOptions<CareManagementContext> options)
             : base(options)
@@ -32,5 +32,7 @@ namespace CareManagement.Data
         public DbSet<CareManagement.Models.CRM.AssetMaintenance>? AssetMaintenance { get; set; }
         public DbSet<CareManagement.Models.CRM.AssetRentLog>? AssetRentLog { get; set; }
         public DbSet<CareManagement.Models.CRM.RenterService>? RenterService { get; set; }
+        public DbSet<CareManagement.Models.AUTH.AppUser>? AppUser { get; set; }
+        public DbSet<CareManagement.Models.SCHDL.Report>? Report { get; set; }
     }
 }

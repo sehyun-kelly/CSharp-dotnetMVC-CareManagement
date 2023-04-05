@@ -2,11 +2,27 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using CareManagement.Data;
 using CareManagement.Models;
+using CareManagement.Models.SCHDL;
+using CareManagement.Models.AUTH;
+using Microsoft.AspNetCore.Identity;
 using EmailService;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<CareManagementContext>(options =>
     options.UseInMemoryDatabase(databaseName: "CareManagement"));
+
+builder.Services.AddIdentity<AppUser, IdentityRole>()
+    .AddEntityFrameworkStores<CareManagementContext>()
+    .AddDefaultTokenProviders();
+
+builder.Services.Configure<IdentityOptions>(opts =>
+{
+    opts.Password.RequiredLength = 6;
+    opts.Password.RequireLowercase = false;
+    opts.Password.RequireUppercase = false;
+    opts.Password.RequireNonAlphanumeric = false;
+    opts.Password.RequireDigit = false;
+});
 
 var emailConfig = builder.Configuration
         .GetSection("EmailConfiguration")
@@ -39,7 +55,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
