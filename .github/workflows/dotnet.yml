@@ -56,7 +56,7 @@ jobs:
     - name: Push Container to Registry
       run: heroku container:push -app care-management-cs-server web
     - name: Release
-      run: heroku container:release -app care-management-cs-server web
+      run: heroku container:release web care-management-cs-server 
       
 
 
