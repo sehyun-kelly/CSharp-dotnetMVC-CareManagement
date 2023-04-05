@@ -110,7 +110,9 @@ namespace CareManagement.Controllers.SCHDL
                 Value = r.RenterId.ToString(),
                 Text = $"{r.Name} ({r.RmNumber})"
             }).ToList();
+
             ViewData["ServiceId"] = new SelectList(_context.Service, "ServiceId", "Type");
+
             ViewData["ShiftID"] = _context.Shift
                 .Join(_context.Employee,
                     shift => shift.EmployeeId,
@@ -121,6 +123,13 @@ namespace CareManagement.Controllers.SCHDL
                         Text = $"{employee.FirstName} {employee.LastName}"
                     })
                 .ToList();
+
+            ViewData["Hours"] = _context.Service.Select(s => new SelectListItem
+            {
+                Value = s.ServiceId.ToString(),
+                Text = s.Hours.ToString()
+            }).ToList();
+
             return View();
         }
 
@@ -301,5 +310,72 @@ namespace CareManagement.Controllers.SCHDL
         public Service? Service { get; internal set; }
         public Renter? Renter { get; internal set; }
         public Shift? Shift { get; internal set; }
+    }
+
+    [ApiController]
+    public class ApiController : ControllerBase
+    {
+        private readonly CareManagementContext _context;
+
+        public ApiController(CareManagementContext context)
+        {
+            _context = context;
+        }
+
+        [HttpGet("api/services/{id}")]
+        public async Task<ActionResult<Service>> GetService(Guid id)
+        {
+            var service = await _context.Service.FindAsync(id);
+
+            if (service == null)
+            {
+                return NotFound();
+            }
+
+            return service;
+        }
+
+        [HttpGet("api/shifts")]
+        public async Task<IActionResult> GetAvailableShiftIds([FromQuery] Guid serviceId, [FromQuery] DateTime startTime, [FromQuery] DateTime endTime)
+        { 
+            var service= await _context.Service.FindAsync(serviceId);
+
+            var availableShifts = await _context.Shift
+                .Join
+                (
+                    _context.Employee,
+                    shift => shift.EmployeeId,
+                    employee => employee.EmployeeId,
+                    (shift, employee) => new { shift, employee }
+                )
+                .GroupJoin
+                (
+                    _context.Schedule,
+                    joined => joined.shift.ShiftId,
+                    schedule => schedule.ShiftID,
+                    (joined, schedules) => new { joined, schedules }
+                )
+                .Where
+                (
+                    grouped =>
+                    grouped.joined.employee.QualificationId == service.QualificationId &&
+                    grouped.joined.shift.StartTime <= startTime &&
+                    grouped.joined.shift.EndTime >= endTime &&
+                    (
+                        !grouped.schedules.Any() ||
+                        //TODO: add more conditions where schedule is before, after, overlap... 
+                        grouped.schedules.All(schedule => schedule.EndTime <= startTime || schedule.StartTime >= endTime)
+                    )
+                )
+                .Select(grouped => new
+                {
+                    ShiftId = grouped.joined.shift.ShiftId,
+                    FirstName = grouped.joined.employee.FirstName,
+                    LastName = grouped.joined.employee.LastName
+                })
+                .ToListAsync();
+
+            return Ok(availableShifts);
+        }
     }
 }
