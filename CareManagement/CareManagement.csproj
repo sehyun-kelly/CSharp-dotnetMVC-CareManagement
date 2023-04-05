@@ -33,7 +33,6 @@
     <None Remove="Views\Account\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Models\CRM\" />
     <Folder Include="Models\SCHDL\" />
     <Folder Include="Models\AUTH\" />
     <Folder Include="Controllers\SCHDL\" />
