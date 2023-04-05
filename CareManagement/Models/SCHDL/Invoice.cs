@@ -10,41 +10,35 @@ namespace CareManagement.Models.SCHDL
 		[Key]
 		public Guid InvoiceNumber { get; set; }
 
-		//[Required]
-		//[ForeignKey("Renter")]
 
-		//public int RenterId { get; set; }
-		//public virtual Renter Renter { get; set; }
+        [Required]
+        [ForeignKey("Renter")]
+        public Guid RenterId { get; set; } // the actual FK in the table
+        public virtual Renter? Renter { get; set; } // reference for the FK
 
 
         /**
          * once an invoice time period is specified we can change the range of dates allowed for an invoice
          */
         [Required]
-        [Range(typeof(DateTime), "1/1/2023", "12/31/2023",
-        ErrorMessage = "Value for {0} must be between {1} and {2}")]
         public DateTime StartDate { get; set; }
 
         /**
         * once an invoice time period is specified we can change the range of dates allowed for an invoice
         */
         [Required]
-        [Range(typeof(DateTime), "1/1/2023", "12/31/2023",
-        ErrorMessage = "Value for {0} must be between {1} and {2}")]
         public DateTime EndDate { get; set; }
 
         /**
 		 * The total hours of all the services summed together 
 		 */
 
-        [Required]
 		[Range(0.01, double.MaxValue)]
 		public double TotalHours { get; set; }
 
 		/**
 		 * the total cost of all the services summed together
 		 */
-        [Required]
         [Range(0.01, double.MaxValue)]
         public double TotalCost { get; set; }
 
@@ -59,8 +53,7 @@ namespace CareManagement.Models.SCHDL
         public bool IsSent { get; set; }
 
         [DisplayName("Due Date")]
-        [Range(typeof(DateTime), "1/1/2023", "12/31/2023",
-        ErrorMessage = "Value for {0} must be between {1} and {2}")]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime DueDate { get; set; }
 
     }
