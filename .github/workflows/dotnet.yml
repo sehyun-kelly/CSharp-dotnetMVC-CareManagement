@@ -47,7 +47,8 @@ jobs:
     - uses: actions/checkout@v3
 
     - name: Login to Heroku Container Registry
-      uses: akhileshns/heroku-deploy@v3.12.13
+    #  uses: akhileshns/heroku-deploy@v3.12.13
+      uses: gonuit/heroku-docker-deploy@v1.3.3
 
       with:
         heroku_api_key: ${{ secrets.HEROKU_API_KEY }} 
@@ -61,8 +62,8 @@ jobs:
    #   run: docker login --username=${{secrets.DOCKER_USERNAME}} --password= ${{ secrets.HEROKU_API_KEY }}  registry.heroku.com
    # - name: Docker Build
    #   run: docker build -t care-management-cs-server .
-   # - name: Push Container to Registry
-   #   run: heroku container:push web --app care-management-cs-server 
+  #  - name: Push Container to Registry
+   #   run: heroku container:push web 
    # - name: Release
    #   run: heroku container:release -app care-management-cs-server 
       
