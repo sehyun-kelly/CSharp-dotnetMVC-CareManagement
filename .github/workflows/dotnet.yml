@@ -53,8 +53,8 @@ jobs:
         heroku_api_key: ${{ secrets.HEROKU_API_KEY }} 
         heroku_app_name: "care-management-cs-server"
         heroku_email: ${{ secrets.HEROKU_EMAIL }}
-    - name: Docker Check-In
-      run: docker ps
+    - name: Docker Build
+      run: docker build -t care-management-cs-server .
     - name: Push Container to Registry
       run: heroku container:push web --app care-management-cs-server 
     - name: Release
