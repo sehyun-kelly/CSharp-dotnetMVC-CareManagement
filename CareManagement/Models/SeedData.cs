@@ -355,6 +355,7 @@ namespace CareManagement.Models
                         new Invoice
                         {
                             InvoiceNumber = Invoice1,
+                            RenterId = Renter1,
                             StartDate = new DateTime(2023,3,3),
                             EndDate = new DateTime(2023,3,4),
                             TotalHours = 3,
@@ -367,6 +368,7 @@ namespace CareManagement.Models
                         new Invoice
                         {
                             InvoiceNumber = Invoice2,
+                            RenterId = Renter2,
                             StartDate = new DateTime(2023, 4, 3),
                             EndDate = new DateTime(2023, 4, 4),
                             TotalHours = 7,
@@ -379,6 +381,7 @@ namespace CareManagement.Models
                         new Invoice
                         {
                             InvoiceNumber = Invoice3,
+                            RenterId = Renter2,
                             StartDate = new DateTime(2023, 5, 3),
                             EndDate = new DateTime(2023, 5, 4),
                             TotalHours = 9,

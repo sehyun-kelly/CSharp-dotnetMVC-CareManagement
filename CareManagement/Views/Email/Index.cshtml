@@ -5,6 +5,10 @@
 }
 <h1>Emailed Invoice</h1>
 <div>
+    <h3>Sent to: </h3>
+    <p>
+        @TempData["CustomerEmail"]
+    </p>
     <h3>Invoice Content</h3>
     <p>
         @TempData["Invoice"]
