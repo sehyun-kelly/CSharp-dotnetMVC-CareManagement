@@ -33,9 +33,12 @@ namespace CareManagement.Models.CRM
 
         //Foreign Key
         [Required]
+        [ForeignKey("Appliance")]
         public Guid ApplianceId { get; set; }
 
         public string Details { get; set; }
+
+        public virtual Appliance? Appliance { get; set; }
     }
 
 }

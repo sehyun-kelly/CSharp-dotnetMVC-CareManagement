@@ -9,11 +9,12 @@ namespace CareManagement.Models.CRM
 
     public class Renter
     {
-        //[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        //public Renter()
-        //{
-        //    this.Assets = new HashSet<Asset>();
-        //}
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Renter()
+        {
+            this.Invoice = new HashSet<Invoice>();
+            this.Assets = new HashSet<Asset>();
+        }
 
         [Key]
         public Guid RenterId { get; set; }
@@ -46,10 +47,10 @@ namespace CareManagement.Models.CRM
 
         //[Required]
         //[ForeignKey("Invoice")]
-        //public int InvoiceNo { get; set; } // the actual FK in the table
-        //public virtual ICollection<Invoice> Invoice { get; set; } // reference for the FK
+        //public Guid InvoiceNo { get; set; }    //the actual FK in the table
+        public virtual ICollection<Invoice> Invoice { get; set; } //   reference for the FK
 
-        //[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        //public virtual ICollection<Asset> Assets { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Asset> Assets { get; set; }
     }
 }

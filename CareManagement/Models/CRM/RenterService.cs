@@ -12,17 +12,17 @@ namespace CareManagement.Models.CRM
         [Key]
         public Guid RenterServiceID { get; set; }
 
-        [Key]
+
         [Required]
         [ForeignKey("Service")]
-        public Guid Service_ID { get; set; }
+        public Guid ServiceId { get; set; }
 
         public virtual Service Service { get; set; }
 
-        [Key]
+
         [Required]
         [ForeignKey("Renter")]
-        public Guid Renter_ID { get; set; }
+        public Guid RenterId { get; set; }
 
         public virtual Renter Renter { get; set; }
 
