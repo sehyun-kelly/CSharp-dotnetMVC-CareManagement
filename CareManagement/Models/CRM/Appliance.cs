@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using CareManagement.Models.OM;
 
 namespace CareManagement.Models.CRM
 {
@@ -8,14 +10,15 @@ namespace CareManagement.Models.CRM
         public Guid ApplianceId { get; set; }
 
         [Required]
-        public Guid SuiteId { get; set; }
+        [ForeignKey("Asset")]
+        public Guid AssetId { get; set; }
 
         [Required]
-        [StringLength(50, MinimumLength = 3)]
-        public string ApplianceType { get; set; }
+        public Enum.ApplianceBrand ApplianceType { get; set; }
 
         [Required]
-        [StringLength(50, MinimumLength = 3)]
-        public string ApplianceBrand { get; set; }
+        public Enum.ApplianceBrand ApplianceBrand { get; set; }
+
+        public virtual Asset? Asset { get; set; }
     }
 }

@@ -8,13 +8,16 @@ namespace CareManagement.Models.CRM
         [Key]
         [Required]
         [ForeignKey("Asset")]
-        public Guid Asset_ID { get; set; }
+        public Guid AssetId { get; set; }
 
         public float Asset_Cost { get; set;}
-        [Key]
         [Required]
-        [ForeignKey("Client_ID")]
-        public Guid Client_ID { get; set; }
+        [ForeignKey("Renter")]
+        public Guid RenterId { get; set; }
         public string Date { get; set;}
+
+        public virtual Renter? Renter { get; set; }
+
+        public virtual Asset? Asset { get; set; }
     }
 }
