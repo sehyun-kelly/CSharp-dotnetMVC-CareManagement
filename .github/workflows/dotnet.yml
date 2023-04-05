@@ -54,7 +54,7 @@ jobs:
         heroku_app_name: "care-management-cs-server"
         heroku_email: ${{ secrets.HEROKU_EMAIL }}
     - name: Login into Docker
-      run: docker login --username=${{secrets.DOCKER_USERNAME} --password= ${{ secrets.HEROKU_API_KEY }}  registry.heroku.com
+      run: docker login --username=${{secrets.DOCKER_USERNAME}} --password= ${{ secrets.HEROKU_API_KEY }}  registry.heroku.com
     - name: Docker Build
       run: docker build -t care-management-cs-server .
     - name: Push Container to Registry
