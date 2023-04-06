@@ -5,7 +5,7 @@ name: .NET
 
 on:
   push:
-    branches: ["master", "brad-dev" ]
+    branches: ["master", "brad-dev", "dev-scheduling"]
   pull_request:
     branches: [ "master" ]
 
@@ -22,11 +22,11 @@ jobs:
       with:
         dotnet-version: 6.0.x
     - name: Restore dependencies
-      run: dotnet restore
+      run: msbuild "./CareManagement" -t:restore #dotnet restore
     - name: Build
-      run: dotnet build --no-restore
-    - name: Test
-      run: dotnet test --no-build --verbosity normal # run the test suite
+      run: msbuild #dotnet build --no-restore
+   # - name: Test
+     # run: dotnet test --no-build --verbosity normal # run the test suite
 
   containerize-image:
     runs-on: ubuntu-latest

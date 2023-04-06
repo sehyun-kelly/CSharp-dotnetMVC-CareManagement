@@ -1,23 +1,26 @@
-@model IEnumerable<CareManagement.Models.SCHDL.Report>
+@model IEnumerable<CareManagement.Models.SCHDL.Schedule>
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Report";
 }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<h1>Report</h1>
 
 <form asp-action="Index" method="get">
     <div class="form-actions no-color">
         <p>
-            Find by renter: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
-            <input type="submit" value="Search" class="btn btn-default" /> |
-            <a asp-action="Index">Back to Full List</a>
+            Find by renter: <input type="text" name="searchRenter" value="@ViewData["CurrentFilter"]" />
         </p>
+        <p>
+            Find by service: <input type="text" name="searchService" value="@ViewData["CurrentFilter"]" />
+        </p>
+        <p>
+            Between: <input type="datetime-local" name="startTime" value="@ViewData["CurrentFilter"]" /> and
+            <input type="datetime-local" name="endTime" value="@ViewData["CurrentFilter"]" />
+        </p>
+        <input type="submit" value="Search" class="btn btn-default" />
     </div>
 </form>
+<br />
 
 <table class="table">
     <thead>
@@ -53,11 +56,6 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Service.Type)
                 </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.ReportId">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.ReportId">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.ReportId">Delete</a>
-                </td>
             </tr>
         }
     </tbody>
@@ -66,6 +64,29 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
+
+<script>
+window.onload = function () {
+
+    var chart = new CanvasJS.Chart("chartContainer", {
+        animationEnabled: true,
+        theme: "light2", // "light1", "light2", "dark1", "dark2"
+        title: {
+            text: "Total amount paid by each Renter"
+        },
+        axisY: {
+            title: "Name of Renter"
+        },
+        data: [{
+            type: "column",
+            dataPoints: @Html.Raw(ViewBag.DataPoints)
+}]
+    });
+    chart.render();
+}
+</script>
+<div id="chartContainer" style="height: 370px; width: 100%;"></div>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
