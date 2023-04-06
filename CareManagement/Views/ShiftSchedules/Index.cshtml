@@ -10,9 +10,7 @@
 <form asp-action="Index" method="post">
     <div class="form-group">
         <label asp-for="SelectedEmployeeId">Employee</label>
-        <select asp-for="SelectedEmployeeId" asp-items="@(ViewData["EmployeeSelectList"] as SelectList)" class="form-control">
-            <option value="">-- Select Employee --</option>
-        </select>
+        <input asp-for="SelectedEmployeeId" class="form-control" />
     </div>
     <div class="form-group">
         <label asp-for="StartDate">Start Date</label>

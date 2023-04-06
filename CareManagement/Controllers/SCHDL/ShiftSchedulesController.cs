@@ -9,6 +9,9 @@ using CareManagement.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Identity;
+using CareManagement.Models.AUTH;
+using System.Security.Claims;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -17,10 +20,12 @@ namespace CareManagement.Controllers.SCHDL
     public class ShiftSchedulesController : Controller
     {
         private readonly CareManagementContext _context;
+        private UserManager<AppUser> userManager;
 
-        public ShiftSchedulesController(CareManagementContext context)
+        public ShiftSchedulesController(CareManagementContext context, UserManager<AppUser> usrMgr)
         {
             _context = context;
+            userManager = usrMgr;
         }
 
         [HttpGet]
@@ -34,6 +39,12 @@ namespace CareManagement.Controllers.SCHDL
                 Employees = await _context.Employee.ToListAsync(),
                 StartDate = DateTime.Today
             };
+
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // will give the user's userId
+            var userName = User.FindFirstValue(ClaimTypes.Name); // will give the user's userName
+
+            System.Diagnostics.Debug.WriteLine(userId);
+            System.Diagnostics.Debug.WriteLine(userName);
 
             return View(viewModel);
         }
