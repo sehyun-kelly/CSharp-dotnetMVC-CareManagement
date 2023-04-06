@@ -118,55 +118,23 @@ namespace SeleniumTests.Tests
             // This tests creating an invoice
             driver.FindElement(By.LinkText("Create New")).Click();
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
-            //driver.FindElement(By.Id("DatePaid")).Click();
-            //driver.FindElement(By.Id("StartDate")).Click();
 
-            // Send date and time to the DateTime element
+            // Send date and time to the DateTime elements
             IWebElement startDate = driver.FindElement(By.Id("StartDate"));
-            //Fill date as yyyy/mm/dd
             driver.FindElement(By.Id("StartDate")).Click();
-            startDate.SendKeys("2023\t03-01");
-            //startDate.SendKeys("03 01");
-            //Press tab to shift focus to time field
-            //startDate.SendKeys(Keys.Tab);
-            //Fill time as 02:45 PM
+            // Fill date as yyyy/mm/dd
+            startDate.SendKeys("2023\t03-01");  // Use tab to shift to the next value
             startDate.SendKeys("0245PM");
-
-            IWebElement endDate = driver.FindElement(By.Id("EndDate"));            //Fill date as yyyy/mm/dd
+            IWebElement endDate = driver.FindElement(By.Id("EndDate"));            
             driver.FindElement(By.Id("EndDate")).Click();
             endDate.SendKeys("2023\t04-01");
             endDate.SendKeys("0245PM");
-
             IWebElement datePaid = driver.FindElement(By.Id("DatePaid"));
             driver.FindElement(By.Id("DatePaid")).Click();
             datePaid.SendKeys("2023\t04-01");
-            //datePaid.SendKeys("0600PM");
-
-            //IWebElement endDate = driver.FindElement(By.Id("EndDate"));
-            ////Fill date as yyyy/mm/dd
-            //endDate.SendKeys("2023-04-01");
-            ////Press tab to shift focus to time field
-            //endDate.SendKeys(Keys.Tab);
-            ////Fill time as 02:45 PM
-            //endDate.SendKeys("0245PM");
-
-            //IWebElement datePaid = driver.FindElement(By.Id("DatePaid"));
-            ////Fill date as yyyy/mm/dd
-            //datePaid.SendKeys("2023-04-01");
-            ////Press tab to shift focus to time field
-            //datePaid.SendKeys(Keys.Tab);
-            ////Fill time as 02:45 PM
-            //datePaid.SendKeys("0600PM");
-
-
-
-            //var today = DateTime.Today;
-            //driver.FindElement(By.Id("DatePaid")).Click();
-            //driver.FindElement(By.LinkText(today.Day.ToString())).Click();
-
-
 
             driver.FindElement(By.XPath("//Input[@type='submit']")).Click();
+
 
             // This redirects to the Invoice URL
             driver.Manage().Window.Maximize();
