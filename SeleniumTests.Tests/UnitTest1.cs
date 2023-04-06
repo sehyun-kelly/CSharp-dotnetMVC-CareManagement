@@ -134,17 +134,12 @@ namespace SeleniumTests.Tests
             datePaid.SendKeys("2023\t04-01");
 
             driver.FindElement(By.XPath("//Input[@type='submit']")).Click();
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
 
 
             // This redirects to the Invoice URL
             driver.Manage().Window.Maximize();
             driver.Navigate().GoToUrl(urlInvoice);
-
-            // This tests editing a invoice
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
-            driver.FindElement(By.LinkText("Edit")).Click();
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
-            driver.FindElement(By.XPath("//Input[@type='submit']")).Click();
 
             // This tests viewing a invoice
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
@@ -152,7 +147,77 @@ namespace SeleniumTests.Tests
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
             driver.FindElement(By.LinkText("Back to List")).Click();
 
+            // This tests editing a invoice
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+            driver.FindElement(By.LinkText("Edit")).Click();
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+            driver.FindElement(By.XPath("//Input[@type='submit']")).Click();
+
             // This tests deleting a invoice
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+            driver.FindElement(By.LinkText("Delete")).Click();
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+            driver.FindElement(By.XPath("//Input[@type='submit']")).Click();
+        }
+
+
+
+        [TestMethod]
+        public void TestReport()
+        {
+            string urlReport = "https://localhost:7121/Report";
+            ChromeDriver driver = new ChromeDriver();
+
+            // This redirects to the report URL
+            driver.Manage().Window.Maximize();
+            driver.Navigate().GoToUrl(urlReport);
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+
+            // This tests creating a report
+            driver.FindElement(By.LinkText("Create New")).Click();
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+
+            // Send date and time to the DateTime elements
+            IWebElement startTime = driver.FindElement(By.Id("StartTime"));
+            driver.FindElement(By.Id("StartTime")).Click();
+            // Fill date as yyyy/mm/dd
+            startTime.SendKeys("2023\t03-01");  // Use tab to shift to the next value
+            startTime.SendKeys("0245PM");
+            IWebElement endTime = driver.FindElement(By.Id("EndTime"));
+            driver.FindElement(By.Id("EndTime")).Click();
+            endTime.SendKeys("2023\t04-01");
+            endTime.SendKeys("0245PM");
+
+            driver.FindElement(By.XPath("//Input[@type='submit']")).Click();
+
+
+            // This tests editing a report
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+            driver.FindElement(By.LinkText("Edit")).Click();
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+
+            // Send date and time to the DateTime elements
+            IWebElement startTimeEdit = driver.FindElement(By.Id("StartTime"));
+            driver.FindElement(By.Id("StartTime")).Click();
+            // Fill date as yyyy/mm/dd
+            startTimeEdit.SendKeys("2023\t03-02");  // Use tab to shift to the next value
+            startTimeEdit.SendKeys("0246PM");
+            IWebElement endTimeEdit = driver.FindElement(By.Id("EndTime"));
+            driver.FindElement(By.Id("EndTime")).Click();
+            endTimeEdit.SendKeys("2023\t04-02");
+            endTimeEdit.SendKeys("0246PM");
+
+            driver.FindElement(By.XPath("//Input[@type='submit']")).Click();
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+
+
+            // This tests viewing a report
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+            driver.FindElement(By.LinkText("Details")).Click();
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+            driver.FindElement(By.LinkText("Back to List")).Click();
+
+            // This tests deleting a report
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
             driver.FindElement(By.LinkText("Delete")).Click();
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
