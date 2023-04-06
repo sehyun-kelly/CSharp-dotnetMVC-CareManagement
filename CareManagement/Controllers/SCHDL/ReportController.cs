@@ -20,164 +20,33 @@ namespace CareManagement.Controllers.SCHDL
         }
 
         // GET: Report
-        public async Task<IActionResult> Index(string searchString)
+        public async Task<IActionResult> Index(string searchRenter, string searchService, DateTime? startTime, DateTime? endTime)
         {
             //var careManagementContext = _context.Report.Include(r => r.Renter).Include(r => r.Service);
-            var reports = from m in _context.Report.Include(r => r.Renter).Include(r => r.Service)
+            var reports = from m in _context.Schedule.Include(r => r.Renter).Include(r => r.Service)
                           select m;
 
-            if (!String.IsNullOrEmpty(searchString))
+            Console.WriteLine(startTime.ToString(), endTime.ToString());
+
+            if (!String.IsNullOrEmpty(searchRenter))
             {
-                reports = reports.Where(s => s.Renter.Name!.Contains(searchString));
+                reports = reports.Where(s => s.Renter.Name!.Contains(searchRenter));
             }
+            if (!String.IsNullOrEmpty(searchService))
+            {
+                reports = reports.Where(s => s.Service.Type!.Contains(searchService));
+            }
+            if (startTime.HasValue)
+            {
+                reports = reports.Where(s => DateTime.Compare(s.StartTime, (DateTime)startTime) >= 0);
+            }
+            if (endTime.HasValue)
+            {
+                reports = reports.Where(s => DateTime.Compare(s.EndTime, (DateTime)endTime) <= 0);
+            }
+
 
             return View(await reports.ToListAsync());
-        }
-
-        // GET: Report/Details/5
-        public async Task<IActionResult> Details(Guid? id)
-        {
-            if (id == null || _context.Report == null)
-            {
-                return NotFound();
-            }
-
-            var report = await _context.Report
-                .Include(r => r.Renter)
-                .Include(r => r.Service)
-                .FirstOrDefaultAsync(m => m.ReportId == id);
-            if (report == null)
-            {
-                return NotFound();
-            }
-
-            return View(report);
-        }
-
-        // GET: Report/Create
-        public IActionResult Create()
-        {
-            ViewData["RenterId"] = new SelectList(_context.Renter, "RenterId", "RenterId");
-            ViewData["ServiceId"] = new SelectList(_context.Service, "ServiceId", "Type");
-            return View();
-        }
-
-        // POST: Report/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ReportId,StartTime,EndTime,RenterId,ServiceId")] Report report)
-        {
-            if (ModelState.IsValid)
-            {
-                report.ReportId = Guid.NewGuid();
-                _context.Add(report);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["RenterId"] = new SelectList(_context.Renter, "RenterId", "RenterId", report.RenterId);
-            ViewData["ServiceId"] = new SelectList(_context.Service, "ServiceId", "Type", report.ServiceId);
-            return View(report);
-        }
-
-        // GET: Report/Edit/5
-        public async Task<IActionResult> Edit(Guid? id)
-        {
-            if (id == null || _context.Report == null)
-            {
-                return NotFound();
-            }
-
-            var report = await _context.Report.FindAsync(id);
-            if (report == null)
-            {
-                return NotFound();
-            }
-            ViewData["RenterId"] = new SelectList(_context.Renter, "RenterId", "RenterId", report.RenterId);
-            ViewData["ServiceId"] = new SelectList(_context.Service, "ServiceId", "Type", report.ServiceId);
-            return View(report);
-        }
-
-        // POST: Report/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("ReportId,StartTime,EndTime,RenterId,ServiceId")] Report report)
-        {
-            if (id != report.ReportId)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(report);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ReportExists(report.ReportId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["RenterId"] = new SelectList(_context.Renter, "RenterId", "RenterId", report.RenterId);
-            ViewData["ServiceId"] = new SelectList(_context.Service, "ServiceId", "Type", report.ServiceId);
-            return View(report);
-        }
-
-        // GET: Report/Delete/5
-        public async Task<IActionResult> Delete(Guid? id)
-        {
-            if (id == null || _context.Report == null)
-            {
-                return NotFound();
-            }
-
-            var report = await _context.Report
-                .Include(r => r.Renter)
-                .Include(r => r.Service)
-                .FirstOrDefaultAsync(m => m.ReportId == id);
-            if (report == null)
-            {
-                return NotFound();
-            }
-
-            return View(report);
-        }
-
-        // POST: Report/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(Guid id)
-        {
-            if (_context.Report == null)
-            {
-                return Problem("Entity set 'CareManagementContext.Report'  is null.");
-            }
-            var report = await _context.Report.FindAsync(id);
-            if (report != null)
-            {
-                _context.Report.Remove(report);
-            }
-            
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
-        private bool ReportExists(Guid id)
-        {
-          return (_context.Report?.Any(e => e.ReportId == id)).GetValueOrDefault();
         }
     }
 }
