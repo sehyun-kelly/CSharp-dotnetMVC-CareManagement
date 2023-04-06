@@ -31,6 +31,8 @@
     <None Remove="Controllers\AUTH\" />
     <None Remove="Views\Admin\" />
     <None Remove="Views\Account\" />
+    <None Remove="ViewModels\" />
+    <None Remove="Views\ShiftSchedules\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\SCHDL\" />
@@ -38,6 +40,8 @@
     <Folder Include="Controllers\AUTH\" />
     <Folder Include="Views\Admin\" />
     <Folder Include="Views\Account\" />
+    <Folder Include="ViewModels\" />
+    <Folder Include="Views\ShiftSchedules\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EmailService\EmailService.csproj" />
