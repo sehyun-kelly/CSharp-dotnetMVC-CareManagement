@@ -32,8 +32,6 @@ namespace SeleniumTests.Tests
 			driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
 
 			// This tests creating a service
-			driver.FindElement(By.LinkText("Services")).Click();
-			driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
 			driver.FindElement(By.LinkText("Create New")).Click();
 			driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
 			driver.FindElement(By.Id("Hours")).SendKeys("8");
