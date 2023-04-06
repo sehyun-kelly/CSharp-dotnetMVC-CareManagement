@@ -51,6 +51,7 @@ namespace SeleniumTests.Tests
 			driver.FindElement(By.Id("Type")).SendKeys("TypeEdited");
 			driver.FindElement(By.XPath("//Input[@type='submit']")).Click();
 
+
 			// This tests viewing a service
 			driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
 			driver.FindElement(By.LinkText("Details")).Click();
