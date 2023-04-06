@@ -26,16 +26,16 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.StartTime)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["StartTimeSort"]">@Html.DisplayNameFor(model => model.StartTime)</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.EndTime)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["EndTimeSort"]">@Html.DisplayNameFor(model => model.EndTime)</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Renter)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["RenterSort"]">@Html.DisplayNameFor(model => model.Renter)</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Service)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["ServiceSort"]">@Html.DisplayNameFor(model => model.Service)</a>
             </th>
             <th></th>
         </tr>

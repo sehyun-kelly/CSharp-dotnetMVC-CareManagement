@@ -42,11 +42,13 @@ namespace CareManagement.Controllers.SCHDL
         }
 
         // GET: Report
-        public async Task<IActionResult> Index(string searchRenter, string searchService, DateTime? startTime, DateTime? endTime)
+        public async Task<IActionResult> Index(string searchRenter, string searchService, DateTime? startTime, DateTime? endTime, string sortOrder)
         {
             //var careManagementContext = _context.Report.Include(r => r.Renter).Include(r => r.Service);
             var reports = from m in _context.Schedule.Include(r => r.Renter).Include(r => r.Service)
                           select m;
+
+
 
             Console.WriteLine(startTime.ToString(), endTime.ToString());
 
@@ -65,6 +67,39 @@ namespace CareManagement.Controllers.SCHDL
             if (endTime.HasValue)
             {
                 reports = reports.Where(s => DateTime.Compare(s.EndTime, (DateTime)endTime) <= 0);
+            }
+
+            ViewData["RenterSort"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["StartTimeSort"] = sortOrder == "StartTime" ? "time_desc" : "StartTime";
+            ViewData["EndTimeSort"] = sortOrder == "EndTime" ? "end_time_desc" : "EndTime";
+            ViewData["ServiceSort"] = sortOrder == "ServiceType" ? "service_type_desc" : "ServiceType";
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    reports = reports.OrderBy(i => i.Renter.Name);
+                    break;
+                case "StartTime":
+                    reports = reports.OrderBy(i => i.StartTime);
+                    break;
+                case "time_desc":
+                    reports = reports.OrderByDescending(i => i.StartTime);
+                    break;
+                case "EndTime":
+                    reports = reports.OrderBy(i => i.EndTime);
+                    break;
+                case "end_time_desc":
+                    reports = reports.OrderByDescending(i => i.EndTime);
+                    break;
+                case "ServiceType":
+                    reports = reports.OrderBy(i => i.Service.Type); ;
+                    break;
+                case "service_type_desc":
+                    reports = reports.OrderByDescending(i => i.Service.Type);
+                    break;
+                default:
+                    reports = reports.OrderBy(i => i.StartTime);
+                    break;
             }
 
 
