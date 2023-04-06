@@ -22,9 +22,9 @@ jobs:
       with:
         dotnet-version: 6.0.x
     - name: Restore dependencies
-      run: dotnet restore
+      run: msbuild -t:restore #dotnet restore
     - name: Build
-      run: dotnet build --no-restore
+      run: msbuild #dotnet build --no-restore
    # - name: Test
      # run: dotnet test --no-build --verbosity normal # run the test suite
 
