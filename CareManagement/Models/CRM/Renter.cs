@@ -45,10 +45,14 @@ namespace CareManagement.Models.CRM
         [Range(0, int.MaxValue)]  // No negative numbers
         public int RmNumber { get; set; }
 
+
+        //public virtual ICollection<Invoice> Invoice { get; set; } // reference for the FK
+
         //[Required]
         //[ForeignKey("Invoice")]
         //public Guid InvoiceNo { get; set; }    //the actual FK in the table
         public virtual ICollection<Invoice> Invoice { get; set; } //   reference for the FK
+
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Asset> Assets { get; set; }

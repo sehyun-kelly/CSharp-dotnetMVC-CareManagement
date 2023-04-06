@@ -17,8 +17,10 @@ namespace CareManagement.Controllers.SCHDL
             if (TempData["Invoice"] != null)
             {
                 var emailContent = "";
+                var customerEmail = "";
                 emailContent = (string)TempData["Invoice"];
-                var message = new Message(new string[] { "maiphuong.nguyen97@gmail.com" },
+                customerEmail = (string)TempData["CustomerEmail"];
+                var message = new Message(new string[] { customerEmail },
                 "Invoice CareManagement",
                 emailContent);
                 _emailSender.SendEmail(message);
