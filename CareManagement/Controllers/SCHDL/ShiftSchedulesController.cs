@@ -8,30 +8,48 @@ using CareManagement.Models.OM;
 using CareManagement.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Identity;
+using CareManagement.Models.AUTH;
+using System.Security.Claims;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace CareManagement.Controllers.SCHDL
 {
+    [Authorize]
     public class ShiftSchedulesController : Controller
     {
         private readonly CareManagementContext _context;
+        private UserManager<AppUser> userManager;
 
-        public ShiftSchedulesController(CareManagementContext context)
+        public ShiftSchedulesController(CareManagementContext context, UserManager<AppUser> usrMgr)
         {
             _context = context;
+            userManager = usrMgr;
         }
 
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var employees = await _context.Employee.ToListAsync();
-            ViewData["EmployeeSelectList"] = new SelectList(employees.Select(e => new { e.EmployeeId, FullName = e.FirstName + " " + e.LastName }), "EmployeeId", "FullName");
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // will give the user's userId
+            var currentUser = await userManager.FindByIdAsync(userId);
+            if (currentUser == null)
+            {
+                return RedirectToAction("AccessDenied");
+            }
+            var employeeInfo = await _context.Employee.FindAsync(currentUser.EmployeeId);
+
+            if (employeeInfo == null)
+            {
+                return RedirectToAction("AccessDenied");
+            }
 
             var viewModel = new ShiftSchedulesViewModel
             {
-                Employees = await _context.Employee.ToListAsync(),
+                SelectedEmployeeId = currentUser.EmployeeId,
+                SelectedEmployeeName = employeeInfo.FirstName + " " + employeeInfo.LastName + " - " + employeeInfo.Title,
                 StartDate = DateTime.Today
             };
 
@@ -39,13 +57,8 @@ namespace CareManagement.Controllers.SCHDL
         }
 
         [HttpPost]
-        public async Task<IActionResult> Index(ShiftSchedulesViewModel model)
+        public async Task<IActionResult> Index([Bind("SelectedEmployeeId,SelectedEmployeeName,StartDate")] ShiftSchedulesViewModel model)
         {
-            var employees = await _context.Employee.ToListAsync();
-            ViewData["EmployeeSelectList"] = new SelectList(employees.Select(e => new { e.EmployeeId, FullName = e.FirstName + " " + e.LastName }), "EmployeeId", "FullName");
-
-            model.Employees = await _context.Employee.ToListAsync();
-
             model.DisplayedShift = await _context.Shift
                 .Include(s => s.Schedules)
                 .FirstOrDefaultAsync(s => s.EmployeeId == model.SelectedEmployeeId
@@ -65,6 +78,11 @@ namespace CareManagement.Controllers.SCHDL
             }
 
             return View(model);
+        }
+
+        public IActionResult AccessDenied()
+        {
+            return View();
         }
     }
 }
