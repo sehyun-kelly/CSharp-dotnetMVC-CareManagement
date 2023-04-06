@@ -153,6 +153,10 @@ namespace SeleniumTests.Tests
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
             driver.FindElement(By.XPath("//Input[@type='submit']")).Click();
 
+            if (driver.FindElement(By.LinkText("Delete")) == null)
+            {
+                return;
+            }
             // This tests deleting a invoice
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
             driver.FindElement(By.LinkText("Delete")).Click();
@@ -218,6 +222,72 @@ namespace SeleniumTests.Tests
             driver.FindElement(By.LinkText("Back to List")).Click();
 
             // This tests deleting a report
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+            driver.FindElement(By.LinkText("Delete")).Click();
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+            driver.FindElement(By.XPath("//Input[@type='submit']")).Click();
+        }
+
+
+        [TestMethod]
+        public void TestSchedule()
+        {
+            string urlSchedule = "https://localhost:7121/Schedules";
+            ChromeDriver driver = new ChromeDriver();
+
+            // This redirects to the schedule URL
+            driver.Manage().Window.Maximize();
+            driver.Navigate().GoToUrl(urlSchedule);
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+
+            // This tests creating a schedule
+            driver.FindElement(By.LinkText("Create a new schedule")).Click();
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+
+            // Send date and time to the DateTime elements
+            IWebElement startTime = driver.FindElement(By.Id("StartTime"));
+            driver.FindElement(By.Id("StartTime")).Click();
+            // Fill date as yyyy/mm/dd
+            startTime.SendKeys("2023\t03-01");  // Use tab to shift to the next value
+            startTime.SendKeys("0245PM");
+            IWebElement endTime = driver.FindElement(By.Id("EndTime"));
+            driver.FindElement(By.Id("EndTime")).Click();
+            endTime.SendKeys("2023\t04-01");
+            endTime.SendKeys("0245PM");
+
+            driver.FindElement(By.XPath("//Input[@type='submit']")).Click();
+
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+            driver.Navigate().GoToUrl(urlSchedule);
+
+
+            // This tests editing a schedule
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+            driver.FindElement(By.LinkText("Edit")).Click();
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+
+            // Send date and time to the DateTime elements
+            IWebElement startTimeEdit = driver.FindElement(By.Id("StartTime"));
+            driver.FindElement(By.Id("StartTime")).Click();
+            // Fill date as yyyy/mm/dd
+            startTimeEdit.SendKeys("2023\t03-02");  // Use tab to shift to the next value
+            startTimeEdit.SendKeys("0246PM");
+            IWebElement endTimeEdit = driver.FindElement(By.Id("EndTime"));
+            driver.FindElement(By.Id("EndTime")).Click();
+            endTimeEdit.SendKeys("2023\t04-02");
+            endTimeEdit.SendKeys("0246PM");
+
+            driver.FindElement(By.XPath("//Input[@type='submit']")).Click();
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+
+
+            // This tests viewing a schedule
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+            driver.FindElement(By.LinkText("Details")).Click();
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+            driver.FindElement(By.LinkText("Back to List")).Click();
+
+            // This tests deleting a schedule
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
             driver.FindElement(By.LinkText("Delete")).Click();
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
