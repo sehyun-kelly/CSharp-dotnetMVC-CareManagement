@@ -132,6 +132,9 @@ namespace CareManagement.Controllers.AUTH
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(String id, String username, String email, String role, Guid employeeId, String password, String? newPassword)
         {
+            var employees = await _context.Employee.ToListAsync();
+            ViewData["EmployeeList"] = new SelectList(employees.Select(e => new { e.EmployeeId, FullName = e.FirstName + " " + e.LastName + " - " + e.Title }), "EmployeeId", "FullName");
+
             AppUser user = await userManager.FindByIdAsync(id);
             if (user != null)
             {
