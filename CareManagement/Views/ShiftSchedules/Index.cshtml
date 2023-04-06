@@ -8,11 +8,13 @@
 <h1>@ViewData["Title"]</h1>
 
 <form asp-action="Index" method="post">
+    <div class="form-group" hidden>
+        <label asp-for="SelectedEmployeeId">Employee Id</label>
+        <input asp-for="SelectedEmployeeId" class="form-control" readonly />
+    </div>
     <div class="form-group">
-        <label asp-for="SelectedEmployeeId">Employee</label>
-        <select asp-for="SelectedEmployeeId" asp-items="@(ViewData["EmployeeSelectList"] as SelectList)" class="form-control">
-            <option value="">-- Select Employee --</option>
-        </select>
+        <label asp-for="SelectedEmployeeName">Employee Name</label>
+        <input asp-for="SelectedEmployeeName" class="form-control" readonly />
     </div>
     <div class="form-group">
         <label asp-for="StartDate">Start Date</label>
@@ -27,7 +29,6 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Employee</th>
                 <th>Start Time</th>
                 <th>End Time</th>
                 <th>Sick</th>
@@ -35,7 +36,6 @@
         </thead>
         <tbody>
             <tr>
-                <td>@(Model.DisplayedShift.Employee.FirstName + " " + Model.DisplayedShift.Employee.LastName)</td>
                 <td>@Model.DisplayedShift.StartTime</td>
                 <td>@Model.DisplayedShift.EndTime</td>
                 <td>@(Model.DisplayedShift.Sick ? "Yes" : "No")</td>
