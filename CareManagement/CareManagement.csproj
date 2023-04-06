@@ -45,5 +45,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EmailService\EmailService.csproj" />
+    <ProjectReference Include="..\SeleniumTests\SeleniumTests.csproj" />
   </ItemGroup>
 </Project>
