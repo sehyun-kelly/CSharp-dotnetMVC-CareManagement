@@ -3,6 +3,19 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <img class="mt-5" src="@Url.Content("~/Content/hands.png")" alt="Hands Image" />
+
+    @if (User?.Identity?.IsAuthenticated == null || User?.Identity?.IsAuthenticated == false)
+    {
+            <h2 class="mt-3">Please Log In to Continue</h2>
+            <form method="get">
+                <button class="mt-3 btn btn-primary" asp-area="" asp-controller="Account" asp-action="Login">LOGIN</button>
+            </form>
+
+    }
+
+    @if (User?.Identity?.IsAuthenticated ?? false)
+    {
+        <h2 class="mt-3"> Hello, @User?.Identity.Name </h2>
+    }
 </div>

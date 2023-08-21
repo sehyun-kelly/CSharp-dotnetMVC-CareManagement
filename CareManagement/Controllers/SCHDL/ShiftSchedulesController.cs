@@ -33,14 +33,16 @@ namespace CareManagement.Controllers.SCHDL
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // will give the user's userId
-            var currentUser = await userManager.FindByIdAsync(userId);
+            var userEmail = User.FindFirstValue(ClaimTypes.Email); // will give the user's userId
+
+            var currentUser = await userManager.FindByEmailAsync(userEmail);
+
             if (currentUser == null)
             {
                 return RedirectToAction("AccessDenied");
             }
             var employeeInfo = await _context.Employee.FindAsync(currentUser.EmployeeId);
-
+            
             if (employeeInfo == null)
             {
                 return RedirectToAction("AccessDenied");

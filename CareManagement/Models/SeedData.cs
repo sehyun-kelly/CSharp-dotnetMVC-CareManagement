@@ -9,8 +9,8 @@ using Microsoft.AspNetCore.Identity;
 
 namespace CareManagement.Models
 {
-	public static class SeedData
-	{
+    public static class SeedData
+    {
         public static void Initialize(IServiceProvider serviceProvider)
         {
             using (var context = new CareManagementContext(
@@ -41,7 +41,7 @@ namespace CareManagement.Models
                 Guid Invoice2 = Guid.NewGuid();
                 Guid Invoice3 = Guid.NewGuid();
 
-                
+
                 if (!context.Qualification.Any())
                 {
                     context.Qualification.AddRange(
@@ -102,8 +102,8 @@ namespace CareManagement.Models
                         {
                             EmployeeId = e1,
                             QualificationId = Qualification1,
-                            FirstName = "Therapy",
-                            LastName = "Morning",
+                            FirstName = "Pearlie",
+                            LastName = "Huerta",
                             Address = "1234 BCIT st, Burnaby, BC",
                             EmergencyContact = 1,
                             Phone = "111-111-1111",
@@ -120,8 +120,8 @@ namespace CareManagement.Models
                         {
                             EmployeeId = e2,
                             QualificationId = Qualification2,
-                            FirstName = "Nursing",
-                            LastName = "Morning",
+                            FirstName = "Ethan",
+                            LastName = "Wilson",
                             Address = "1234 BCIT st, Burnaby, BC",
                             EmergencyContact = 1,
                             Phone = "111-111-1111",
@@ -138,8 +138,8 @@ namespace CareManagement.Models
                         {
                             EmployeeId = e3,
                             QualificationId = Qualification3,
-                            FirstName = "Homecare",
-                            LastName = "Morning",
+                            FirstName = "Pablo",
+                            LastName = "Sellers",
                             Address = "1234 BCIT st, Burnaby, BC",
                             EmergencyContact = 1,
                             Phone = "111-111-1111",
@@ -156,8 +156,8 @@ namespace CareManagement.Models
                         {
                             EmployeeId = e4,
                             QualificationId = Qualification1,
-                            FirstName = "Therapy",
-                            LastName = "Afternoon",
+                            FirstName = "Alonzo",
+                            LastName = "Carney",
                             Address = "1234 BCIT st, Burnaby, BC",
                             EmergencyContact = 1,
                             Phone = "111-111-1111",
@@ -174,8 +174,8 @@ namespace CareManagement.Models
                         {
                             EmployeeId = e5,
                             QualificationId = Qualification2,
-                            FirstName = "Nursing",
-                            LastName = "Afternoon",
+                            FirstName = "Kara",
+                            LastName = "Snow",
                             Address = "1234 BCIT st, Burnaby, BC",
                             EmergencyContact = 1,
                             Phone = "111-111-1111",
@@ -192,8 +192,8 @@ namespace CareManagement.Models
                         {
                             EmployeeId = e6,
                             QualificationId = Qualification3,
-                            FirstName = "Homecare",
-                            LastName = "Afternoon",
+                            FirstName = "Leah",
+                            LastName = "Farley",
                             Address = "1234 BCIT st, Burnaby, BC",
                             EmergencyContact = 1,
                             Phone = "111-111-1111",
@@ -273,7 +273,7 @@ namespace CareManagement.Models
                         new Renter
                         {
                             RenterId = Renter1,
-                            Name = "Albert Dumbledore",
+                            Name = "Stuart Benjamin",
                             Age = 142,
                             Gender = "Male",
                             Address = "Hogwart",
@@ -289,7 +289,7 @@ namespace CareManagement.Models
                         new Renter
                         {
                             RenterId = Renter2,
-                            Name = "Minerva McGonagall",
+                            Name = "Miriam Meyers",
                             Age = 71,
                             Gender = "Female",
                             Address = "Hogwart",
@@ -307,22 +307,6 @@ namespace CareManagement.Models
                 if (!context.Schedule.Any())
                 {
                     context.Schedule.AddRange(
-                        new Schedule
-                        {
-                            StartTime = new DateTime(2023, 4, 1, 10, 0, 0),
-                            EndTime = new DateTime(2023, 4, 1, 12, 0, 0),
-                            RenterId = Renter1,
-                            ServiceId = Service1,
-                            ShiftID = Shift1
-                        },
-                        new Schedule
-                        {
-                            StartTime = new DateTime(2023, 4, 1, 10, 0, 0),
-                            EndTime = new DateTime(2023, 4, 1, 12, 0, 0),
-                            RenterId = Renter2,
-                            ServiceId = Service2,
-                            ShiftID = Shift2
-                        },
                         new Schedule
                         {
                             StartTime = new DateTime(2023, 4, 5, 8, 0, 0),
@@ -356,13 +340,13 @@ namespace CareManagement.Models
                         {
                             InvoiceNumber = Invoice1,
                             RenterId = Renter1,
-                            StartDate = new DateTime(2023,3,3),
-                            EndDate = new DateTime(2023,3,4),
+                            StartDate = new DateTime(2023, 3, 3),
+                            EndDate = new DateTime(2023, 3, 4),
                             TotalHours = 3,
                             TotalCost = 50,
                             DatePaid = new DateTime(2023, 3, 5),
-                            IsSent= true,
-                            DueDate= new DateTime(2023, 3, 10)
+                            IsSent = true,
+                            DueDate = new DateTime(2023, 3, 10)
                         },
 
                         new Invoice
