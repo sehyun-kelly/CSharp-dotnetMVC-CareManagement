@@ -1,4 +1,4 @@
-# Senior Care Home
+# Senior Care Home | ASP.NET CORE MVC
 
 ### BCIT CST COMP 4945 Class Project
 <img width="1339" alt="Screenshot 2023-08-21 at 5 15 08 PM" src="https://github.com/sehyun-kelly/CSharp-dotnetMVC-CareManagement/assets/89621420/a1a6b673-f0c4-46ba-be4c-6e8c0f3b4853">
