@@ -113,7 +113,7 @@ namespace CareManagement.Models
                             VacationDays = 14,
                             EmployeeStatus = OM.Enum.EStatus.Layoff,
                             SickDays = 4,
-                            Title = OM.Enum.EmployeeTitle.Nurse,
+                            Title = OM.Enum.EmployeeTitle.Therapist,
                             StartDate = DateTime.Now
                         },
                         new Employee
@@ -149,7 +149,7 @@ namespace CareManagement.Models
                             VacationDays = 14,
                             EmployeeStatus = OM.Enum.EStatus.Layoff,
                             SickDays = 4,
-                            Title = OM.Enum.EmployeeTitle.Nurse,
+                            Title = OM.Enum.EmployeeTitle.Homecare,
                             StartDate = DateTime.Now
                         },
                         new Employee
@@ -167,7 +167,7 @@ namespace CareManagement.Models
                             VacationDays = 14,
                             EmployeeStatus = OM.Enum.EStatus.Layoff,
                             SickDays = 4,
-                            Title = OM.Enum.EmployeeTitle.Nurse,
+                            Title = OM.Enum.EmployeeTitle.Therapist,
                             StartDate = DateTime.Now
                         },
                         new Employee
@@ -203,7 +203,7 @@ namespace CareManagement.Models
                             VacationDays = 14,
                             EmployeeStatus = OM.Enum.EStatus.Layoff,
                             SickDays = 4,
-                            Title = OM.Enum.EmployeeTitle.Nurse,
+                            Title = OM.Enum.EmployeeTitle.Homecare,
                             StartDate = DateTime.Now
                         }
                     );

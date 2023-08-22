@@ -10,8 +10,8 @@ namespace CareManagement.Models.OM
         {
             Manager,
             Nurse,
-            Librarian,
-            Designer
+            Therapist,
+            Homecare
         }
 
         public enum PaymentType
